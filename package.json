@@ -1,9 +1,20 @@
 {
-  "name": "barrani",
-  "version": "1.0.0",
+  "name": "@getcrowder/barrani",
+  "version": "0.0.6",
   "main": "./build/index.js",
   "module": "./build/index.es.js",
+  "types": "./build/index.d.ts",
   "license": "MIT",
+  "files": [
+    "./build"
+  ],
+  "scripts": {
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "build": "rollup -c",
+    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
+    "test": "jest"
+  },
   "dependencies": {},
   "peerDependencies": {
     "react": "16.13.1",
@@ -40,12 +51,5 @@
     "ts-jest": "^26.4.1",
     "ts-loader": "^8.0.4",
     "typescript": "^4.0.3"
-  },
-  "scripts": {
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
-    "build": "rollup -c",
-    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
-    "test": "jest"
   }
 }
