@@ -1,5 +1,5 @@
-const deepMerge = await import('deepmerge');
-const { fontFamily } = await import('tailwindcss/defaultTheme');
+const deepMerge = require('deepmerge');
+const { fontFamily } = require('tailwindcss/defaultTheme');
 
 const config = {
   future: {

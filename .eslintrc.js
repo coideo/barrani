@@ -29,6 +29,7 @@ module.exports = {
   plugins: ['react', 'jsx-a11y', '@typescript-eslint'],
   rules: {
     '@typescript-eslint/no-use-before-define': [RULES.ERROR],
+    '@typescript-eslint/no-var-requires': RULES.OFF,
     'no-console': RULES.WARN,
     'no-nested-ternary': RULES.OFF,
     'no-use-before-define': RULES.OFF,
