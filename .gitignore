@@ -38,5 +38,4 @@ storybook-static
 .vscode
 .history
 package-lock.json
-yarn.lock
 .eslintcache
