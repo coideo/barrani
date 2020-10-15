@@ -1,43 +1,53 @@
 {
   "name": "@getcrowder/barrani",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "main": "./build/index.js",
   "module": "./build/index.es.js",
   "types": "./build/index.d.ts",
   "license": "MIT",
   "files": [
     "./build",
-    "config.js"
+    "config.js",
+    "postcss.js"
   ],
   "scripts": {
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "build": "rollup -c",
-    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
-    "test": "jest"
+    "format": "prettier --write \"**/*.+(ts|tsx|js|json|css|md|mdx|html)\" --loglevel warn",
+    "lint": "eslint . --ext ts --ext tsx --ext js --cache-location node_modules/.cache/eslint --fix",
+    "test": "jest --coverage",
+    "validate": "npm-run-all format lint test"
   },
   "dependencies": {
     "deepmerge": "^4.2.2"
   },
   "peerDependencies": {
-    "@tailwindcss/custom-forms": "^0.2.1",
-    "@tailwindcss/ui": "^0.6.2",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "tailwindcss": "^1.9.1"
+    "@headlessui/react": ">=0.2.0",
+    "@hookform/error-message": ">=0.0.4",
+    "classnames": ">=2.2.6",
+    "react": ">=16",
+    "react-dom": ">=16",
+    "react-hook-form": ">=6.9.2",
+    "react-query": ">=2.23.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.6",
+    "@babel/core": "^7.12.0",
     "@rollup/plugin-commonjs": "^15.1.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "@storybook/addon-actions": "^6.0.26",
     "@storybook/addon-links": "^6.0.26",
     "@storybook/addons": "^6.0.26",
     "@storybook/react": "^6.0.26",
+    "@tailwindcss/custom-forms": "^0.2.1",
+    "@tailwindcss/ui": "^0.6.2",
     "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.0.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/react-hooks": "^3.4.2",
     "@types/jest": "^26.0.14",
     "@types/node": "^14.11.8",
+    "@types/react": "^16.9.52",
+    "@types/react-dom": "^16.9.8",
     "@types/testing-library__jest-dom": "^5.9.4",
     "@types/testing-library__react": "^10.2.0",
     "@typescript-eslint/eslint-plugin": "^4.4.1",
@@ -45,17 +55,43 @@
     "babel-loader": "^8.1.0",
     "eslint": "^7.11.0",
     "eslint-config-prettier": "^6.12.0",
-    "eslint-plugin-jest": "^24.1.0",
-    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-config-react-app": "^5.2.1",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.21.4",
+    "eslint-plugin-react-hooks": "^4.1.2",
+    "eslint-plugin-standard": "^4.0.1",
     "fork-ts-checker-webpack-plugin": "^5.2.0",
+    "husky": "^4.3.0",
     "jest": "^26.5.3",
+    "lint-staged": "^10.4.0",
+    "npm-run-all": "^4.1.5",
+    "postcss-flexbugs-fixes": "^4.2.1",
+    "postcss-preset-env": "^6.7.0",
     "prettier": "^2.1.2",
-    "rollup": "^2.29.0",
+    "rollup": "^2.30.0",
     "rollup-plugin-peer-deps-external": "^2.2.3",
     "rollup-plugin-typescript2": "^0.27.3",
+    "tailwindcss": "^1.9.2",
     "ts-jest": "^26.4.1",
-    "ts-loader": "^8.0.4",
+    "ts-loader": "^8.0.5",
     "typescript": "^4.0.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.*(ts|tsx|js)": "eslint --cache-location node_modules/.cache/eslint --fix",
+    "*.+(ts|tsx|js|json|css|md|mdx|html)": "prettier --write --loglevel warn"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "trailingComma": "es5"
   }
 }

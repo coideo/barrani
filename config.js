@@ -1,5 +1,5 @@
-const deepMerge = require("deepmerge");
-const { fontFamily } = require("tailwindcss/defaultTheme");
+const deepMerge = await import('deepmerge');
+const { fontFamily } = await import('tailwindcss/defaultTheme');
 
 const config = {
   future: {
@@ -7,8 +7,8 @@ const config = {
     purgeLayersByDefault: true,
   },
   purge: [
-    "node_modules/@getcrowder/barrani/lib/defaultTheme.js",
-    "node_modules/@getcrowder/barrani/dist/index.js",
+    'node_modules/@getcrowder/barrani/lib/defaultTheme.js',
+    'node_modules/@getcrowder/barrani/dist/index.js',
   ],
   theme: {
     container: {
@@ -16,16 +16,16 @@ const config = {
     },
     extend: {
       fontFamily: {
-        sans: ["Inter var", ...fontFamily.sans],
+        sans: ['Inter var', ...fontFamily.sans],
       },
     },
   },
   variants: {
-    backgroundColor: ["responsive", "hover", "focus", "active", "disabled"],
-    cursor: ["responsive", "disabled"],
-    opacity: ["responsive", "group-hover", "hover", "focus", "disabled"],
+    backgroundColor: ['responsive', 'hover', 'focus', 'active', 'disabled'],
+    cursor: ['responsive', 'disabled'],
+    opacity: ['responsive', 'group-hover', 'hover', 'focus', 'disabled'],
   },
-  plugins: [require("@tailwindcss/ui"), require("@tailwindcss/custom-forms")],
+  plugins: [require('@tailwindcss/ui'), require('@tailwindcss/custom-forms')],
 };
 
 function arrayMergeFn(destinationArray, sourceArray) {

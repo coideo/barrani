@@ -1,8 +1,8 @@
-import React from "react";
-import HelloWorld from "./hello-world";
+import React from 'react';
+import HelloWorld from './hello-world';
 
 export default {
-  title: "Hello World",
+  title: 'Hello World',
   component: HelloWorld,
 };
 

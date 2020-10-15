@@ -1,7 +1,42 @@
-node_modules
-build
-storybook-static
-.history
+# Coverage directory used by tools like istanbul
+coverage
+
+# Dependency directory
+cypress/videos
+cypress/screenshots
+cypress/examples
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+!public/
+.now
+.vercel
+
+# production
+/build
+
+# misc
 .DS_Store
-yarn.lock
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+#storybook
+storybook-static
+
+.vscode
+.history
 package-lock.json
+yarn.lock
+.eslintcache
