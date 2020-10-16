@@ -28,6 +28,7 @@ module.exports = {
   },
   plugins: ['react', 'jsx-a11y', '@typescript-eslint'],
   rules: {
+    '@typescript-eslint/explicit-module-boundary-types': RULES.OFF,
     '@typescript-eslint/no-use-before-define': [RULES.ERROR],
     '@typescript-eslint/no-var-requires': RULES.OFF,
     'no-console': RULES.WARN,

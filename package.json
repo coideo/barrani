@@ -1,6 +1,6 @@
 {
   "name": "@getcrowder/barrani",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "main": "./build/index.js",
   "module": "./build/index.es.js",
   "types": "./build/index.d.ts",
@@ -17,22 +17,22 @@
     "format": "prettier --write \"**/*.+(ts|tsx|js|json|css|md|mdx|html)\" --loglevel warn",
     "lint": "eslint . --ext ts --ext tsx --ext js --cache-location node_modules/.cache/eslint --fix",
     "test": "jest --coverage",
-    "validate": "npm-run-all format lint test"
+    "type-check": "tsc --pretty --noEmit",
+    "validate": "npm-run-all format lint type-check test"
   },
   "dependencies": {
-    "deepmerge": "^4.2.2"
+    "@headlessui/react": "^0.2.0",
+    "@hookform/error-message": "^0.0.4",
+    "deepmerge": "^4.2.2",
+    "react-hook-form": "^6.9.2",
+    "react-query": "^2.23.1"
   },
   "peerDependencies": {
-    "@headlessui/react": ">=0.2.0",
-    "@hookform/error-message": ">=0.0.4",
-    "classnames": ">=2.2.6",
     "react": ">=16",
-    "react-dom": ">=16",
-    "react-hook-form": ">=6.9.2",
-    "react-query": ">=2.23.1"
+    "react-dom": ">=16"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.0",
+    "@babel/core": "^7.12.1",
     "@rollup/plugin-commonjs": "^15.1.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "@storybook/addon-actions": "^6.0.26",
@@ -68,17 +68,20 @@
     "husky": "^4.3.0",
     "jest": "^26.5.3",
     "lint-staged": "^10.4.0",
+    "msw": "^0.21.2",
     "npm-run-all": "^4.1.5",
     "postcss-flexbugs-fixes": "^4.2.1",
     "postcss-preset-env": "^6.7.0",
     "prettier": "^2.1.2",
-    "rollup": "^2.30.0",
+    "react-test-renderer": "^16.14.0",
+    "rollup": "^2.31.0",
     "rollup-plugin-peer-deps-external": "^2.2.3",
     "rollup-plugin-typescript2": "^0.27.3",
     "tailwindcss": "^1.9.2",
     "ts-jest": "^26.4.1",
     "ts-loader": "^8.0.5",
-    "typescript": "^4.0.3"
+    "typescript": "^4.0.3",
+    "whatwg-fetch": "^3.4.1"
   },
   "husky": {
     "hooks": {
