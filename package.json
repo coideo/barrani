@@ -1,7 +1,7 @@
 {
-  "name": "@getcrowder/barrani",
+  "name": "@coideo/barrani",
   "description": "tailwind + react-query + react-hook-form",
-  "version": "0.0.21",
+  "version": "0.0.2",
   "main": "./build/index.js",
   "module": "./build/index.es.js",
   "types": "./build/index.d.ts",
@@ -11,6 +11,9 @@
     "postcss.config.js",
     "tailwind.config.js"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build-storybook-static": "build-storybook -s .storybook/public",
     "build-storybook": "npm-run-all build-tailwind build-storybook-static",
