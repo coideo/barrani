@@ -1,7 +1,7 @@
 {
   "name": "@getcrowder/barrani",
   "description": "tailwind + react-query + react-hook-form",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "main": "./build/index.js",
   "module": "./build/index.es.js",
   "types": "./build/index.d.ts",
@@ -16,10 +16,10 @@
     "build-storybook": "npm-run-all build-tailwind build-storybook-static",
     "build-tailwind": "postcss src/styles/index.css -o src/styles/tailwind.css",
     "build": "rollup -c",
-    "start-storybook": "start-storybook -p 5000 -s .storybook/public",
     "dev": "npm-run-all build-tailwind start-storybook",
     "format": "prettier --write \"**/*.+(ts|tsx|js|json|css|md|mdx|html)\" --loglevel warn",
     "lint": "eslint . --ext ts --ext tsx --ext js --cache-location node_modules/.cache/eslint --fix",
+    "start-storybook": "start-storybook -p 5000 -s .storybook/public",
     "test": "jest --coverage",
     "type-check": "tsc --pretty --noEmit",
     "validate": "npm-run-all format lint type-check test"
@@ -103,7 +103,7 @@
     }
   },
   "lint-staged": {
-    "*.*(ts|tsx|js)": "eslint --cache-location node_modules/.cache/eslint --fix"
+    "*.*(ts|tsx|js)": "eslint . --ext ts --ext tsx --ext js --cache-location node_modules/.cache/eslint --fix"
   },
   "prettier": {
     "printWidth": 100,
