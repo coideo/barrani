@@ -1,9 +1,7 @@
 {
   "name": "@coideo/barrani",
   "description": "tailwind + react-query + react-hook-form",
-  "version": "0.0.3",
-  "main": "./build/index.js",
-  "module": "./build/index.es.js",
+  "version": "0.0.4",
   "types": "./build/index.d.ts",
   "license": "MIT",
   "files": [
