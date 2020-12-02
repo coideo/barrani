@@ -5,7 +5,14 @@ type RequestConfig = Omit<globalThis.RequestInit, 'body'> & {
 
 const inClient = () => typeof window !== 'undefined';
 
-function doFetch(endpoint: string, { data, queryString, ...customConfig }: RequestConfig) {
+interface CancellablePromise<T> extends Promise<T> {
+  cancel: () => void;
+}
+
+function doFetch<T>(
+  endpoint: string,
+  { data, queryString, ...customConfig }: RequestConfig = {}
+): CancellablePromise<T> {
   const controller = inClient() ? new AbortController() : undefined;
 
   const config = {
@@ -27,26 +34,10 @@ function doFetch(endpoint: string, { data, queryString, ...customConfig }: Reque
       // eslint-disable-next-line prefer-promise-reject-errors
       return Promise.reject({ status: r.status, ...data });
     }
-  });
+  }) as CancellablePromise<T>;
 
-  const cancel = () => {
-    controller?.abort();
-  };
-  return Object.assign(promise, { cancel });
+  promise.cancel = () => controller?.abort();
+  return promise;
 }
 
-function client(
-  endpoint: string,
-  { headers: customHeaders, token, ...customConfig }: RequestConfig & { token?: string } = {}
-) {
-  return doFetch(endpoint, {
-    headers: {
-      Authorization: token ? `Bearer ${token}` : '',
-      'Content-Type': 'application/json',
-      ...customHeaders,
-    },
-    ...customConfig,
-  });
-}
-
-export { doFetch, client };
+export { doFetch };

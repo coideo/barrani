@@ -1,6 +1,6 @@
 import { MockedRequest, rest } from 'msw';
 import { setupServer } from 'msw/node';
-import { client } from '../api-client';
+import { doFetch } from '../api-client';
 
 const server = setupServer();
 
@@ -19,27 +19,9 @@ test('calls fetch at the endpoint with the arguments for GET requests', async ()
     })
   );
 
-  const result = await client(endpoint);
+  const result = await doFetch(endpoint);
 
   expect(result).toEqual(mockResult);
-});
-
-test('adds auth token when a token is in localStorage', async () => {
-  const token = 'FAKE_TOKEN';
-
-  let request: MockedRequest | undefined;
-  const endpoint = 'http://test-endpoint';
-  const mockResult = { mockValue: 'VALUE' };
-  server.use(
-    rest.get(endpoint, async (req, res, ctx) => {
-      request = req;
-      return res(ctx.json(mockResult));
-    })
-  );
-
-  await client(endpoint, { token });
-
-  expect(request?.headers.get('Authorization')).toBe(`Bearer ${token}`);
 });
 
 test('allows for config overrides', async () => {
@@ -58,7 +40,7 @@ test('allows for config overrides', async () => {
     headers: { 'Content-Type': 'fake-type' },
   };
 
-  await client(endpoint, customConfig);
+  await doFetch(endpoint, customConfig);
 
   expect(request?.mode).toBe(customConfig.mode);
   expect(request?.headers.get('Content-Type')).toBe(customConfig.headers['Content-Type']);
@@ -68,12 +50,12 @@ test('when data is provided, it is stringified and the method defaults to POST',
   const endpoint = 'http://test-endpoint';
   server.use(
     rest.post(endpoint, async (req, res, ctx) => {
-      return res(ctx.json(req.body));
+      return res(ctx.json(JSON.parse(req.body as string)));
     })
   );
 
   const data = { a: 'b' };
-  const result = await client(endpoint, { data });
+  const result = await doFetch(endpoint, { data });
 
   expect(result).toEqual(data);
 });
@@ -87,7 +69,7 @@ test(`correctly rejects the promise if there's an error`, async () => {
     })
   );
 
-  const error = await client(endpoint).catch((e) => e);
+  const error = await doFetch(endpoint).catch((e) => e);
 
   expect(error).toEqual({ status: 400, ...testError });
 });
@@ -100,7 +82,7 @@ test(`correctly parse text response`, async () => {
     })
   );
 
-  const result = await client(endpoint);
+  const result = await doFetch(endpoint);
 
   expect(result).toEqual({});
 });
@@ -113,9 +95,9 @@ test('throw AbortError if request is canceled', async () => {
     })
   );
 
-  const promise = client(endpoint);
+  const promise = doFetch(endpoint);
   promise.cancel();
-  const error = await promise.catch((e) => e);
+  const error = (await promise.catch((e) => e)) as { name: string };
 
   expect(error.name).toEqual('AbortError');
 });
