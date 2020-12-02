@@ -11,13 +11,17 @@ interface CancellablePromise<T> extends Promise<T> {
 
 function doFetch<T>(
   endpoint: string,
-  { data, queryString, ...customConfig }: RequestConfig = {}
+  { data, headers: customHeaders, queryString, ...customConfig }: RequestConfig = {}
 ): CancellablePromise<T> {
   const controller = inClient() ? new AbortController() : undefined;
 
   const config = {
     method: data ? 'POST' : 'GET',
     body: data ? JSON.stringify(data) : undefined,
+    headers: {
+      'Content-Type': 'application/json',
+      ...customHeaders,
+    },
     signal: controller?.signal,
     ...customConfig,
   };
