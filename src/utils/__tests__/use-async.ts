@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react-hooks';
-import { useAsync } from '../use-async';
+import { Status, useAsync } from '../use-async';
 
 beforeEach(() => {
   jest.spyOn(console, 'error');
@@ -26,7 +26,7 @@ function deferred<T>(): {
 }
 
 const defaultState = {
-  status: 'idle',
+  status: Status.IDLE,
   data: null,
   error: null,
 
@@ -43,21 +43,21 @@ const defaultState = {
 
 const pendingState = {
   ...defaultState,
-  status: 'pending',
+  status: Status.PENDING,
   isIdle: false,
   isLoading: true,
 };
 
 const resolvedState = {
   ...defaultState,
-  status: 'resolved',
+  status: Status.RESOLVED,
   isIdle: false,
   isSuccess: true,
 };
 
 const rejectedState = {
   ...defaultState,
-  status: 'rejected',
+  status: Status.REJECTED,
   isIdle: false,
   isError: true,
 };
@@ -108,8 +108,8 @@ test('calling run with a promise which rejects', async () => {
 
 test('can specify an initial state', () => {
   const mockData = Symbol('resolved value');
-  const customInitialState: { status: 'resolved'; data: symbol } = {
-    status: 'resolved',
+  const customInitialState: { status: Status.RESOLVED; data: symbol } = {
+    status: Status.RESOLVED,
     data: mockData,
   };
   const { result } = renderHook(() => useAsync(customInitialState));

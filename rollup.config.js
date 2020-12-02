@@ -1,8 +1,10 @@
-import commonjs from '@rollup/plugin-commonjs';
-import resolve from '@rollup/plugin-node-resolve';
-import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import commonjs from 'rollup-plugin-commonjs';
+import resolve from 'rollup-plugin-node-resolve';
+import externalDeps from 'rollup-plugin-peer-deps-external';
 import typescript from 'rollup-plugin-typescript2';
 import packageJson from './package.json';
+
+const extensions = ['.js', '.jsx', '.es6', '.es', '.mjs', '.ts', '.tsx'];
 
 export default {
   input: './src/index.ts',
@@ -18,5 +20,6 @@ export default {
       sourcemap: true,
     },
   ],
-  plugins: [peerDepsExternal(), resolve(), commonjs(), typescript()],
+  external: ['react', 'react-dom'],
+  plugins: [resolve({ extensions }), commonjs(), externalDeps(), typescript()],
 };

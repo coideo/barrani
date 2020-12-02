@@ -1,6 +1,12 @@
 import { Dispatch, useCallback, useLayoutEffect, useReducer, useRef } from 'react';
 
-type Status = 'idle' | 'resolved' | 'rejected' | 'pending';
+export enum Status {
+  IDLE = 'idle',
+  RESOLVED = 'resolved',
+  REJECTED = 'rejected',
+  PENDING = 'pending',
+}
+
 type AsyncState<T> = {
   status: Status;
   data: T | null;
@@ -26,7 +32,7 @@ function useSafeDispatch<T>(dispatch: Dispatch<Partial<AsyncState<T>>>) {
 // useEffect(() => {
 //   run(fetchPokemon(pokemonName))
 // }, [pokemonName, run])
-const defaultInitialState: AsyncState<null> = { status: 'idle', data: null, error: null };
+const defaultInitialState: AsyncState<null> = { status: Status.IDLE, data: null, error: null };
 function useAsync<T>(initialState?: Partial<AsyncState<T>>) {
   const initialStateRef = useRef<AsyncState<T>>({
     ...defaultInitialState,
@@ -39,17 +45,17 @@ function useAsync<T>(initialState?: Partial<AsyncState<T>>) {
 
   const safeSetState = useSafeDispatch(setState);
 
-  const setData = useCallback((data: T | null) => safeSetState({ data, status: 'resolved' }), [
+  const setData = useCallback((data: T | null) => safeSetState({ data, status: Status.RESOLVED }), [
     safeSetState,
   ]);
-  const setError = useCallback((error: Error) => safeSetState({ error, status: 'rejected' }), [
+  const setError = useCallback((error: Error) => safeSetState({ error, status: Status.REJECTED }), [
     safeSetState,
   ]);
   const reset = useCallback(() => safeSetState(initialStateRef.current), [safeSetState]);
 
   const run = useCallback(
     (promise: Promise<T>) => {
-      safeSetState({ status: 'pending' });
+      safeSetState({ status: Status.PENDING });
       return promise.then(
         (data: T) => {
           setData(data);
@@ -65,10 +71,10 @@ function useAsync<T>(initialState?: Partial<AsyncState<T>>) {
   );
 
   return {
-    isIdle: status === 'idle',
-    isLoading: status === 'pending',
-    isError: status === 'rejected',
-    isSuccess: status === 'resolved',
+    isIdle: status === Status.IDLE,
+    isLoading: status === Status.PENDING,
+    isError: status === Status.REJECTED,
+    isSuccess: status === Status.RESOLVED,
 
     setData,
     setError,

@@ -40,6 +40,8 @@ module.exports = {
     'react/no-unknown-property': [RULES.WARN, {}],
     'react/prop-types': RULES.OFF,
     'react/require-default-props': RULES.OFF,
+    '@typescript-eslint/no-unused-vars': RULES.ERROR,
+    'no-unused-vars': RULES.OFF,
   },
   settings: { react: { version: 'detect' } },
 };
