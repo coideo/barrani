@@ -40,6 +40,7 @@ export type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   append?: string;
   containerClass?: string;
   icon?: ReactNode;
+  isDirty?: boolean;
   prepend?: string;
   rightIcon?: ReactNode;
   withError?: boolean;
@@ -51,6 +52,8 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
     className,
     containerClass,
     icon,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    isDirty,
     name,
     prepend,
     rightIcon,

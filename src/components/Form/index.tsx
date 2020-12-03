@@ -1,4 +1,4 @@
-import Button, { ButtonProps } from 'components/Button';
+import { ButtonProps } from 'components/Button';
 import React, { BaseSyntheticEvent, FC, ReactNode } from 'react';
 import {
   DeepMap,
@@ -31,36 +31,32 @@ const FieldText: FC<FieldProps & FieldInputProps> = (props) => (
 
 const FieldURL: FC<FieldProps & FieldInputProps> = (props) => <FieldInput type="url" {...props} />;
 
-const SubmitButton: FC<ButtonProps> = ({ children = 'Guardar', disabled, loading, ...props }) => {
+type FormButton = FC<ButtonProps & { children: FC<Omit<ButtonProps, 'kind'>> }>;
+
+const SubmitButton: FormButton = ({ children, disabled, loading, ...props }) => {
   const { formState } = useFormContext();
   const { isDirty, isSubmitting } = formState;
-  return (
-    <Button
-      disabled={isSubmitting || (disabled !== undefined ? disabled : !isDirty)}
-      loading={isSubmitting || loading}
-      type="submit"
-      {...props}
-    >
-      {children}
-    </Button>
-  );
+
+  return children({
+    disabled: isSubmitting || (disabled !== undefined ? disabled : !isDirty),
+    loading: isSubmitting || loading,
+    type: 'submit',
+    ...props,
+  });
 };
 
-const CancelButton: FC<ButtonProps> = ({ children = 'Cancelar', disabled, onClick, ...props }) => {
+const CancelButton: FormButton = ({ children, disabled, onClick, ...props }) => {
   const { formState, reset } = useFormContext();
   const { isDirty, isSubmitting } = formState;
-  return (
-    <Button
-      disabled={isSubmitting || (disabled !== undefined ? disabled : !isDirty)}
-      onClick={(evt) => {
-        reset();
-        onClick?.(evt);
-      }}
-      {...props}
-    >
-      {children}
-    </Button>
-  );
+
+  return children({
+    disabled: isSubmitting || (disabled !== undefined ? disabled : !isDirty),
+    onClick: (evt) => {
+      reset();
+      onClick?.(evt);
+    },
+    ...props,
+  });
 };
 
 function filterDirty<T extends FieldValues>(

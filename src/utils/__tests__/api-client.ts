@@ -50,7 +50,7 @@ test('when data is provided, it is stringified and the method defaults to POST',
   const endpoint = 'http://test-endpoint';
   server.use(
     rest.post(endpoint, async (req, res, ctx) => {
-      return res(ctx.json(JSON.parse(req.body as string)));
+      return res(ctx.json(req.body));
     })
   );
 

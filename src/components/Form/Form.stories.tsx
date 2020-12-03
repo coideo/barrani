@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions';
-import React from 'react';
+import Button, { ButtonProps } from 'components/Button';
+import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import Form from '.';
 import { CheckboxProps } from './FieldCheckbox';
@@ -15,6 +16,11 @@ const KINDS = {
     button: 'text-white hover:bg-indigo-700 focus:ring-indigo-500 disabled:bg-indigo-600',
     loading: 'bg-white',
   },
+  secondary: {
+    bg: 'bg-indigo-100',
+    button: 'text-indigo-700 hover:bg-indigo-200 focus:ring-indigo-500 disabled:bg-indigo-100',
+    loading: 'bg-indigo-700',
+  },
   light: {
     bg: 'bg-white',
     button:
@@ -22,6 +28,32 @@ const KINDS = {
     loading: 'bg-gray-700',
   },
 };
+
+const MyButton: FC<Omit<ButtonProps, 'kind'> & { kind?: keyof typeof KINDS }> = ({
+  children,
+  kind = 'primary',
+  ...props
+}) => (
+  <Button className="focus:ring-indigo-500" kind={KINDS[kind]} {...props}>
+    {children}
+  </Button>
+);
+
+const SubmitButton = (props: ButtonProps) => (
+  <Form.SubmitButton {...props}>
+    {(rest) => <MyButton {...rest}>Guardar</MyButton>}
+  </Form.SubmitButton>
+);
+
+const CancelButton = (props: ButtonProps) => (
+  <Form.CancelButton {...props}>
+    {(rest) => (
+      <MyButton kind="light" {...rest}>
+        Cancelar
+      </MyButton>
+    )}
+  </Form.CancelButton>
+);
 
 export const Basic = () => {
   const methods = useForm();
@@ -34,8 +66,8 @@ export const Basic = () => {
       >
         <Form.Text name="name" label="Nombre" required />
         <div className="flex justify-end space-x-3">
-          <Form.CancelButton kind={KINDS.light} />
-          <Form.SubmitButton kind={KINDS.primary} />
+          <CancelButton />
+          <SubmitButton />
         </div>
       </Form>
     </div>
@@ -54,8 +86,8 @@ export const Login = () => {
         <Form.Email required />
         <Form.Password required />
         <div className="flex justify-end space-x-3">
-          <Form.CancelButton kind={KINDS.light} />
-          <Form.SubmitButton kind={KINDS.primary} />
+          <CancelButton />
+          <SubmitButton />
         </div>
       </Form>
     </div>
@@ -147,9 +179,9 @@ export const General = () => {
               </Form.Switch.Label>
             </Form.Switch.Group>
             <div className="sm:col-span-2">
-              <Form.SubmitButton kind={KINDS.primary} block size="xl">
+              <SubmitButton block size="xl">
                 Let&lsquo;s talk
-              </Form.SubmitButton>
+              </SubmitButton>
             </div>
           </Form>
         </div>

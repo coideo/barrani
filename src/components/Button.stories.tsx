@@ -28,8 +28,12 @@ const KINDS = {
 };
 const kinds = Object.keys(KINDS) as (keyof typeof KINDS)[];
 
-const MyButton: FC<ButtonProps> = ({ children, kind = KINDS.primary, ...props }) => (
-  <Button className="focus:ring-indigo-500" kind={kind} {...props}>
+const MyButton: FC<Omit<ButtonProps, 'kind'> & { kind: keyof typeof KINDS }> = ({
+  children,
+  kind = 'primary',
+  ...props
+}) => (
+  <Button className="focus:ring-indigo-500" kind={KINDS[kind]} {...props}>
     {children}
   </Button>
 );
@@ -39,7 +43,7 @@ export const Default = () => (
     {kinds.map((kind) => (
       <div key={kind} className="space-x-4">
         {sizes.map((size) => (
-          <MyButton key={size} size={size} kind={KINDS[kind]}>
+          <MyButton key={size} size={size} kind={kind}>
             Button {size}
           </MyButton>
         ))}
@@ -51,7 +55,7 @@ export const Default = () => (
 export const Disabled = () => (
   <div className="space-x-4">
     {kinds.map((kind) => (
-      <MyButton key={kind} kind={KINDS[kind]} disabled>
+      <MyButton key={kind} kind={kind} disabled>
         Disabled
       </MyButton>
     ))}
@@ -61,7 +65,7 @@ export const Disabled = () => (
 export const Loading = () => (
   <div className="space-x-4">
     {kinds.map((kind) => (
-      <MyButton key={kind} kind={KINDS[kind]} loading>
+      <MyButton key={kind} kind={kind} loading>
         Loading
       </MyButton>
     ))}
@@ -71,7 +75,7 @@ export const Loading = () => (
 export const Block = () => (
   <div className="container max-w-sm p-10 space-y-4 bg-gray-50">
     {kinds.map((kind) => (
-      <MyButton key={kind} kind={KINDS[kind]} block>
+      <MyButton key={kind} kind={kind} block>
         Block
       </MyButton>
     ))}
@@ -81,7 +85,7 @@ export const Block = () => (
 export const Flat = () => (
   <div className="space-x-4">
     {kinds.map((kind) => (
-      <MyButton key={kind} kind={KINDS[kind]} flat>
+      <MyButton key={kind} kind={kind} flat>
         Flat
       </MyButton>
     ))}
