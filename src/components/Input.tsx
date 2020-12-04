@@ -52,7 +52,6 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
     className,
     containerClass,
     icon,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     isDirty,
     name,
     prepend,
@@ -73,9 +72,10 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
         aria-invalid={withError ? 'true' : 'false'}
         className={cn(
           className,
-          'block w-full flex-1 border-gray-300 sm:text-sm disabled:bg-gray-100 disabled:cursor-not-allowed',
+          'block w-full flex-1 border-gray-300 sm:text-sm disabled:bg-gray-100 disabled:cursor-not-allowed form-input',
           !!icon && 'pl-10',
           !!rightIcon && 'pr-10',
+          isDirty && '',
           append && prepend
             ? 'rounded-none'
             : append
