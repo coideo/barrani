@@ -68,3 +68,19 @@ export const WithOptions = () => {
     </div>
   );
 };
+
+export const WithError = () => {
+  return (
+    <div className="container max-w-sm space-y-1">
+      <MySelect onChange={action('onChange')} options={people} withError />
+    </div>
+  );
+};
+
+export const Disabled = () => {
+  return (
+    <div className="container max-w-sm space-y-1">
+      <MySelect onChange={action('onChange')} options={people} disabled />
+    </div>
+  );
+};

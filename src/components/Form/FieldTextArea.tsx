@@ -26,7 +26,7 @@ const TextArea: FC<TextAreaProps & FieldComponentProps> = ({
       className={cn(
         className,
         'focus:ring-indigo-500 focus:border-indigo-500',
-        'block w-full border-gray-300 sm:text-sm',
+        'block w-full border-gray-300 sm:text-sm rounded-md shadow-sm',
         withError &&
           'border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500'
       )}

@@ -50,7 +50,8 @@ export type SelectProps = Omit<ListboxInputProps, 'ref' | 'children'> & {
   className?: string;
   color?: string;
   id?: string;
-  options?: { id: number | string; name: ReactNode; icon?: ReactNode }[];
+  options?: ({ id: string; name: ReactNode; icon?: ReactNode } | string)[];
+  withError?: boolean;
 };
 
 const Select = ({
@@ -63,15 +64,22 @@ const Select = ({
   id,
   onChange,
   value,
+  withError,
   ...props
 }: SelectProps) => {
   const items =
     children ||
-    options?.map(({ id, name, icon }) => (
-      <Item key={id} value={id.toString()} icon={icon}>
-        {name}
-      </Item>
-    ));
+    options?.map((o) =>
+      typeof o === 'string' ? (
+        <Item key={o} value={o} icon={o}>
+          {o}
+        </Item>
+      ) : (
+        <Item key={o.id} value={o.id} icon={o.icon}>
+          {o.name}
+        </Item>
+      )
+    );
 
   return (
     <ListboxInput
@@ -85,8 +93,8 @@ const Select = ({
     >
       <ListboxButton
         className={cn(
-          color,
-          'relative flex w-full py-2 pl-3 pr-10 text-left bg-white border border-gray-300 rounded-md shadow-sm cursor-default focus:outline-none sm:text-sm focus:ring-1'
+          'relative flex w-full py-2 pl-3 pr-10 text-left bg-white border border-gray-300 rounded-md shadow-sm cursor-default focus:outline-none sm:text-sm focus:ring-1',
+          withError ? 'ring-red-500 border-red-500' : color
         )}
       >
         {({ label }) => (
