@@ -19,5 +19,10 @@ export default {
     },
   ],
   external: ['react', 'react-dom'],
-  plugins: [resolve(), commonjs(), externalDeps(), typescript()],
+  plugins: [
+    resolve(),
+    commonjs({ include: /node_modules/, namedExports: { 'highlight-words-core': ['findAll'] } }),
+    externalDeps(),
+    typescript(),
+  ],
 };
