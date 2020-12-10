@@ -1,5 +1,5 @@
 import { Dispatch, useReducer } from 'react';
-import useDebounce from './use-debounce';
+import { useDebounce } from './use-debounce';
 
 type Obj = Record<string, unknown | undefined>;
 
@@ -20,4 +20,4 @@ const useQueryString = (
   return [queryString, setQuery];
 };
 
-export default useQueryString;
+export { useQueryString };

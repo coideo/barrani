@@ -2,7 +2,7 @@ import { action } from '@storybook/addon-actions';
 import Button, { ButtonProps } from 'components/Button';
 import React, { FC, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
-import useQueryString from 'utils/use-query-string';
+import { useQueryString } from 'utils/use-query-string';
 import Form from '.';
 import { CheckboxProps } from './FieldCheckbox';
 

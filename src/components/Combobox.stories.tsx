@@ -1,6 +1,6 @@
 import { action } from '@storybook/addon-actions';
 import React, { FC, useMemo } from 'react';
-import useQueryString from 'utils/use-query-string';
+import { useQueryString } from 'utils/use-query-string';
 import Combobox, { ComboboxProps } from './Combobox';
 
 export default {
