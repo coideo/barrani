@@ -1,7 +1,8 @@
 import { action } from '@storybook/addon-actions';
 import Button, { ButtonProps } from 'components/Button';
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
+import useQueryString from 'utils/use-query-string';
 import Form from '.';
 import { CheckboxProps } from './FieldCheckbox';
 
@@ -98,8 +99,37 @@ const FormCheckbox = ({ ...props }: Omit<CheckboxProps, 'color'>) => (
   <Form.Checkbox color="focus:ring-indigo-500 text-indigo-600" {...props} />
 );
 
+const peopleList = [
+  'Wade Cooper',
+  'Arlene Mccoy',
+  'Devon Webb',
+  'Tom Cook',
+  'Tanya Fox',
+  'Hellen Schmidt',
+  'Caroline Schultz',
+  'Mason Heaney',
+  'Claudie Smitham',
+  'Emil Schaefer',
+];
+
+function usePeopleMatch() {
+  const [queryString, search] = useQueryString({ name: '' });
+  const name = queryString.name as string;
+
+  return {
+    people: useMemo(() => peopleList.filter((p) => p.toLowerCase().includes(name.toLowerCase())), [
+      name,
+    ]),
+    search,
+  };
+}
+
 export const General = () => {
-  const methods = useForm({ defaultValues: { country: 'Argentina' } });
+  const methods = useForm({
+    defaultValues: { country: 'Argentina', policy: false },
+  });
+  const { people, search } = usePeopleMatch();
+
   return (
     <div className="px-4 py-16 overflow-hidden bg-white sm:px-6 lg:px-8 lg:py-24">
       <div className="max-w-xl mx-auto">
@@ -126,9 +156,29 @@ export const General = () => {
               name="country"
               label="Country / Region"
               required
-              options={['Argentina', 'United States', 'Australia'].map((p) => ({ id: p, name: p }))}
+              options={['Argentina', 'United States', 'Australia']}
               wrapperClass="sm:col-span-2"
             />
+            <Form.Combobox
+              label="Person"
+              name="person"
+              onSearch={(name) => search({ name })}
+              required
+              wrapperClass="sm:col-span-2"
+            >
+              {people &&
+                (people.length > 0 ? (
+                  <Form.Combobox.List>
+                    {people.map((name) => (
+                      <Form.Combobox.Item key={name} value={name}>
+                        {name}
+                      </Form.Combobox.Item>
+                    ))}
+                  </Form.Combobox.List>
+                ) : (
+                  <span className="block m-2">No results found</span>
+                ))}
+            </Form.Combobox>
             <Form.Text
               name="phone"
               label="Phone Number"

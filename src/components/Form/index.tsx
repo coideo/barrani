@@ -11,6 +11,7 @@ import {
 import { PartialBy } from 'types';
 import Field, { FieldProps } from './Field';
 import FieldCheckbox from './FieldCheckbox';
+import FieldCombobox from './FieldCombobox';
 import FieldEmail from './FieldEmail';
 import FieldInput, { FieldInputProps } from './FieldInput';
 import FieldSelect from './FieldSelect';
@@ -99,6 +100,7 @@ const Form = <T extends FieldValues>({ className, children, methods, onSubmit }:
 
 Form.CancelButton = CancelButton;
 Form.Checkbox = FieldCheckbox;
+Form.Combobox = FieldCombobox;
 Form.Email = FieldEmail;
 Form.Field = Field;
 Form.Number = FieldNumber;
