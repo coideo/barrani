@@ -63,7 +63,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
   ref
 ) => {
   return (
-    <div className={cn(containerClass, 'relative flex rounded-md shadow-sm')}>
+    <div className={cn(containerClass, 'relative flex shadow-sm')}>
       {prepend ? <Pend className="border-r-0 rounded-l-md">{prepend}</Pend> : null}
       {icon && <Icon className="left-0 pl-3">{icon}</Icon>}
       <input

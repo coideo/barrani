@@ -126,7 +126,7 @@ function usePeopleMatch() {
 
 export const General = () => {
   const methods = useForm({
-    defaultValues: { country: 'Argentina', policy: false },
+    defaultValues: { country: 'Argentina', person: '', policy: false },
   });
   const { people, search } = usePeopleMatch();
 
@@ -160,6 +160,7 @@ export const General = () => {
               wrapperClass="sm:col-span-2"
             />
             <Form.Combobox
+              color="focus:ring-indigo-500 focus:border-indigo-500"
               label="Person"
               name="person"
               onSearch={(name) => search({ name })}
