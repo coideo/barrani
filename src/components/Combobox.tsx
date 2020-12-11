@@ -41,6 +41,7 @@ const List: FC = ({ children }) => (
 export type ComboboxProps = {
   children?: ReactNode;
   color?: string;
+  disabled?: boolean;
   id?: string;
   onChange?: (value: string | number) => void;
   onSearch?: (value: string | number) => void;
@@ -52,7 +53,7 @@ const Combobox: ForwardRefExoticComponent<
   PropsWithoutRef<ComboboxProps> & RefAttributes<HTMLInputElement>
 > & { List: typeof List; Item: typeof Item } = Object.assign(
   forwardRef<HTMLInputElement, ComboboxProps>(function Combobox(
-    { children, color, id, onChange, onSearch, placeholder, withError },
+    { children, color, disabled, id, onChange, onSearch, placeholder, withError },
     ref
   ) {
     const [term, setTerm] = useState('');
@@ -82,6 +83,7 @@ const Combobox: ForwardRefExoticComponent<
               'block w-full rounded-md border-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed sm:text-sm form-input',
               withError ? 'ring-red-500 border-red-500' : color
             )}
+            disabled={disabled}
             id={id}
             onChange={handleChange}
             onFocus={() => setFocused(true)}

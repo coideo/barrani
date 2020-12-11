@@ -59,3 +59,11 @@ export const Default = () => {
     </div>
   );
 };
+
+export const Disabled = () => {
+  return (
+    <div className="container max-w-sm space-y-1">
+      <MyCombobox disabled />
+    </div>
+  );
+};
