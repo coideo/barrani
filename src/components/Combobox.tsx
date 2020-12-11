@@ -18,10 +18,12 @@ import React, {
 import { cn } from 'utils/class-names';
 import { SelectorIcon } from './icons';
 
-const Item: FC<{ value: string }> = ({ children, value }) => (
+type Value = string | { id: string | number; name: string };
+
+const Item: FC<{ value: Value }> = ({ children, value }) => (
   <ComboboxOption
     className="relative px-3 py-2 text-gray-900 cursor-pointer select-none"
-    value={value}
+    value={JSON.stringify(value)}
   >
     <span className="block font-normal truncate">{children}</span>
   </ComboboxOption>
@@ -40,10 +42,9 @@ export type ComboboxProps = {
   children?: ReactNode;
   color?: string;
   id?: string;
-  onChange?: (value: string) => void;
-  onSearch?: (value: string) => void;
+  onChange?: (value: string | number) => void;
+  onSearch?: (value: string | number) => void;
   placeholder?: string;
-  value?: string;
   withError?: boolean;
 };
 
@@ -51,16 +52,20 @@ const Combobox: ForwardRefExoticComponent<
   PropsWithoutRef<ComboboxProps> & RefAttributes<HTMLInputElement>
 > & { List: typeof List; Item: typeof Item } = Object.assign(
   forwardRef<HTMLInputElement, ComboboxProps>(function Combobox(
-    { children, color, id, onChange, onSearch, placeholder, value, withError },
+    { children, color, id, onChange, onSearch, placeholder, withError },
     ref
   ) {
     const [term, setTerm] = useState('');
+    const [selected, setSelected] = useState('');
     const [focused, setFocused] = useState(false);
 
-    const handleSelect = (value: string) => {
-      onChange?.(value);
-      onSearch?.(value);
-      setTerm(value);
+    const handleSelect = (v: string) => {
+      const value = JSON.parse(v) as Value;
+      const { id, name } = typeof value === 'string' ? { id: value, name: value } : value;
+      onChange?.(id);
+      onSearch?.(name);
+      setTerm(name);
+      setSelected(name);
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -84,7 +89,7 @@ const Combobox: ForwardRefExoticComponent<
             placeholder={placeholder}
             ref={ref}
             type="text"
-            value={focused ? term : value}
+            value={focused ? term : selected}
           />
           <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
             <SelectorIcon />

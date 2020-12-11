@@ -124,11 +124,34 @@ function usePeopleMatch() {
   };
 }
 
+const teamList = [
+  { id: 1, name: 'Real Madrid' },
+  { id: 2, name: 'Barcelona' },
+  { id: 3, name: 'Juventus' },
+  { id: 4, name: 'Milan' },
+  { id: 5, name: 'Manchester United' },
+  { id: 6, name: 'PSG' },
+];
+
+function useTeamMatch() {
+  const [queryString, search] = useQueryString({ name: '' });
+  const name = queryString.name as string;
+
+  return {
+    teams: useMemo(
+      () => teamList.filter((t) => t.name.toLowerCase().includes(name.toLowerCase())),
+      [name]
+    ),
+    search,
+  };
+}
+
 export const General = () => {
   const methods = useForm({
-    defaultValues: { country: 'Argentina', person: '', policy: false },
+    defaultValues: { country: 'Argentina', person: '', team: '', policy: false },
   });
   const { people, search } = usePeopleMatch();
+  const { teams, search: teamSearch } = useTeamMatch();
 
   return (
     <div className="px-4 py-16 overflow-hidden bg-white sm:px-6 lg:px-8 lg:py-24">
@@ -172,6 +195,27 @@ export const General = () => {
                   <Form.Combobox.List>
                     {people.map((name) => (
                       <Form.Combobox.Item key={name} value={name}>
+                        {name}
+                      </Form.Combobox.Item>
+                    ))}
+                  </Form.Combobox.List>
+                ) : (
+                  <span className="block m-2">No results found</span>
+                ))}
+            </Form.Combobox>
+            <Form.Combobox
+              color="focus:ring-indigo-500 focus:border-indigo-500"
+              label="Team"
+              name="team"
+              onSearch={(name) => teamSearch({ name })}
+              required
+              wrapperClass="sm:col-span-2"
+            >
+              {teams &&
+                (teams.length > 0 ? (
+                  <Form.Combobox.List>
+                    {teams.map(({ id, name }) => (
+                      <Form.Combobox.Item key={id} value={{ id, name }}>
                         {name}
                       </Form.Combobox.Item>
                     ))}
