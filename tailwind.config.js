@@ -2,13 +2,9 @@ const { fontFamily } = require('tailwindcss/defaultTheme');
 
 module.exports = {
   presets: [require('tailwindcss/defaultConfig')],
-  purge: ['node_modules/@coideo/barrani/build/**/*.{js,ts,jsx,tsx}'],
   theme: {
     container: {
       center: true,
-    },
-    animationDelay: {
-      200: 'animation-delay: 0.2s',
     },
     extend: {
       fontFamily: {
