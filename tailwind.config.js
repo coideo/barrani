@@ -2,10 +2,7 @@ const { fontFamily } = require('tailwindcss/defaultTheme');
 
 module.exports = {
   presets: [require('tailwindcss/defaultConfig')],
-  // purge: [
-  //   'node_modules/@getcrowder/barrani/lib/defaultTheme.js',
-  //   'node_modules/@getcrowder/barrani/dist/index.js',
-  // ],
+  purge: ['node_modules/@coideo/barrani/build/**/*.{js,ts,jsx,tsx}'],
   theme: {
     container: {
       center: true,
