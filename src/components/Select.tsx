@@ -29,10 +29,7 @@ const CheckIcon = () => (
 );
 
 const Item: FC<{ icon?: ReactNode; value: string }> = ({ children, icon, value }) => (
-  <ListboxOption
-    className="relative py-2 pl-3 text-gray-900 cursor-pointer select-none pr-9"
-    value={value}
-  >
+  <ListboxOption className="relative py-2 pl-3 cursor-pointer select-none pr-9" value={value}>
     <div className="flex items-center space-x-3">
       {icon}
       <span className="block font-normal truncate item-text">{children}</span>

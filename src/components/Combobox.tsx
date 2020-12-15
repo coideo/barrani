@@ -28,7 +28,7 @@ const Item: FC<{ className?: string; icon?: ReactNode; value: Value }> = ({
   value,
 }) => (
   <ComboboxOption
-    className={cn('relative px-3 py-2 text-gray-900 cursor-pointer select-none', className)}
+    className={cn('relative px-3 py-2 cursor-pointer select-none', className)}
     value={JSON.stringify(value)}
   >
     <div className="flex items-center space-x-3">
