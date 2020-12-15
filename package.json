@@ -14,15 +14,15 @@
   "publishConfig": {
     "access": "public"
   },
+  "resolutions": {
+    "postcss": "8.2.1"
+  },
   "scripts": {
-    "build-storybook-static": "build-storybook -s .storybook/public",
-    "build-storybook": "npm-run-all build-tailwind build-storybook-static",
-    "build-tailwind": "postcss src/styles/index.css -o src/styles/tailwind.css",
+    "build-storybook": "build-storybook -s .storybook/public",
     "build": "rollup -c",
-    "dev": "npm-run-all build-tailwind start-storybook",
+    "dev": "start-storybook -p 5000 -s .storybook/public",
     "format": "prettier --write \"**/*.+(ts|tsx|js|json|css|md|mdx|html)\" --loglevel warn",
     "lint": "eslint . --ext .ts,.tsx,.js --cache --fix",
-    "start-storybook": "start-storybook -p 5000 -s .storybook/public",
     "test": "jest --coverage",
     "type-check": "tsc --pretty --noEmit",
     "validate": "npm-run-all lint type-check test"
@@ -36,6 +36,7 @@
     "react-query": "^2.26.4"
   },
   "peerDependencies": {
+    "postcss": "^8.2.1",
     "react": ">=17",
     "react-dom": ">=17"
   },
@@ -64,7 +65,7 @@
     "@types/testing-library__react": "^10.2.0",
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
-    "autoprefixer": "^9",
+    "autoprefixer": "^10.1.0",
     "babel-loader": "^8.2.2",
     "eslint": "^7.15.0",
     "eslint-config-prettier": "^7.0.0",
@@ -83,7 +84,7 @@
     "lint-staged": "^10.5.3",
     "msw": "^0.24.2",
     "npm-run-all": "^4.1.5",
-    "postcss": "^7",
+    "postcss": "^8.2.1",
     "postcss-cli": "^8.3.1",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-preset-env": "^6.7.0",
@@ -96,7 +97,7 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-typescript2": "^0.29.0",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
+    "tailwindcss": "^2.0.2",
     "ts-jest": "^26.4.4",
     "ts-loader": "^8.0.12",
     "typescript": "^4.1.3",

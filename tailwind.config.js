@@ -2,6 +2,10 @@ const { fontFamily } = require('tailwindcss/defaultTheme');
 
 module.exports = {
   presets: [require('tailwindcss/defaultConfig')],
+  purge: [
+    './src/components/**/*.{js,ts,jsx,tsx}',
+    './src/utils/**/*.{js,ts,jsx,tsx}',
+  ],
   theme: {
     container: {
       center: true,
