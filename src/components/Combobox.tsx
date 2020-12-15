@@ -17,6 +17,7 @@ import React, {
 } from 'react';
 import { cn } from 'utils/class-names';
 import { SelectorIcon } from './icons';
+import Input, { InputProps } from './Input';
 
 type Value = string | { id: string | number; name: string };
 
@@ -57,16 +58,40 @@ export type ComboboxProps = {
   withError?: boolean;
 };
 
+type ComboInputProps = InputProps & { term: string; selected: string };
+
+const ComboInput = forwardRef<HTMLInputElement, ComboInputProps>(function ComboInput(
+  { term, selected, onBlur, onFocus, ...props },
+  ref
+) {
+  const [focused, setFocused] = useState(false);
+
+  return (
+    <Input
+      {...props}
+      ref={ref}
+      onBlur={(e) => {
+        setFocused(false);
+        onBlur?.(e);
+      }}
+      onFocus={(e) => {
+        setFocused(true);
+        onFocus?.(e);
+      }}
+      value={focused ? term : selected}
+    />
+  );
+});
+
 const Combobox: ForwardRefExoticComponent<
   PropsWithoutRef<ComboboxProps> & RefAttributes<HTMLInputElement>
 > & { List: typeof List; Item: typeof Item } = Object.assign(
   forwardRef<HTMLInputElement, ComboboxProps>(function Combobox(
-    { children, color, disabled, id, onChange, onSearch, placeholder, withError },
+    { children, disabled, id, onChange, onSearch, placeholder, withError },
     ref
   ) {
     const [term, setTerm] = useState('');
     const [selected, setSelected] = useState('');
-    const [focused, setFocused] = useState(false);
 
     const handleSelect = (v: string) => {
       const value = JSON.parse(v) as Value;
@@ -84,27 +109,19 @@ const Combobox: ForwardRefExoticComponent<
 
     return (
       <ReachCombobox openOnFocus onSelect={handleSelect}>
-        <div className="relative flex shadow-sm">
-          <ComboboxInput
-            autocomplete={false}
-            className={cn(
-              'block w-full rounded-md border-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed sm:text-sm form-input',
-              withError ? 'ring-red-500 border-red-500' : color
-            )}
-            disabled={disabled}
-            id={id}
-            onChange={handleChange}
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
-            placeholder={placeholder}
-            ref={ref}
-            type="text"
-            value={focused ? term : selected}
-          />
-          <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-            <SelectorIcon />
-          </span>
-        </div>
+        <ComboboxInput
+          rightIcon={<SelectorIcon />}
+          autocomplete={false}
+          disabled={disabled}
+          id={id}
+          onChange={handleChange}
+          placeholder={placeholder}
+          ref={ref}
+          withError={withError}
+          term={term}
+          selected={selected}
+          as={ComboInput}
+        />
         {children ? (
           <ComboboxPopover className="w-full mt-1 bg-white rounded-md shadow-lg">
             {children}
