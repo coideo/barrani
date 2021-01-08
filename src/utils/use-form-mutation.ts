@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import {
   DeepPartial,
   FieldValues,
@@ -6,64 +7,57 @@ import {
   useForm,
   UseFormMethods,
 } from 'react-hook-form';
-import {
-  MutateFunction,
-  MutationConfig,
-  MutationFunction,
-  MutationResult,
-  useMutation,
-} from 'react-query';
+import { MutationFunction, useMutation, UseMutationOptions, UseMutationResult } from 'react-query';
 
 type FormMutationOptions<
-  TResult,
+  TData,
   TError = unknown,
   TVariables extends FieldValues = FieldValues,
-  TSnapshot = unknown
-> = Omit<MutationConfig<TResult, TError, TVariables, TSnapshot>, 'onSuccess'> &
+  TContext = unknown
+> = Omit<UseMutationOptions<TData, TError, TVariables, TContext>, 'onSuccess'> &
   Partial<{
     defaultValues: UnpackNestedValue<DeepPartial<TVariables>>;
     mode: Mode;
     reValidateMode: Exclude<Mode, 'onTouched' | 'all'>;
     onSuccess?: (
-      data: TResult,
+      data: TData,
       variables: TVariables,
       methods: UseFormMethods<TVariables>
-    ) => Promise<unknown> | void;
+    ) => Promise<void> | void;
   }>;
 
 type FormMutationResult<
-  TResult,
+  TData,
   TError = unknown,
   TVariables extends FieldValues = FieldValues,
-  TSnapshot = unknown
-> = [
-  MutateFunction<TResult, TError, TVariables, TSnapshot>,
-  MutationResult<TResult, TError> & { methods: UseFormMethods<TVariables> }
-];
+  TContext = unknown
+> = UseMutationResult<TData, TError, TVariables, TContext> & {
+  methods: UseFormMethods<TVariables>;
+};
 
 function useFormMutation<
-  TResult,
+  TData,
   TError = unknown,
   TVariables extends FieldValues = FieldValues,
-  TSnapshot = unknown
+  TContext = unknown
 >(
-  mutationFn: MutationFunction<TResult, TVariables>,
+  mutationFn: MutationFunction<TData, TVariables>,
   {
     defaultValues,
     mode = 'onSubmit',
     reValidateMode = 'onChange',
     onSuccess,
     ...options
-  }: FormMutationOptions<TResult, TError, TVariables, TSnapshot> = {}
-): FormMutationResult<TResult, TError, TVariables> {
+  }: FormMutationOptions<TData, TError, TVariables, TContext> = {}
+): FormMutationResult<TData, TError, TVariables> {
   const methods = useForm<TVariables>({ defaultValues, mode, reValidateMode });
 
-  const [mutate, result] = useMutation<TResult, TError, TVariables, TSnapshot>(mutationFn, {
+  const result = useMutation<TData, TError, TVariables, TContext>(mutationFn, {
     onSuccess: (data, variables) => onSuccess?.(data, variables, methods),
     ...options,
   });
 
-  return [mutate, { ...result, methods }];
+  return useMemo(() => ({ ...result, methods }), [methods, result]);
 }
 
 export { useFormMutation };
