@@ -2,10 +2,7 @@ const { fontFamily } = require('tailwindcss/defaultTheme');
 
 module.exports = {
   presets: [require('tailwindcss/defaultConfig')],
-  purge: [
-    './src/components/**/*.{js,ts,jsx,tsx}',
-    './src/utils/**/*.{js,ts,jsx,tsx}',
-  ],
+  purge: ['./src/components/**/*.{js,ts,jsx,tsx}', './src/utils/**/*.{js,ts,jsx,tsx}'],
   theme: {
     container: {
       center: true,
@@ -47,5 +44,5 @@ module.exports = {
     },
     animation: ({ after }) => after(['motion-safe', 'motion-reduce']),
   },
-  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/aspect-ratio')],
+  plugins: [require('@tailwindcss/forms')],
 };

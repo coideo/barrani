@@ -1,18 +1,17 @@
 import { Dispatch, useReducer } from 'react';
 import { useDebounce } from './use-debounce';
 
-type Obj = Record<string, unknown | undefined>;
+type Obj = Record<string, unknown>;
+type ObjUndef = Record<string, unknown | undefined>;
 
-const deleteUndefined = (obj: Obj) => {
+const deleteUndefined = (obj: ObjUndef) => {
   Object.keys(obj).forEach((key) => obj[key] === undefined && delete obj[key]);
-  return obj as Record<string, unknown>;
+  return obj as Obj;
 };
 
-const useQueryString = (
-  initialValue = {}
-): [Record<string, unknown>, Dispatch<Record<string, unknown>>] => {
+const useQueryString = (initialValue = {}): [Obj, Dispatch<Obj>] => {
   const [query, setQuery] = useReducer(
-    (s: Obj, a: Obj) => deleteUndefined({ ...s, ...a }),
+    (s: ObjUndef, a: ObjUndef) => deleteUndefined({ ...s, ...a }),
     initialValue
   );
 
