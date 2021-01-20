@@ -96,7 +96,7 @@ const Select: ForwardRefExoticComponent<
       >
         <ListboxButton
           className={cn(
-            'relative flex w-full py-2 pl-3 pr-10 text-left bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer focus:outline-none focus:ring-1 sm:text-sm',
+            'relative flex w-full py-2 pl-3 pr-10 h-10 text-left bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer focus:outline-none focus:ring-1 sm:text-sm',
             withError ? 'ring-red-500 border-red-500' : color,
             isDirty && ''
           )}
