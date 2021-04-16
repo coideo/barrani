@@ -10,10 +10,10 @@
 [data-reach-listbox-option] .check-icon {
   @apply hidden;
 }
-[data-reach-listbox-option][data-current] .check-icon {
+[data-reach-listbox-option][data-current-selected] .check-icon {
   @apply flex text-indigo-600;
 }
-[data-reach-listbox-option][data-current] .item-text {
+[data-reach-listbox-option][data-current-selected] .item-text {
   @apply font-semibold;
 }
 [data-reach-listbox-option][aria-selected='true'] {
