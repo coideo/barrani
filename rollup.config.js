@@ -1,5 +1,5 @@
-import commonjs from 'rollup-plugin-commonjs';
-import resolve from 'rollup-plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
 import externalDeps from 'rollup-plugin-peer-deps-external';
 import typescript from 'rollup-plugin-typescript2';
 import packageJson from './package.json';
@@ -19,10 +19,5 @@ export default {
     },
   ],
   external: ['react', 'react-dom'],
-  plugins: [
-    resolve(),
-    commonjs({ include: /node_modules/, namedExports: { 'highlight-words-core': ['findAll'] } }),
-    externalDeps(),
-    typescript(),
-  ],
+  plugins: [resolve(), commonjs({ include: /node_modules/ }), externalDeps(), typescript()],
 };
