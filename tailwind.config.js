@@ -7,7 +7,7 @@ module.exports = {
     container: { center: true },
     extend: {
       colors: {
-        primary: colors.green,
+        primary: colors.indigo,
       },
       fontFamily: {
         sans: ['Inter var', ...fontFamily.sans],

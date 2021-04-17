@@ -1,14 +1,15 @@
 {
   "name": "@coideo/barrani",
   "description": "tailwind + react-query + react-hook-form",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "./build/index.js",
   "module": "./build/index.es.js",
   "types": "./build/index.d.ts",
   "license": "MIT",
   "files": [
     "build",
-    "tailwind.config.js"
+    "tailwind.config.js",
+    "src/styles/index.css"
   ],
   "publishConfig": {
     "access": "public"
