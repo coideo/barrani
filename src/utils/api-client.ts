@@ -1,4 +1,4 @@
-type RequestConfig = Omit<globalThis.RequestInit, 'body'> & {
+export type RequestConfig = Omit<globalThis.RequestInit, 'body'> & {
   data?: Record<string, unknown>;
   queryString?: Record<string, string>;
 };
