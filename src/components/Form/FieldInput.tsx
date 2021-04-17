@@ -8,9 +8,13 @@ export type FieldInputProps = Omit<
   'pattern' | 'required' | 'name' | 'min' | 'max' | 'maxLength' | 'minLength'
 >;
 
-const FieldInputComponent: FC<FieldInputProps & FieldComponentProps> = ({ rules, ...props }) => {
+const FieldInputComponent: FC<FieldInputProps & FieldComponentProps> = ({
+  rules,
+  name,
+  ...props
+}) => {
   const { register } = useFormContext();
-  return <Input ref={register(rules)} {...props} />;
+  return <Input {...register(name, rules)} {...props} />;
 };
 
 const FieldInput = (props: FieldProps & FieldInputProps) => (

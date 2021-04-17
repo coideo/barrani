@@ -6,7 +6,7 @@ import { FieldProps } from './Field';
 const FieldSwitch = ({ name, ...props }: FieldProps & Omit<SwitchProps, 'checked'>) => (
   <Controller
     name={name}
-    render={({ onChange, value }) => <Switch checked={value} onChange={onChange} {...props} />}
+    render={({ field: { value, ...field } }) => <Switch checked={value} {...field} {...props} />}
   />
 );
 

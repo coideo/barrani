@@ -4,23 +4,17 @@ import { cn } from 'utils/class-names';
 import ErrorMsg from './ErrorMsg';
 
 export type CheckboxProps = InputHTMLAttributes<HTMLInputElement> & {
-  color: string;
   help?: string;
   label?: string;
   name: string;
   wrapperClass?: string;
 };
 
-const FieldCheckbox = ({
-  color,
-  help,
-  label,
-  name,
-  required,
-  wrapperClass,
-  ...props
-}: CheckboxProps) => {
-  const { errors, register } = useFormContext();
+const FieldCheckbox = ({ help, label, name, required, wrapperClass, ...props }: CheckboxProps) => {
+  const {
+    formState: { errors },
+    register,
+  } = useFormContext();
   const isError = errors[name];
 
   return (
@@ -35,14 +29,14 @@ const FieldCheckbox = ({
         <input
           aria-label={label}
           className={cn(
-            color,
-            'w-4 h-4 border-gray-300 rounded',
-            isError && 'border-red-600 focus:ring-red-500 focus:border-red-600'
+            'w-4 h-4 rounded text-primary-600',
+            isError
+              ? 'border-red-600 focus:ring-red-500 focus:border-red-600'
+              : 'border-gray-300 focus:ring-primary-500 '
           )}
           id={name}
-          name={name}
-          ref={register({ required: required === true ? 'Requerido' : required })}
           type="checkbox"
+          {...register(name, { required: required === true ? 'Requerido' : required })}
           {...props}
         />
       </div>

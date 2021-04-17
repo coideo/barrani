@@ -17,7 +17,7 @@ export const Default = () => (
     </div>
     <div className="flex space-x-4 mt-15">
       {sizes.map((size) => (
-        <Loading key={size} size={size} className="bg-indigo-600" />
+        <Loading key={size} size={size} className="bg-primary-600" />
       ))}
     </div>
   </div>

@@ -10,7 +10,7 @@ const SIZES = {
 };
 
 type Size = keyof typeof SIZES;
-const Sizes: { [key in Size]: key } = { xs: 'xs', sm: 'sm', md: 'md', lg: 'lg', xl: 'xl' };
+const Sizes = Object.fromEntries(Object.keys(SIZES).map((s) => [s, s])) as { [key in Size]: key };
 
 const Dot: FC<{ className: string; size: Size }> = ({ className, size }) => (
   <i className={cn('rounded-full mx-px inline-block animate-blink', className, SIZES[size])} />

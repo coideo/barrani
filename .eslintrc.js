@@ -18,7 +18,6 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'standard',
     'prettier',
-    'prettier/@typescript-eslint',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {

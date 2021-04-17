@@ -1,13 +1,14 @@
-const { fontFamily } = require('tailwindcss/defaultTheme');
+const { fontFamily, colors } = require('tailwindcss/defaultTheme');
 
 module.exports = {
   presets: [require('tailwindcss/defaultConfig')],
   purge: ['./src/components/**/*.{js,ts,jsx,tsx}', './src/utils/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    container: {
-      center: true,
-    },
+    container: { center: true },
     extend: {
+      colors: {
+        primary: colors.green,
+      },
       fontFamily: {
         sans: ['Inter var', ...fontFamily.sans],
       },

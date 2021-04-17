@@ -1,6 +1,7 @@
 import { action } from '@storybook/addon-actions';
-import React, { FC } from 'react';
-import Select, { SelectProps } from './Select';
+import React from 'react';
+import Select from './Select';
+import { ChartBarIcon } from '@heroicons/react/solid';
 
 export default {
   title: 'Select',
@@ -20,40 +21,30 @@ const people = [
   'Emil Schaefer',
 ];
 
-const MySelect: FC<Omit<SelectProps, 'color'>> = (props) => (
-  <Select color="focus:ring-indigo-500 focus:border-indigo-500" {...props} />
-);
-
 export const Default = () => {
   return (
     <div className="container max-w-sm space-y-1">
-      <MySelect onChange={action('onChange')}>
+      <Select onChange={action('onChange')}>
         {people.map((name) => (
           <Select.Item key={name} value={name}>
             {name}
           </Select.Item>
         ))}
-      </MySelect>
+      </Select>
     </div>
   );
 };
 
-const CharBar = () => (
-  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-    <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-  </svg>
-);
-
 export const WithIcon = () => {
   return (
     <div className="container max-w-sm space-y-1">
-      <MySelect onChange={action('onChange')}>
+      <Select onChange={action('onChange')}>
         {people.map((name) => (
-          <Select.Item key={name} value={name} icon={<CharBar />}>
+          <Select.Item key={name} value={name} icon={<ChartBarIcon className="w-6 h-6" />}>
             {name}
           </Select.Item>
         ))}
-      </MySelect>
+      </Select>
     </div>
   );
 };
@@ -61,9 +52,13 @@ export const WithIcon = () => {
 export const WithOptions = () => {
   return (
     <div className="container max-w-sm space-y-1">
-      <MySelect
+      <Select
         onChange={action('onChange')}
-        options={people.map((p) => ({ id: p, name: p, icon: <CharBar /> }))}
+        options={people.map((p) => ({
+          id: p,
+          name: p,
+          icon: <ChartBarIcon className="w-6 h-6" />,
+        }))}
       />
     </div>
   );
@@ -72,7 +67,7 @@ export const WithOptions = () => {
 export const WithError = () => {
   return (
     <div className="container max-w-sm space-y-1">
-      <MySelect onChange={action('onChange')} options={people} withError />
+      <Select onChange={action('onChange')} options={people} withError />
     </div>
   );
 };
@@ -80,7 +75,7 @@ export const WithError = () => {
 export const Disabled = () => {
   return (
     <div className="container max-w-sm space-y-1">
-      <MySelect onChange={action('onChange')} options={people} disabled />
+      <Select onChange={action('onChange')} options={people} disabled />
     </div>
   );
 };

@@ -11,13 +11,13 @@
   @apply hidden;
 }
 [data-reach-listbox-option][data-current-selected] .check-icon {
-  @apply flex text-indigo-600;
+  @apply flex text-primary-600;
 }
 [data-reach-listbox-option][data-current-selected] .item-text {
   @apply font-semibold;
 }
 [data-reach-listbox-option][aria-selected='true'] {
-  @apply text-white bg-indigo-600;
+  @apply text-white bg-primary-600;
 }
 [data-reach-listbox-option][aria-selected='true'] .check-icon {
   @apply text-white;
@@ -26,7 +26,7 @@
   @apply bg-gray-100 text-gray-500;
 }
 [data-reach-combobox-option][data-highlighted] {
-  @apply text-white bg-indigo-600;
+  @apply text-white bg-primary-600;
 }
 
 @tailwind utilities;

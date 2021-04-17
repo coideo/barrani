@@ -6,6 +6,7 @@ module.exports = {
     '@storybook/addon-storysource',
     '@storybook/addon-a11y',
     '@storybook/addon-viewport',
+    '@storybook/addon-postcss',
   ],
   typescript: {
     check: false,

@@ -1,57 +1,25 @@
 import { action } from '@storybook/addon-actions';
 import Button, { ButtonProps } from 'components/Button';
-import React, { FC, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useQueryString } from 'utils/use-query-string';
 import Form from '.';
-import { CheckboxProps } from './FieldCheckbox';
 
 export default {
   title: 'Form',
   component: Form,
 };
 
-const KINDS = {
-  primary: {
-    bg: 'bg-indigo-600',
-    button: 'text-white hover:bg-indigo-700 focus:ring-indigo-500 disabled:bg-indigo-600',
-    loading: 'bg-white',
-  },
-  secondary: {
-    bg: 'bg-indigo-100',
-    button: 'text-indigo-700 hover:bg-indigo-200 focus:ring-indigo-500 disabled:bg-indigo-100',
-    loading: 'bg-indigo-700',
-  },
-  light: {
-    bg: 'bg-white',
-    button:
-      'border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-indigo-500 disabled:bg-white',
-    loading: 'bg-gray-700',
-  },
-};
-
-const MyButton: FC<Omit<ButtonProps, 'kind'> & { kind?: keyof typeof KINDS }> = ({
-  children,
-  kind = 'primary',
-  ...props
-}) => (
-  <Button className="focus:ring-indigo-500" kind={KINDS[kind]} {...props}>
-    {children}
-  </Button>
-);
-
 const SubmitButton = (props: ButtonProps) => (
-  <Form.SubmitButton {...props}>
-    {(rest) => <MyButton {...rest}>Guardar</MyButton>}
-  </Form.SubmitButton>
+  <Form.SubmitButton {...props}>{(rest) => <Button {...rest}>Guardar</Button>}</Form.SubmitButton>
 );
 
 const CancelButton = (props: ButtonProps) => (
   <Form.CancelButton {...props}>
     {(rest) => (
-      <MyButton kind="light" {...rest}>
+      <Button kind={Button.Kinds.light} {...rest}>
         Cancelar
-      </MyButton>
+      </Button>
     )}
   </Form.CancelButton>
 );
@@ -59,14 +27,16 @@ const CancelButton = (props: ButtonProps) => (
 export const Basic = () => {
   const methods = useForm();
   return (
-    <div className="container max-w-md">
+    <div className="py-20 bg-gray-300">
       <Form
-        className="p-8 space-y-4 bg-gray-100 rounded-lg shadow"
+        className="container max-w-md bg-white rounded-lg shadow-lg"
         methods={methods}
         onSubmit={action('onSubmit')}
       >
-        <Form.Text name="name" label="Nombre" required />
-        <div className="flex justify-end space-x-3">
+        <div className="px-8 pt-8 pb-6">
+          <Form.Text name="name" label="Nombre" required />
+        </div>
+        <div className="flex justify-end px-8 py-4 space-x-3 bg-gray-100 rounded-b-lg">
           <CancelButton />
           <SubmitButton />
         </div>
@@ -78,9 +48,9 @@ export const Basic = () => {
 export const Login = () => {
   const methods = useForm();
   return (
-    <div className="container max-w-md">
+    <div className="py-20 bg-gray-300">
       <Form
-        className="p-8 space-y-4 bg-gray-100 rounded-lg shadow"
+        className="container max-w-md p-8 space-y-4 bg-white rounded-lg shadow-lg"
         methods={methods}
         onSubmit={action('onSubmit')}
       >
@@ -94,10 +64,6 @@ export const Login = () => {
     </div>
   );
 };
-
-const FormCheckbox = ({ ...props }: Omit<CheckboxProps, 'color'>) => (
-  <Form.Checkbox color="focus:ring-indigo-500 text-indigo-600" {...props} />
-);
 
 const peopleList = [
   'Wade Cooper',
@@ -175,7 +141,6 @@ export const General = () => {
             <Form.Text name="lastName" label="Last name" required />
             <Form.Email wrapperClass="sm:col-span-2" required />
             <Form.Select
-              color="focus:ring-indigo-500 focus:border-indigo-500"
               name="country"
               label="Country / Region"
               required
@@ -183,7 +148,6 @@ export const General = () => {
               wrapperClass="sm:col-span-2"
             />
             <Form.Combobox
-              color="focus:ring-indigo-500 focus:border-indigo-500"
               label="Person"
               name="person"
               onSearch={(name) => search({ name })}
@@ -204,7 +168,6 @@ export const General = () => {
                 ))}
             </Form.Combobox>
             <Form.Combobox
-              color="focus:ring-indigo-500 focus:border-indigo-500"
               label="Team"
               name="team"
               onSearch={(name) => teamSearch({ name })}
@@ -246,29 +209,25 @@ export const General = () => {
                   you want to hear about.
                 </p>
               </div>
-              <FormCheckbox
+              <Form.Checkbox
                 name="comments"
                 label="Comments"
                 help="Get notified when someones posts a comment on a posting."
                 required
               />
-              <FormCheckbox
+              <Form.Checkbox
                 name="candidates"
                 label="Candidates"
                 help="Get notified when a candidate applies for a job."
               />
-              <FormCheckbox
+              <Form.Checkbox
                 name="offers"
                 label="Offers"
                 help="Get notified when a candidate accepts or rejects an offer."
               />
             </div>
             <Form.Switch.Group className="pt-4 border-t border-gray-200 sm:col-span-2">
-              <Form.Switch
-                name="policy"
-                className="focus:ring-indigo-500"
-                color={{ bg: 'bg-indigo-600', text: 'text-indigo-600' }}
-              />
+              <Form.Switch name="policy" className="focus:ring-green-500" />
               <Form.Switch.Label className="text-base leading-6 text-gray-500">
                 By selecting this, you agree to the Privacy Policy and Cookie Policy.
               </Form.Switch.Label>

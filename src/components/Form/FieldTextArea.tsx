@@ -10,7 +10,6 @@ export type TextAreaProps = Omit<
 
 const TextArea: FC<TextAreaProps & FieldComponentProps> = ({
   className,
-  isDirty,
   name,
   rules,
   withError,
@@ -26,15 +25,13 @@ const TextArea: FC<TextAreaProps & FieldComponentProps> = ({
       autoComplete="off"
       className={cn(
         className,
-        'focus:ring-indigo-500 focus:border-indigo-500',
-        'block w-full border-gray-300 sm:text-sm rounded-md shadow-sm',
-        withError &&
-          'border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500',
-        isDirty && ''
+        'block w-full sm:text-sm rounded-md shadow-sm',
+        withError
+          ? 'border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500'
+          : 'border-gray-300 focus:ring-primary-500 focus:border-primary-500'
       )}
       id={name}
-      name={name}
-      ref={register(rules)}
+      {...register(name, rules)}
       rows={5}
       {...props}
     />

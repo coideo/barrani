@@ -55,9 +55,9 @@ const Field = ({
   wrapperClass,
   ...props
 }: FieldProps & { component: FC<FieldComponentProps> }) => {
-  const { errors, formState } = useFormContext();
+  const { formState } = useFormContext();
   const isDirty = Object.keys(formState.dirtyFields).includes(name);
-  const withError = errors[name];
+  const withError = formState.errors[name];
 
   const label =
     tag && labelText ? (

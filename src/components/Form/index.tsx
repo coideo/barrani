@@ -6,7 +6,7 @@ import {
   FormProvider,
   UnpackNestedValue,
   useFormContext,
-  UseFormMethods,
+  UseFormReturn,
 } from 'react-hook-form';
 import { PartialBy } from 'types';
 import Field, { FieldProps } from './Field';
@@ -18,8 +18,12 @@ import FieldSelect from './FieldSelect';
 import FieldSwitch from './FieldSwitch';
 import FieldTextArea from './FieldTextArea';
 
+const FieldDate: FC<FieldProps & FieldInputProps> = (props) => (
+  <FieldInput type="date" valueAsDate {...props} />
+);
+
 const FieldNumber: FC<FieldProps & FieldInputProps> = (props) => (
-  <FieldInput type="number" {...props} />
+  <FieldInput type="number" valueAsNumber {...props} />
 );
 
 const FieldPassword: FC<PartialBy<FieldProps, 'name'> & FieldInputProps> = (props) => (
@@ -32,7 +36,7 @@ const FieldText: FC<FieldProps & FieldInputProps> = (props) => (
 
 const FieldURL: FC<FieldProps & FieldInputProps> = (props) => <FieldInput type="url" {...props} />;
 
-type FormButton = FC<ButtonProps & { children: FC<Omit<ButtonProps, 'kind'>> }>;
+type FormButton = FC<ButtonProps & { children: FC<ButtonProps> }>;
 
 const SubmitButton: FormButton = ({ children, disabled, loading, ...props }) => {
   const { formState } = useFormContext();
@@ -74,7 +78,7 @@ function filterDirty<T extends FieldValues>(
 type FormProps<T> = {
   className?: string;
   children?: ReactNode;
-  methods: UseFormMethods<T>;
+  methods: UseFormReturn<T>;
   onSubmit: (
     dirtys: UnpackNestedValue<T>,
     data: UnpackNestedValue<T>,
@@ -101,6 +105,7 @@ const Form = <T extends FieldValues>({ className, children, methods, onSubmit }:
 Form.CancelButton = CancelButton;
 Form.Checkbox = FieldCheckbox;
 Form.Combobox = FieldCombobox;
+Form.Date = FieldDate;
 Form.Email = FieldEmail;
 Form.Field = Field;
 Form.Number = FieldNumber;

@@ -9,7 +9,7 @@ type Props = Omit<
 >;
 
 const ControllerSelect: FC<FieldComponentProps & Props> = ({ name, ...props }) => (
-  <Controller name={name} as={<Select id={name} />} {...props} />
+  <Controller name={name} render={({ field }) => <Select id={name} {...field} {...props} />} />
 );
 
 const FieldSelect = (props: FieldProps & Props) => (

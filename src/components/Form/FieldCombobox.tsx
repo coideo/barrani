@@ -9,7 +9,7 @@ type Props = Omit<
 >;
 
 const ControllerCombobox: FC<FieldComponentProps & Props> = ({ name, ...props }) => (
-  <Controller name={name} as={<Combobox id={name} />} {...props} />
+  <Controller name={name} render={({ field }) => <Combobox id={name} {...field} {...props} />} />
 );
 
 const FieldCombobox = (props: FieldProps & Props) => (

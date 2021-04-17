@@ -5,7 +5,7 @@ import {
   Mode,
   UnpackNestedValue,
   useForm,
-  UseFormMethods,
+  UseFormReturn,
 } from 'react-hook-form';
 import { MutationFunction, useMutation, UseMutationOptions, UseMutationResult } from 'react-query';
 
@@ -22,7 +22,7 @@ type FormMutationOptions<
     onSuccess?: (
       data: TData,
       variables: TVariables,
-      methods: UseFormMethods<TVariables>
+      methods: UseFormReturn<TVariables>
     ) => Promise<void> | void;
   }>;
 
@@ -32,7 +32,7 @@ type FormMutationResult<
   TVariables extends FieldValues = FieldValues,
   TContext = unknown
 > = UseMutationResult<TData, TError, TVariables, TContext> & {
-  methods: UseFormMethods<TVariables>;
+  methods: UseFormReturn<TVariables>;
 };
 
 function useFormMutation<

@@ -5,18 +5,9 @@ import {
   ComboboxOption,
   ComboboxPopover,
 } from '@reach/combobox';
-import React, {
-  ChangeEvent,
-  FC,
-  forwardRef,
-  ForwardRefExoticComponent,
-  PropsWithoutRef,
-  ReactNode,
-  RefAttributes,
-  useState,
-} from 'react';
+import React, { ChangeEvent, FC, forwardRef, ReactNode, useState } from 'react';
 import { cn } from 'utils/class-names';
-import { SelectorIcon } from './icons';
+import { SelectorIcon } from '@heroicons/react/solid';
 import Input, { InputProps } from './Input';
 
 type Value = string | { id: string | number; name: string };
@@ -49,7 +40,6 @@ const List: FC = ({ children }) => (
 
 export type ComboboxProps = {
   children?: ReactNode;
-  color?: string;
   disabled?: boolean;
   id?: string;
   onChange?: (value: string | number) => void;
@@ -83,13 +73,8 @@ const ComboInput = forwardRef<HTMLInputElement, ComboInputProps>(function ComboI
   );
 });
 
-const Combobox: ForwardRefExoticComponent<
-  PropsWithoutRef<ComboboxProps> & RefAttributes<HTMLInputElement>
-> & { List: typeof List; Item: typeof Item } = Object.assign(
-  forwardRef<HTMLInputElement, ComboboxProps>(function Combobox(
-    { children, disabled, id, onChange, onSearch, placeholder, withError },
-    ref
-  ) {
+const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
+  ({ children, disabled, id, onChange, onSearch, placeholder, withError }, ref) => {
     const [term, setTerm] = useState('');
     const [selected, setSelected] = useState('');
 
@@ -110,17 +95,17 @@ const Combobox: ForwardRefExoticComponent<
     return (
       <ReachCombobox openOnFocus onSelect={handleSelect}>
         <ComboboxInput
-          rightIcon={<SelectorIcon />}
+          as={ComboInput}
           autocomplete={false}
           disabled={disabled}
           id={id}
           onChange={handleChange}
           placeholder={placeholder}
           ref={ref}
-          withError={withError}
-          term={term}
+          rightIcon={<SelectorIcon className="w-5 h-5 text-gray-400" />}
           selected={selected}
-          as={ComboInput}
+          term={term}
+          withError={withError}
         />
         {children ? (
           <ComboboxPopover className="w-full mt-1 bg-white rounded-md shadow-lg">
@@ -129,8 +114,7 @@ const Combobox: ForwardRefExoticComponent<
         ) : null}
       </ReachCombobox>
     );
-  }),
-  { List, Item }
+  }
 );
 
-export default Combobox;
+export default Object.assign(Combobox, { List, Item });

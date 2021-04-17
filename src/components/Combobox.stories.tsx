@@ -1,7 +1,7 @@
 import { action } from '@storybook/addon-actions';
-import React, { FC, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useQueryString } from 'utils/use-query-string';
-import Combobox, { ComboboxProps } from './Combobox';
+import Combobox from './Combobox';
 
 export default {
   title: 'Combobox',
@@ -33,16 +33,12 @@ function usePeopleMatch() {
   };
 }
 
-const MyCombobox: FC<Omit<ComboboxProps, 'color'>> = (props) => (
-  <Combobox color="focus:ring-indigo-500 focus:border-indigo-500" {...props} />
-);
-
 export const Default = () => {
   const { people, search } = usePeopleMatch();
 
   return (
     <div className="container max-w-sm space-y-1">
-      <MyCombobox onChange={action('onChange')} onSearch={(name) => search({ name })}>
+      <Combobox onChange={action('onChange')} onSearch={(name) => search({ name })}>
         {people &&
           (people.length > 0 ? (
             <Combobox.List>
@@ -55,7 +51,7 @@ export const Default = () => {
           ) : (
             <span className="block m-2">No results found</span>
           ))}
-      </MyCombobox>
+      </Combobox>
     </div>
   );
 };
@@ -63,7 +59,15 @@ export const Default = () => {
 export const Disabled = () => {
   return (
     <div className="container max-w-sm space-y-1">
-      <MyCombobox disabled />
+      <Combobox disabled />
+    </div>
+  );
+};
+
+export const WithError = () => {
+  return (
+    <div className="container max-w-sm space-y-1">
+      <Combobox withError />
     </div>
   );
 };
