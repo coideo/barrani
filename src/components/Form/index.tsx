@@ -75,7 +75,7 @@ function filterDirty<T extends FieldValues>(
   return result as UnpackNestedValue<T>;
 }
 
-type FormProps<T> = {
+export type FormProps<T> = {
   className?: string;
   children?: ReactNode;
   methods: UseFormReturn<T>;
