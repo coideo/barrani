@@ -3,6 +3,7 @@ const { fontFamily, colors } = require('tailwindcss/defaultTheme');
 module.exports = {
   presets: [require('tailwindcss/defaultConfig')],
   purge: ['./src/components/**/*.{js,ts,jsx,tsx}', './src/utils/**/*.{js,ts,jsx,tsx}'],
+  darkMode: 'class', // false | 'media' | 'class'
   theme: {
     container: { center: true },
     extend: {

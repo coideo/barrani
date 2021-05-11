@@ -58,39 +58,43 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
   ref
 ) => {
   return (
-    <div className={cn(containerClass, 'relative flex shadow-sm')}>
+    <div className={cn(containerClass, 'flex shadow-sm')}>
       {prepend ? <Pend className="border-r-0 rounded-l-md">{prepend}</Pend> : null}
-      {icon && <Icon className="left-0 pl-3">{icon}</Icon>}
-      <input
-        autoComplete="off"
-        aria-describedby={withError ? `${name}-error` : undefined}
-        aria-invalid={withError ? 'true' : 'false'}
-        className={cn(
-          className,
-          'block w-full flex-1 sm:text-sm disabled:bg-gray-100 disabled:cursor-not-allowed focus:outline-none',
-          !!icon && 'pl-10',
-          !!rightIcon && 'pr-10',
-          isDirty && '',
-          append && prepend
-            ? 'rounded-none'
-            : append
-            ? 'rounded-none rounded-l-md'
-            : prepend
-            ? 'rounded-none rounded-r-md'
-            : 'rounded-md',
-          withError
-            ? 'pr-10 border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500'
-            : 'border-gray-300 focus:ring-primary-500 focus:border-primary-500'
+      <div className="relative w-full">
+        {icon && <Icon className="left-0 pl-3">{icon}</Icon>}
+        <input
+          autoComplete="off"
+          aria-describedby={withError ? `${name}-error` : undefined}
+          aria-invalid={withError ? 'true' : 'false'}
+          className={cn(
+            className,
+            'block w-full flex-1 sm:text-sm disabled:bg-gray-100 disabled:cursor-not-allowed focus:outline-none',
+            !!icon && 'pl-10',
+            (withError || !!rightIcon) && (withError && !!rightIcon ? 'pr-14' : 'pr-10'),
+            isDirty && '',
+            append && prepend
+              ? 'rounded-none'
+              : append
+              ? 'rounded-none rounded-l-md'
+              : prepend
+              ? 'rounded-none rounded-r-md'
+              : 'rounded-md',
+            withError
+              ? 'border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500'
+              : 'border-gray-300 focus:ring-primary-500 focus:border-primary-500'
+          )}
+          id={name}
+          name={name}
+          ref={ref}
+          type={type}
+          {...props}
+        />
+        {rightIcon && (
+          <Icon className={cn('right-0', withError ? 'pr-8' : 'pr-3')}>{rightIcon}</Icon>
         )}
-        id={name}
-        name={name}
-        ref={ref}
-        type={type}
-        {...props}
-      />
-      {rightIcon && <Icon className="right-0 pr-3">{rightIcon}</Icon>}
+        {withError ? <ErrorIcon /> : null}
+      </div>
       {append ? <Pend className="border-l-0 rounded-r-md">{append}</Pend> : null}
-      {withError ? <ErrorIcon /> : null}
     </div>
   );
 };

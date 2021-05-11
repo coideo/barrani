@@ -1,6 +1,6 @@
 import { action } from '@storybook/addon-actions';
 import Button, { ButtonProps } from 'components/Button';
-import React, { useMemo } from 'react';
+import React, { FC, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useQueryString } from 'utils/use-query-string';
 import Form from '.';
@@ -24,24 +24,35 @@ const CancelButton = (props: ButtonProps) => (
   </Form.CancelButton>
 );
 
-export const Basic = () => {
-  const methods = useForm();
+const Theming: FC = ({ children }) => {
   return (
-    <div className="py-20 bg-gray-300">
-      <Form
-        className="container max-w-md bg-white rounded-lg shadow-lg"
-        methods={methods}
-        onSubmit={action('onSubmit')}
-      >
-        <div className="px-8 pt-8 pb-6">
-          <Form.Text name="name" label="Nombre" required />
-        </div>
-        <div className="flex justify-end px-8 py-4 space-x-3 bg-gray-100 rounded-b-lg">
-          <CancelButton />
-          <SubmitButton />
-        </div>
-      </Form>
+    <div>
+      <div>{children}</div>
+      <div className="dark">{children}</div>
     </div>
+  );
+};
+
+export const Basic = () => {
+  const methods = useForm({ defaultValues: { name: '' } });
+  return (
+    <Theming>
+      <div className="py-10 bg-gray-300 dark:bg-gray-900">
+        <Form
+          className="container max-w-md bg-white rounded-lg shadow-lg dark:bg-gray-700"
+          methods={methods}
+          onSubmit={action('onSubmit')}
+        >
+          <div className="px-8 pt-8 pb-6">
+            <Form.Text name="name" label="Nombre" required />
+          </div>
+          <div className="flex justify-end px-8 py-4 space-x-3 bg-gray-100 rounded-b-lg dark:bg-gray-800">
+            <CancelButton />
+            <SubmitButton />
+          </div>
+        </Form>
+      </div>
+    </Theming>
   );
 };
 
@@ -120,7 +131,7 @@ export const General = () => {
   const { teams, search: teamSearch } = useTeamMatch();
 
   return (
-    <div className="px-4 py-16 overflow-hidden bg-white sm:px-6 lg:px-8 lg:py-24">
+    <div className="px-4 py-16 overflow-hidden sm:px-6 lg:px-8 lg:py-24">
       <div className="max-w-xl mx-auto">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 sm:text-4xl sm:leading-10">

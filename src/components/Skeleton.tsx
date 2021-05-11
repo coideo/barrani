@@ -3,9 +3,7 @@ import { cn } from 'utils';
 
 const Sekeleton = ({ className, wrapper: Wrapper }: { className?: string; wrapper?: FC }) => {
   const element = (
-    <span className={cn(className, 'inline-block leading-none bg-gray-200 animate-pulse')}>
-      &zwnj;
-    </span>
+    <span className={cn(className, 'inline-block leading-none animate-pulse')}>&zwnj;</span>
   );
 
   return (

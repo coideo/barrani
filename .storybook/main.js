@@ -6,7 +6,14 @@ module.exports = {
     '@storybook/addon-storysource',
     '@storybook/addon-a11y',
     '@storybook/addon-viewport',
-    '@storybook/addon-postcss',
+    {
+      name: '@storybook/addon-postcss',
+      options: {
+        postcssLoaderOptions: {
+          implementation: require('postcss'),
+        },
+      },
+    },
   ],
   typescript: {
     check: false,

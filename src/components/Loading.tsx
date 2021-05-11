@@ -17,7 +17,7 @@ const Dot: FC<{ className: string; size: Size }> = ({ className, size }) => (
 );
 
 const Loading = ({
-  className = 'bg-gray-900',
+  className = 'bg-gray-900 dark:bg-gray-100',
   size = 'md',
 }: {
   className?: string;
@@ -25,7 +25,7 @@ const Loading = ({
 }) => {
   return (
     <div className="relative inline-flex items-center w-full h-full">
-      <span className="absolute inset-0 flex items-center justify-center w-full h-full bg-transparent select-none">
+      <span className="absolute inset-0 flex items-center justify-center w-full h-full select-none">
         <Dot className={cn(className, 'animation-delay-0')} size={size} />
         <Dot className={cn(className, 'animation-delay-200')} size={size} />
         <Dot className={cn(className, 'animation-delay-400')} size={size} />

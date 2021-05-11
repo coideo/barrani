@@ -5,10 +5,10 @@ import Label from '../Label';
 import ErrorMsg from './ErrorMsg';
 
 const registerValidation = {
-  min: (value: number) => `mínimo ${value}`,
-  max: (value: number) => `máximo ${value}`,
-  minLength: (value: number) => `mínimo ${value} caracteres`,
-  maxLength: (value: number) => `máximo ${value} caracteres`,
+  min: (value: number) => `min ${value}`,
+  max: (value: number) => `max ${value}`,
+  minLength: (value: number) => `min length ${value}`,
+  maxLength: (value: number) => `max length ${value}`,
 };
 
 const tv = (
@@ -17,7 +17,7 @@ const tv = (
 ) => (typeof value === 'number' ? { value, message: registerValidation[key](value) } : value);
 
 const HelpInfo: FC = ({ children }) =>
-  children ? <p className="mt-2 text-sm text-gray-500">{children}</p> : null;
+  children ? <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">{children}</p> : null;
 
 export type FieldComponentProps = {
   disabled?: boolean;
@@ -63,7 +63,7 @@ const Field = ({
     tag && labelText ? (
       <div className="flex justify-between">
         <Label htmlFor={name}>{labelText}</Label>
-        <span className="text-sm text-gray-500">{tag}</span>
+        <span className="text-sm text-gray-500 dark:text-gray-400">{tag}</span>
       </div>
     ) : labelText ? (
       <Label htmlFor={name}>{labelText}</Label>
@@ -78,7 +78,7 @@ const Field = ({
         withError={withError}
         name={name}
         rules={{
-          required: required === true ? 'Requerido' : required,
+          required: required === true ? 'Required' : required,
           min: tv('min', min),
           max: tv('max', max),
           minLength: tv('minLength', minLength),

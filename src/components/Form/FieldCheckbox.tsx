@@ -32,19 +32,19 @@ const FieldCheckbox = ({ help, label, name, required, wrapperClass, ...props }: 
             'w-4 h-4 rounded text-primary-600',
             isError
               ? 'border-red-600 focus:ring-red-500 focus:border-red-600'
-              : 'border-gray-300 focus:ring-primary-500 '
+              : 'border-gray-300 focus:ring-primary-500'
           )}
           id={name}
           type="checkbox"
-          {...register(name, { required: required === true ? 'Requerido' : required })}
+          {...register(name, { required: required === true ? 'Required' : required })}
           {...props}
         />
       </div>
       <div className="ml-3 text-sm">
-        <label htmlFor={name} className="font-medium text-gray-700">
+        <label htmlFor={name} className="font-medium text-gray-700 dark:text-gray-300">
           {label}
         </label>
-        {help ? <p className="text-gray-500">{help}</p> : null}
+        {help ? <p className="text-gray-500 dark:text-gray-400">{help}</p> : null}
         <ErrorMsg name={name} />
       </div>
     </div>

@@ -9,7 +9,7 @@ export default {
 const sizes = Object.keys(Loading.Sizes) as (keyof typeof Loading.Sizes)[];
 
 export const Default = () => (
-  <div>
+  <div className="py-8 space-y-10">
     <div className="flex space-x-4">
       {sizes.map((size) => (
         <Loading key={size} size={size} />

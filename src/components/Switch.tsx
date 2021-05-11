@@ -15,7 +15,7 @@ const Switch = ({ className, ...props }: SwitchProps) => {
         cn(
           className ? (typeof className === 'function' ? className({ checked }) : className) : '',
           'relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500',
-          checked ? 'bg-primary-600' : 'bg-gray-200'
+          checked ? 'bg-primary-600' : 'bg-gray-200 dark:bg-gray-700'
         )
       }
     >
@@ -23,7 +23,7 @@ const Switch = ({ className, ...props }: SwitchProps) => {
         <span
           aria-hidden="true"
           className={cn(
-            'relative inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition duration-200',
+            'relative inline-block h-5 w-5 rounded-full bg-white dark:bg-gray-300 shadow transform ring-0 transition duration-200',
             checked ? 'translate-x-5' : 'translate-x-0'
           )}
         >
@@ -33,7 +33,7 @@ const Switch = ({ className, ...props }: SwitchProps) => {
               checked ? 'opacity-0 ease-out duration-100' : 'opacity-100 ease-in duration-200'
             )}
           >
-            <XIcon className="w-3 h-3 text-gray-400" />
+            <XIcon className="w-3 h-3 text-gray-400 dark:text-gray-700" />
           </span>
           <span
             className={cn(
