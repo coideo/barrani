@@ -9,7 +9,7 @@ import {
   UseFormReturn,
 } from 'react-hook-form';
 import { PartialBy } from 'types';
-import Field, { FieldProps } from './Field';
+import Field, { FieldProps, FieldComponentProps } from './Field';
 import FieldCheckbox from './FieldCheckbox';
 import FieldCombobox from './FieldCombobox';
 import FieldEmail from './FieldEmail';
@@ -117,4 +117,5 @@ Form.Text = FieldText;
 Form.TextArea = FieldTextArea;
 Form.URL = FieldURL;
 
+export type { FieldProps, FieldComponentProps };
 export default Form;
