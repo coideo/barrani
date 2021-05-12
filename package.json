@@ -1,7 +1,7 @@
 {
   "name": "@coideo/barrani",
   "description": "tailwind + react-query + react-hook-form",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "main": "./build/index.js",
   "module": "./build/index.es.js",
   "types": "./build/index.d.ts",
@@ -59,7 +59,6 @@
     "@storybook/addons": "^6.2.9",
     "@storybook/react": "^6.2.9",
     "@storybook/theming": "^6.2.9",
-    "@tailwindcss/forms": "^0.3.2",
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.6",
     "@testing-library/react-hooks": "^5.1.2",
