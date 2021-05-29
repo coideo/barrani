@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 import { RegisterOptions, useFormContext, ValidationRule } from 'react-hook-form';
 import { cn } from 'utils/class-names';
 import Label from '../Label';
@@ -21,7 +21,6 @@ const HelpInfo: FC = ({ children }) =>
 
 export type FieldComponentProps = {
   disabled?: boolean;
-  defaultValue?: string;
   isDirty: boolean;
   name: string;
   rules: RegisterOptions;
@@ -30,12 +29,11 @@ export type FieldComponentProps = {
 
 export type FieldProps = {
   disabled?: boolean;
-  defaultValue?: string;
   help?: string;
   label?: string;
   name: string;
+  tag?: ReactNode;
   wrapperClass?: string;
-  tag?: string;
 } & RegisterOptions;
 
 const Field = ({
@@ -50,8 +48,12 @@ const Field = ({
   name,
   pattern,
   required,
+  setValueAs,
+  shouldUnregister,
   tag,
   validate,
+  valueAsDate,
+  valueAsNumber,
   wrapperClass,
   ...props
 }: FieldProps & { component: FC<FieldComponentProps> }) => {
@@ -78,13 +80,17 @@ const Field = ({
         withError={withError}
         name={name}
         rules={{
-          required: required === true ? 'Required' : required,
-          min: tv('min', min),
           max: tv('max', max),
-          minLength: tv('minLength', minLength),
           maxLength: tv('maxLength', maxLength),
+          min: tv('min', min),
+          minLength: tv('minLength', minLength),
           pattern,
+          required: required === true ? 'Required' : required,
+          setValueAs,
+          shouldUnregister,
           validate,
+          valueAsDate,
+          valueAsNumber,
         }}
         {...props}
       />

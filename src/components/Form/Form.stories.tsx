@@ -94,9 +94,10 @@ function usePeopleMatch() {
   const name = queryString.name as string;
 
   return {
-    people: useMemo(() => peopleList.filter((p) => p.toLowerCase().includes(name.toLowerCase())), [
-      name,
-    ]),
+    people: useMemo(
+      () => peopleList.filter((p) => p.toLowerCase().includes(name.toLowerCase())),
+      [name]
+    ),
     search,
   };
 }

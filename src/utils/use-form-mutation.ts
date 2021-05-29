@@ -19,7 +19,7 @@ type FormMutationOptions<
     defaultValues: UnpackNestedValue<DeepPartial<TVariables>>;
     mode: Mode;
     reValidateMode: Exclude<Mode, 'onTouched' | 'all'>;
-    onSuccess?: (
+    onSuccess: (
       data: TData,
       variables: TVariables,
       methods: UseFormReturn<TVariables>
