@@ -26,7 +26,7 @@ function doFetch<T>(
     ...customConfig,
   };
 
-  const url = new URL(endpoint);
+  const url = new URL(endpoint, window.location.origin);
   url.search = new URLSearchParams(queryString).toString();
 
   const promise = fetch(url.toString(), config).then(async (r) => {
