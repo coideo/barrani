@@ -1,4 +1,4 @@
-import { Dispatch, useReducer } from 'react';
+import { useMemo } from 'react';
 import { useDebounce } from './use-debounce';
 
 type Obj = Record<string, unknown>;
@@ -9,14 +9,9 @@ const deleteUndefined = (obj: ObjUndef) => {
   return obj as Obj;
 };
 
-const useQueryString = (initialValue = {}): [Obj, Dispatch<Obj>] => {
-  const [query, setQuery] = useReducer(
-    (s: ObjUndef, a: ObjUndef) => deleteUndefined({ ...s, ...a }),
-    initialValue
-  );
-
-  const queryString = useDebounce(query, 300);
-  return [queryString, setQuery];
+const useQueryString = (query: ObjUndef, delay = 300) => {
+  const qs = useMemo(() => deleteUndefined(query), [query]);
+  return useDebounce(qs, delay);
 };
 
 export { useQueryString };
