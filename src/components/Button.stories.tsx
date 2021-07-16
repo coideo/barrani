@@ -6,7 +6,7 @@ export default {
   component: Button,
 };
 
-const sizes = Object.keys(Button.Sizes) as (keyof typeof Button.Sizes)[];
+const sizes = Object.keys(Button.Sizes) as Array<keyof typeof Button.Sizes>;
 
 const KINDS = {
   danger: {
@@ -21,7 +21,7 @@ const KINDS = {
   },
 };
 const ALL_KINDS = { ...Button.Kinds, ...KINDS };
-const kinds = Object.keys(ALL_KINDS) as (keyof typeof ALL_KINDS)[];
+const kinds = Object.keys(ALL_KINDS) as Array<keyof typeof ALL_KINDS>;
 
 const MyButton: FC<Omit<ButtonProps, 'kind'> & { kind: keyof typeof ALL_KINDS }> = ({
   kind = 'primary',

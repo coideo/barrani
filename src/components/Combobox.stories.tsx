@@ -1,5 +1,5 @@
 import { action } from '@storybook/addon-actions';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useQueryString } from 'utils/use-query-string';
 import Combobox from './Combobox';
 
@@ -22,14 +22,16 @@ const peopleList = [
 ];
 
 function usePeopleMatch() {
-  const [queryString, search] = useQueryString({ name: '' });
+  const [filters, setFilters] = useState<{ name: string | number }>({ name: '' });
+  const queryString = useQueryString(filters);
   const name = queryString.name as string;
 
   return {
-    people: useMemo(() => peopleList.filter((p) => p.toLowerCase().includes(name.toLowerCase())), [
-      name,
-    ]),
-    search,
+    people: useMemo(
+      () => peopleList.filter((p) => p.toLowerCase().includes(name.toLowerCase())),
+      [name]
+    ),
+    search: setFilters,
   };
 }
 

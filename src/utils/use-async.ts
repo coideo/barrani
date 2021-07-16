@@ -54,9 +54,9 @@ function useAsync<T>(initialState?: Partial<AsyncState<T>>) {
   const reset = useCallback(() => safeSetState(initialStateRef.current), [safeSetState]);
 
   const run = useCallback(
-    (promise: Promise<T>) => {
+    async (promise: Promise<T>) => {
       safeSetState({ status: Status.PENDING });
-      return promise.then(
+      return await promise.then(
         (data: T) => {
           setData(data);
           return data;

@@ -14,7 +14,7 @@ test('calls fetch at the endpoint with the arguments for GET requests', async ()
   const endpoint = 'http://test-endpoint';
   const mockResult = { mockValue: 'VALUE' };
   server.use(
-    rest.get(endpoint, async (_, res, ctx) => {
+    rest.get(endpoint, (_, res, ctx) => {
       return res(ctx.json(mockResult));
     })
   );
@@ -29,7 +29,7 @@ test('allows for config overrides', async () => {
   const endpoint = 'http://test-endpoint';
   const mockResult = { mockValue: 'VALUE' };
   server.use(
-    rest.get(endpoint, async (req, res, ctx) => {
+    rest.get(endpoint, (req, res, ctx) => {
       request = req;
       return res(ctx.json(mockResult));
     })
@@ -49,7 +49,7 @@ test('allows for config overrides', async () => {
 test('when data is provided, it is stringified and the method defaults to POST', async () => {
   const endpoint = 'http://test-endpoint';
   server.use(
-    rest.post(endpoint, async (req, res, ctx) => {
+    rest.post(endpoint, (req, res, ctx) => {
       return res(ctx.json(req.body));
     })
   );
@@ -64,7 +64,7 @@ test(`correctly rejects the promise if there's an error`, async () => {
   const testError = { message: 'Test error' };
   const endpoint = 'http://test-endpoint';
   server.use(
-    rest.get(endpoint, async (_, res, ctx) => {
+    rest.get(endpoint, (_, res, ctx) => {
       return res(ctx.status(400), ctx.json(testError));
     })
   );
@@ -77,7 +77,7 @@ test(`correctly rejects the promise if there's an error`, async () => {
 test(`correctly parse text response`, async () => {
   const endpoint = 'http://test-endpoint';
   server.use(
-    rest.get(endpoint, async (_, res, ctx) => {
+    rest.get(endpoint, (_, res, ctx) => {
       return res(ctx.text(''));
     })
   );
@@ -90,14 +90,14 @@ test(`correctly parse text response`, async () => {
 test('throw AbortError if request is canceled', async () => {
   const endpoint = 'http://test-endpoint';
   server.use(
-    rest.get(endpoint, async (_, res, ctx) => {
+    rest.get(endpoint, (_, res, ctx) => {
       return res(ctx.json({}));
     })
   );
 
   const promise = doFetch(endpoint);
   promise.cancel();
-  const error = (await promise.catch((e) => e)) as { name: string };
+  const error = (await promise.catch((e) => e)) as Error;
 
   expect(error.name).toEqual('AbortError');
 });

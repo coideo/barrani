@@ -30,7 +30,6 @@ storybook-static
 .vscode
 .history
 .eslintcache
-yarn.lock
 package-lock.json
 
 #tailwind

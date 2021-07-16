@@ -74,7 +74,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
         kind.button,
         className
       )}
-      disabled={disabled || loading}
+      disabled={!!disabled || loading}
       ref={ref}
       type="button"
       {...props}

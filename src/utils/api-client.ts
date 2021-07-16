@@ -5,10 +5,13 @@ export type RequestConfig = Omit<globalThis.RequestInit, 'body'> & {
 
 const inClient = () => typeof window !== 'undefined';
 
+const getBase = () => (inClient() ? window.location.origin : undefined);
+
 interface CancellablePromise<T> extends Promise<T> {
   cancel: () => void;
 }
 
+// eslint-disable-next-line @typescript-eslint/promise-function-async
 function doFetch<T>(
   endpoint: string,
   { data, headers: customHeaders, queryString, ...customConfig }: RequestConfig = {}
@@ -26,18 +29,15 @@ function doFetch<T>(
     ...customConfig,
   };
 
-  const url = new URL(endpoint, inClient() ? window.location.origin : undefined);
+  const url = new URL(endpoint, getBase());
   url.search = new URLSearchParams(queryString).toString();
 
   const promise = fetch(url.toString(), config).then(async (r) => {
     const text = await r.text();
     const data = text ? JSON.parse(text) : {};
-    if (r.ok) {
-      return data;
-    } else {
-      // eslint-disable-next-line prefer-promise-reject-errors
-      return Promise.reject({ status: r.status, ...data });
-    }
+    if (r.ok) return data;
+    // eslint-disable-next-line prefer-promise-reject-errors
+    return await Promise.reject({ status: r.status, ...data });
   }) as CancellablePromise<T>;
 
   promise.cancel = () => controller?.abort();

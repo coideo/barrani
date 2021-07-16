@@ -64,7 +64,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
         {icon && <Icon className="left-0 pl-3">{icon}</Icon>}
         <input
           autoComplete="off"
-          aria-describedby={withError ? `${name}-error` : undefined}
+          aria-describedby={withError && name ? `${name}-error` : undefined}
           aria-invalid={withError ? 'true' : 'false'}
           className={cn(
             className,

@@ -6,7 +6,7 @@ export default {
   component: Loading,
 };
 
-const sizes = Object.keys(Loading.Sizes) as (keyof typeof Loading.Sizes)[];
+const sizes = Object.keys(Loading.Sizes) as Array<keyof typeof Loading.Sizes>;
 
 export const Default = () => (
   <div className="py-8 space-y-10">

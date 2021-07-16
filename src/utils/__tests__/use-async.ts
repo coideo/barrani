@@ -1,15 +1,15 @@
+/* eslint-disable no-console */
 import { act, renderHook } from '@testing-library/react-hooks';
 import { Status, useAsync } from '../use-async';
+
+const original = console.error;
 
 beforeEach(() => {
   jest.spyOn(console, 'error');
 });
 
 afterEach(() => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
-  // eslint-disable-next-line no-console
-  console.error.mockRestore();
+  console.error = original;
 });
 
 function deferred<T>(): {

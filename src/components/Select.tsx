@@ -28,7 +28,7 @@ export type SelectProps = Omit<ListboxInputProps, 'ref' | 'children'> & {
   className?: string;
   id?: string;
   isDirty?: boolean;
-  options?: ({ id: string; name: ReactNode; icon?: ReactNode } | string)[];
+  options?: Array<{ id: string; name: ReactNode; icon?: ReactNode } | string>;
   withError?: boolean;
 };
 
@@ -48,7 +48,7 @@ const Select = forwardRef<HTMLSpanElement, SelectProps>(function Select(
   ref
 ) {
   const items =
-    children ||
+    children ??
     options?.map((o) =>
       typeof o === 'string' ? (
         <Item key={o} value={o}>
