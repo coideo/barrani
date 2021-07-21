@@ -1,6 +1,6 @@
 import { action } from '@storybook/addon-actions';
 import Button, { ButtonProps } from 'components/Button';
-import React, { FC, useMemo, useState } from 'react';
+import React, { FC, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useQueryString } from 'utils/use-query-string';
 import Form from '.';
@@ -90,8 +90,7 @@ const peopleList = [
 ];
 
 function usePeopleMatch() {
-  const [filters, setFilters] = useState<{ name: string | number }>({ name: '' });
-  const queryString = useQueryString(filters);
+  const [queryString, search] = useQueryString({ name: '' });
   const name = queryString.name as string;
 
   return {
@@ -99,7 +98,7 @@ function usePeopleMatch() {
       () => peopleList.filter((p) => p.toLowerCase().includes(name.toLowerCase())),
       [name]
     ),
-    search: setFilters,
+    search,
   };
 }
 
@@ -113,8 +112,7 @@ const teamList = [
 ];
 
 function useTeamMatch() {
-  const [filters, setFilters] = useState<{ name: string | number }>({ name: '' });
-  const queryString = useQueryString(filters);
+  const [queryString, search] = useQueryString({ name: '' });
   const name = queryString.name as string;
 
   return {
@@ -122,7 +120,7 @@ function useTeamMatch() {
       () => teamList.filter((t) => t.name.toLowerCase().includes(name.toLowerCase())),
       [name]
     ),
-    search: setFilters,
+    search,
   };
 }
 
