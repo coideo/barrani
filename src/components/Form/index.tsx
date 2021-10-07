@@ -2,8 +2,10 @@ import { ButtonProps } from 'components/Button';
 import React, { BaseSyntheticEvent, FC, ReactNode } from 'react';
 import {
   DeepMap,
+  DeepPartial,
   FieldValues,
   FormProvider,
+  UnionLike,
   UnpackNestedValue,
   useFormContext,
   UseFormReturn,
@@ -65,7 +67,7 @@ const CancelButton: FormButton = ({ children, disabled, onClick, ...props }) => 
 };
 
 function filterDirty<T extends FieldValues>(
-  dirtyFields: DeepMap<T, true>,
+  dirtyFields: DeepMap<DeepPartial<UnionLike<T>>, true>,
   value: UnpackNestedValue<T>
 ): UnpackNestedValue<T> {
   const result: FieldValues = {};

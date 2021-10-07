@@ -12,18 +12,16 @@ afterEach(() => {
   console.error = original;
 });
 
-function deferred<T>(): {
-  promise: Promise<T>;
-  resolve?: (value?: T | PromiseLike<T> | undefined) => void;
-  reject?: (reason?: unknown) => void;
-} {
-  let res, rej;
+const deferred = <T>() => {
+  let res: (value: T | PromiseLike<T>) => void | undefined;
+  let rej: (reason?: unknown) => void | undefined;
   const promise = new Promise<T>((resolve, reject) => {
     res = resolve;
     rej = reject;
   });
+  // @ts-expect-error Variable is used before being assigned.
   return { promise, resolve: res, reject: rej };
-}
+};
 
 const defaultState = {
   status: Status.IDLE,
@@ -152,7 +150,7 @@ test('No state updates happen if the component is unmounted while pending', asyn
   });
   unmount();
   await act(async () => {
-    resolve?.();
+    resolve?.(null);
     await p;
   });
 
