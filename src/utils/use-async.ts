@@ -45,23 +45,25 @@ function useAsync<T>(initialState?: Partial<AsyncState<T>>) {
 
   const safeSetState = useSafeDispatch(setState);
 
-  const setData = useCallback((data: T | null) => safeSetState({ data, status: Status.RESOLVED }), [
-    safeSetState,
-  ]);
-  const setError = useCallback((error: Error) => safeSetState({ error, status: Status.REJECTED }), [
-    safeSetState,
-  ]);
+  const setData = useCallback(
+    (data: T | null) => safeSetState({ data, status: Status.RESOLVED }),
+    [safeSetState]
+  );
+  const setError = useCallback(
+    (error: Error) => safeSetState({ error, status: Status.REJECTED }),
+    [safeSetState]
+  );
   const reset = useCallback(() => safeSetState(initialStateRef.current), [safeSetState]);
 
   const run = useCallback(
-    async (promise: Promise<T>) => {
+    async (promise: Promise<T | null>) => {
       safeSetState({ status: Status.PENDING });
       return await promise.then(
-        (data: T) => {
+        (data) => {
           setData(data);
           return data;
         },
-        (error: Error) => {
+        (error) => {
           setError(error);
           return error;
         }
