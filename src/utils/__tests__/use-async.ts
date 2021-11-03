@@ -25,7 +25,7 @@ const deferred = <T>() => {
 
 const defaultState = {
   status: Status.IDLE,
-  data: null,
+  data: undefined,
   error: null,
 
   isIdle: true,
@@ -156,4 +156,51 @@ test('No state updates happen if the component is unmounted while pending', asyn
 
   // eslint-disable-next-line no-console
   expect(console.error).not.toHaveBeenCalled();
+});
+
+test('without data, can set the data with previous func', async () => {
+  const { result } = renderHook(() => useAsync<number>());
+
+  act(() => {
+    result.current.setData((prev) => (prev ?? 0) + 1);
+  });
+
+  expect(result.current).toEqual({
+    ...resolvedState,
+    data: 1,
+  });
+});
+
+test('with data, can set the data with previous func', async () => {
+  const { result } = renderHook(() => useAsync<number>());
+
+  act(() => {
+    result.current.setData(1);
+  });
+
+  act(() => {
+    result.current.setData((prev) => (prev ?? 0) + 1);
+  });
+
+  expect(result.current).toEqual({
+    ...resolvedState,
+    data: 2,
+  });
+});
+
+test('with data of previous func, can set the data', async () => {
+  const { result } = renderHook(() => useAsync<number>());
+
+  act(() => {
+    result.current.setData((prev) => (prev ?? 0) + 1);
+  });
+
+  act(() => {
+    result.current.setData(5);
+  });
+
+  expect(result.current).toEqual({
+    ...resolvedState,
+    data: 5,
+  });
 });

@@ -1,4 +1,4 @@
-import { Dispatch, useCallback, useLayoutEffect, useReducer, useRef } from 'react';
+import { Dispatch, SetStateAction, useCallback, useLayoutEffect, useReducer, useRef } from 'react';
 
 export enum Status {
   IDLE = 'idle',
@@ -9,11 +9,16 @@ export enum Status {
 
 type AsyncState<T> = {
   status: Status;
-  data: T | null;
+  data?: T;
   error: Error | null;
 };
 
-function useSafeDispatch<T>(dispatch: Dispatch<Partial<AsyncState<T>>>) {
+type AnyFunc = (...args: unknown[]) => unknown;
+type PartialState<T> = Partial<AsyncState<T>>;
+type SetState<T> = PartialState<T> | ((prev: AsyncState<T>) => PartialState<T>);
+// type SafeDispatch<T> = Dispatch<SetState<T>>
+
+function useSafeDispatch<T>(dispatch: Dispatch<SetState<T>>) {
   const mounted = useRef(false);
   useLayoutEffect(() => {
     mounted.current = true;
@@ -22,7 +27,7 @@ function useSafeDispatch<T>(dispatch: Dispatch<Partial<AsyncState<T>>>) {
     };
   }, []);
   return useCallback(
-    (args: Partial<AsyncState<T>>) => (mounted.current ? dispatch(args) : undefined),
+    (args: SetState<T>) => (mounted.current ? dispatch(args) : undefined),
     [dispatch]
   );
 }
@@ -32,21 +37,25 @@ function useSafeDispatch<T>(dispatch: Dispatch<Partial<AsyncState<T>>>) {
 // useEffect(() => {
 //   run(fetchPokemon(pokemonName))
 // }, [pokemonName, run])
-const defaultInitialState: AsyncState<null> = { status: Status.IDLE, data: null, error: null };
-function useAsync<T>(initialState?: Partial<AsyncState<T>>) {
+const defaultInitialState = { status: Status.IDLE, data: undefined, error: null };
+function useAsync<T>(initialState?: PartialState<T>) {
   const initialStateRef = useRef<AsyncState<T>>({
     ...defaultInitialState,
     ...initialState,
   });
   const [{ status, data, error }, setState] = useReducer(
-    (s: AsyncState<T>, a: Partial<AsyncState<T>>): AsyncState<T> => ({ ...s, ...a }),
+    (s: AsyncState<T>, a: SetState<T>) => ({ ...s, ...(typeof a === 'function' ? a(s) : a) }),
     initialStateRef.current
   );
 
   const safeSetState = useSafeDispatch(setState);
 
   const setData = useCallback(
-    (data: T | null) => safeSetState({ data, status: Status.RESOLVED }),
+    (data: T extends AnyFunc ? never : SetStateAction<T | undefined>) =>
+      safeSetState((prev) => ({
+        data: typeof data === 'function' ? data(prev.data) : data,
+        status: Status.RESOLVED,
+      })),
     [safeSetState]
   );
   const setError = useCallback(
@@ -56,18 +65,17 @@ function useAsync<T>(initialState?: Partial<AsyncState<T>>) {
   const reset = useCallback(() => safeSetState(initialStateRef.current), [safeSetState]);
 
   const run = useCallback(
-    async (promise: Promise<T | null>) => {
+    async (promise: Promise<T extends AnyFunc ? never : T>): Promise<T> => {
       safeSetState({ status: Status.PENDING });
-      return await promise.then(
-        (data) => {
+      return await promise
+        .then((data) => {
           setData(data);
           return data;
-        },
-        (error) => {
+        })
+        .catch((error) => {
           setError(error);
           return error;
-        }
-      );
+        });
     },
     [safeSetState, setData, setError]
   );

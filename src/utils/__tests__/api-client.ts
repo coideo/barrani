@@ -96,8 +96,10 @@ describe.skip('api-client', () => {
       })
     );
 
-    const promise = doFetch(endpoint);
-    promise.cancel();
+    const controller = new AbortController();
+
+    const promise = doFetch(endpoint, { signal: controller.signal });
+    controller.abort();
     const error = (await promise.catch((e) => e)) as Error;
 
     expect(error.name).toEqual('AbortError');
