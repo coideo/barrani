@@ -25,7 +25,7 @@ const deferred = <T>() => {
 
 const defaultState = {
   status: Status.IDLE,
-  data: undefined,
+  data: null,
   error: null,
 
   isIdle: true,

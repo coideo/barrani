@@ -9,11 +9,11 @@ export enum Status {
 
 type AsyncState<T> = {
   status: Status;
-  data?: T;
+  data: T | null;
   error: Error | null;
 };
 
-type AnyFunc = (...args: unknown[]) => unknown;
+type NotFunction<F, T = F> = F extends (...args: unknown[]) => unknown ? never : T;
 type PartialState<T> = Partial<AsyncState<T>>;
 type SetState<T> = PartialState<T> | ((prev: AsyncState<T>) => PartialState<T>);
 // type SafeDispatch<T> = Dispatch<SetState<T>>
@@ -37,7 +37,7 @@ function useSafeDispatch<T>(dispatch: Dispatch<SetState<T>>) {
 // useEffect(() => {
 //   run(fetchPokemon(pokemonName))
 // }, [pokemonName, run])
-const defaultInitialState = { status: Status.IDLE, data: undefined, error: null };
+const defaultInitialState = { status: Status.IDLE, data: null, error: null };
 function useAsync<T>(initialState?: PartialState<T>) {
   const initialStateRef = useRef<AsyncState<T>>({
     ...defaultInitialState,
@@ -51,7 +51,7 @@ function useAsync<T>(initialState?: PartialState<T>) {
   const safeSetState = useSafeDispatch(setState);
 
   const setData = useCallback(
-    (data: T extends AnyFunc ? never : SetStateAction<T | undefined>) =>
+    (data: NotFunction<T, SetStateAction<T | null>>) =>
       safeSetState((prev) => ({
         data: typeof data === 'function' ? data(prev.data) : data,
         status: Status.RESOLVED,
@@ -65,17 +65,18 @@ function useAsync<T>(initialState?: PartialState<T>) {
   const reset = useCallback(() => safeSetState(initialStateRef.current), [safeSetState]);
 
   const run = useCallback(
-    async (promise: Promise<T extends AnyFunc ? never : T>): Promise<T> => {
+    async (promise: Promise<NotFunction<T>>): Promise<T> => {
       safeSetState({ status: Status.PENDING });
-      return await promise
-        .then((data) => {
+      return await promise.then(
+        (data) => {
           setData(data);
           return data;
-        })
-        .catch((error) => {
+        },
+        (error) => {
           setError(error);
           return error;
-        });
+        }
+      );
     },
     [safeSetState, setData, setError]
   );
