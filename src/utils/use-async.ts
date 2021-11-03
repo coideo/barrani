@@ -65,7 +65,7 @@ function useAsync<T>(initialState?: PartialState<T>) {
   const reset = useCallback(() => safeSetState(initialStateRef.current), [safeSetState]);
 
   const run = useCallback(
-    async (promise: Promise<NotFunction<T>>): Promise<T> => {
+    async (promise: Promise<NotFunction<T, T | null>>): Promise<T | null> => {
       safeSetState({ status: Status.PENDING });
       return await promise.then(
         (data) => {
