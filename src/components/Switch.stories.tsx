@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import Switch from './Switch';
+import React, { useState } from "react";
+
+import Switch from "./Switch";
 
 export default {
-  title: 'Switch',
+  title: "Switch",
   component: Switch,
 };
 
@@ -14,11 +15,11 @@ export const Default = () => {
     <div>
       <div className="max-w-xl p-10 mx-auto space-y-8 bg-gray-900 dark">
         <Switch.Group>
-          <Switch checked={state} onChange={setState} className="dark:focus:ring-offset-gray-900" />
+          <Switch checked={state} className="dark:focus:ring-offset-gray-900" onChange={setState} />
           <Switch.Label className="dark:text-gray-100">Enable notifications</Switch.Label>
         </Switch.Group>
         <Switch.Group>
-          <Switch.Label as="span" className="flex flex-col flex-grow" passive>
+          <Switch.Label passive as="span" className="flex flex-col flex-grow">
             <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
               Available to hire
             </span>
@@ -28,19 +29,19 @@ export const Default = () => {
           </Switch.Label>
           <Switch
             checked={state2}
-            onChange={setState2}
             className="dark:focus:ring-offset-gray-900"
+            onChange={setState2}
           />
         </Switch.Group>
       </div>
 
       <div className="max-w-xl p-10 mx-auto space-y-8">
         <Switch.Group>
-          <Switch checked={state} onChange={setState} className="dark:focus:ring-offset-gray-900" />
+          <Switch checked={state} className="dark:focus:ring-offset-gray-900" onChange={setState} />
           <Switch.Label className="dark:text-gray-100">Enable notifications</Switch.Label>
         </Switch.Group>
         <Switch.Group>
-          <Switch.Label as="span" className="flex flex-col flex-grow" passive>
+          <Switch.Label passive as="span" className="flex flex-col flex-grow">
             <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
               Available to hire
             </span>
@@ -50,8 +51,8 @@ export const Default = () => {
           </Switch.Label>
           <Switch
             checked={state2}
-            onChange={setState2}
             className="dark:focus:ring-offset-gray-900"
+            onChange={setState2}
           />
         </Switch.Group>
       </div>

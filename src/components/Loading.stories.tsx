@@ -1,8 +1,9 @@
-import React from 'react';
-import Loading from './Loading';
+import React from "react";
+
+import Loading from "./Loading";
 
 export default {
-  title: 'Loading',
+  title: "Loading",
   component: Loading,
 };
 
@@ -17,7 +18,7 @@ export const Default = () => (
     </div>
     <div className="flex space-x-4 mt-15">
       {sizes.map((size) => (
-        <Loading key={size} size={size} className="bg-primary-600" />
+        <Loading key={size} className="bg-primary-600" size={size} />
       ))}
     </div>
   </div>

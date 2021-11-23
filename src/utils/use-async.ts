@@ -1,10 +1,10 @@
-import { Dispatch, SetStateAction, useCallback, useLayoutEffect, useReducer, useRef } from 'react';
+import { Dispatch, SetStateAction, useCallback, useLayoutEffect, useReducer, useRef } from "react";
 
 export enum Status {
-  IDLE = 'idle',
-  RESOLVED = 'resolved',
-  REJECTED = 'rejected',
-  PENDING = 'pending',
+  IDLE = "idle",
+  RESOLVED = "resolved",
+  REJECTED = "rejected",
+  PENDING = "pending",
 }
 
 type AsyncState<T> = {
@@ -20,15 +20,18 @@ type SetState<T> = PartialState<T> | ((prev: AsyncState<T>) => PartialState<T>);
 
 function useSafeDispatch<T>(dispatch: Dispatch<SetState<T>>) {
   const mounted = useRef(false);
+
   useLayoutEffect(() => {
     mounted.current = true;
+
     return () => {
       mounted.current = false;
     };
   }, []);
+
   return useCallback(
     (args: SetState<T>) => (mounted.current ? dispatch(args) : undefined),
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -38,14 +41,15 @@ function useSafeDispatch<T>(dispatch: Dispatch<SetState<T>>) {
 //   run(fetchPokemon(pokemonName))
 // }, [pokemonName, run])
 const defaultInitialState = { status: Status.IDLE, data: null, error: null };
+
 function useAsync<T>(initialState?: PartialState<T>) {
   const initialStateRef = useRef<AsyncState<T>>({
     ...defaultInitialState,
     ...initialState,
   });
   const [{ status, data, error }, setState] = useReducer(
-    (s: AsyncState<T>, a: SetState<T>) => ({ ...s, ...(typeof a === 'function' ? a(s) : a) }),
-    initialStateRef.current
+    (s: AsyncState<T>, a: SetState<T>) => ({ ...s, ...(typeof a === "function" ? a(s) : a) }),
+    initialStateRef.current,
   );
 
   const safeSetState = useSafeDispatch(setState);
@@ -53,32 +57,35 @@ function useAsync<T>(initialState?: PartialState<T>) {
   const setData = useCallback(
     (data: NotFunction<T, SetStateAction<T | null>>) =>
       safeSetState((prev) => ({
-        data: typeof data === 'function' ? data(prev.data) : data,
+        data: typeof data === "function" ? data(prev.data) : data,
         status: Status.RESOLVED,
       })),
-    [safeSetState]
+    [safeSetState],
   );
   const setError = useCallback(
     (error: Error) => safeSetState({ error, status: Status.REJECTED }),
-    [safeSetState]
+    [safeSetState],
   );
   const reset = useCallback(() => safeSetState(initialStateRef.current), [safeSetState]);
 
   const run = useCallback(
     async (promise: Promise<NotFunction<T, T | null>>): Promise<T | null> => {
       safeSetState({ status: Status.PENDING });
+
       return await promise.then(
         (data) => {
           setData(data);
+
           return data;
         },
         (error) => {
           setError(error);
+
           return error;
-        }
+        },
       );
     },
-    [safeSetState, setData, setError]
+    [safeSetState, setData, setError],
   );
 
   return {

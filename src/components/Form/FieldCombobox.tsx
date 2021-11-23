@@ -1,11 +1,12 @@
-import Combobox, { ComboboxProps } from 'components/Combobox';
-import React, { FC } from 'react';
-import { Controller } from 'react-hook-form';
-import Field, { FieldComponentProps, FieldProps } from './Field';
+import Combobox, { ComboboxProps } from "components/Combobox";
+import React, { FC } from "react";
+import { Controller } from "react-hook-form";
+
+import Field, { FieldComponentProps, FieldProps } from "./Field";
 
 type Props = Omit<
   ComboboxProps,
-  'pattern' | 'required' | 'name' | 'min' | 'max' | 'maxLength' | 'minLength' | 'as' | 'onFocus'
+  "pattern" | "required" | "name" | "min" | "max" | "maxLength" | "minLength" | "as" | "onFocus"
 >;
 
 const ControllerCombobox: FC<FieldComponentProps & Props> = ({ name, ...props }) => (

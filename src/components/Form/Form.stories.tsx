@@ -1,12 +1,13 @@
-import { action } from '@storybook/addon-actions';
-import Button, { ButtonProps } from 'components/Button';
-import React, { FC, useMemo } from 'react';
-import { useForm } from 'react-hook-form';
-import { useQueryString } from 'utils/use-query-string';
-import Form from '.';
+import { action } from "@storybook/addon-actions";
+import Button, { ButtonProps } from "components/Button";
+import React, { FC, useMemo } from "react";
+import { useForm } from "react-hook-form";
+import { useQueryString } from "utils/use-query-string";
+
+import Form from ".";
 
 export default {
-  title: 'Form',
+  title: "Form",
   component: Form,
 };
 
@@ -34,17 +35,18 @@ const Theming: FC = ({ children }) => {
 };
 
 export const Basic = () => {
-  const methods = useForm({ defaultValues: { name: '' } });
+  const methods = useForm({ defaultValues: { name: "" } });
+
   return (
     <Theming>
       <div className="py-10 bg-gray-300 dark:bg-gray-900">
         <Form
           className="container max-w-md bg-white rounded-lg shadow-lg dark:bg-gray-700"
           methods={methods}
-          onSubmit={action('onSubmit')}
+          onSubmit={action("onSubmit")}
         >
           <div className="px-8 pt-8 pb-6">
-            <Form.Text name="name" label="Nombre" required />
+            <Form.Text required label="Nombre" name="name" />
           </div>
           <div className="flex justify-end px-8 py-4 space-x-3 bg-gray-100 rounded-b-lg dark:bg-gray-800">
             <CancelButton />
@@ -58,12 +60,13 @@ export const Basic = () => {
 
 export const Login = () => {
   const methods = useForm();
+
   return (
     <div className="py-20 bg-gray-300">
       <Form
         className="container max-w-md p-8 space-y-4 bg-white rounded-lg shadow-lg"
         methods={methods}
-        onSubmit={action('onSubmit')}
+        onSubmit={action("onSubmit")}
       >
         <Form.Email required />
         <Form.Password required />
@@ -77,48 +80,48 @@ export const Login = () => {
 };
 
 const peopleList = [
-  'Wade Cooper',
-  'Arlene Mccoy',
-  'Devon Webb',
-  'Tom Cook',
-  'Tanya Fox',
-  'Hellen Schmidt',
-  'Caroline Schultz',
-  'Mason Heaney',
-  'Claudie Smitham',
-  'Emil Schaefer',
+  "Wade Cooper",
+  "Arlene Mccoy",
+  "Devon Webb",
+  "Tom Cook",
+  "Tanya Fox",
+  "Hellen Schmidt",
+  "Caroline Schultz",
+  "Mason Heaney",
+  "Claudie Smitham",
+  "Emil Schaefer",
 ];
 
 function usePeopleMatch() {
-  const [queryString, search] = useQueryString({ name: '' });
+  const [queryString, search] = useQueryString({ name: "" });
   const name = queryString.name as string;
 
   return {
     people: useMemo(
       () => peopleList.filter((p) => p.toLowerCase().includes(name.toLowerCase())),
-      [name]
+      [name],
     ),
     search,
   };
 }
 
 const teamList = [
-  { id: 1, name: 'Real Madrid' },
-  { id: 2, name: 'Barcelona' },
-  { id: 3, name: 'Juventus' },
-  { id: 4, name: 'Milan' },
-  { id: 5, name: 'Manchester United' },
-  { id: 6, name: 'PSG' },
+  { id: 1, name: "Real Madrid" },
+  { id: 2, name: "Barcelona" },
+  { id: 3, name: "Juventus" },
+  { id: 4, name: "Milan" },
+  { id: 5, name: "Manchester United" },
+  { id: 6, name: "PSG" },
 ];
 
 function useTeamMatch() {
-  const [queryString, search] = useQueryString({ name: '' });
+  const [queryString, search] = useQueryString({ name: "" });
   const name = queryString.name as string;
 
   return {
     teams: useMemo(
       () => teamList.filter((t) => t.name.toLowerCase().includes(name.toLowerCase())),
-      [name]
+      [name],
     ),
     search,
   };
@@ -126,7 +129,7 @@ function useTeamMatch() {
 
 export const General = () => {
   const methods = useForm({
-    defaultValues: { country: 'Argentina', person: '', team: '', policy: false },
+    defaultValues: { country: "Argentina", person: "", team: "", policy: false },
   });
   const { people, search } = usePeopleMatch();
   const { teams, search: teamSearch } = useTeamMatch();
@@ -147,68 +150,66 @@ export const General = () => {
           <Form
             className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8"
             methods={methods}
-            onSubmit={action('onSubmit')}
+            onSubmit={action("onSubmit")}
           >
-            <Form.Text name="firstName" label="First name" required />
-            <Form.Text name="lastName" label="Last name" required />
-            <Form.Email wrapperClass="sm:col-span-2" required />
+            <Form.Text required label="First name" name="firstName" />
+            <Form.Text required label="Last name" name="lastName" />
+            <Form.Email required wrapperClass="sm:col-span-2" />
             <Form.Select
-              name="country"
-              label="Country / Region"
               required
-              options={['Argentina', 'United States', 'Australia']}
+              label="Country / Region"
+              name="country"
+              options={["Argentina", "United States", "Australia"]}
               wrapperClass="sm:col-span-2"
             />
             <Form.Combobox
+              required
               label="Person"
               name="person"
-              onSearch={(name) => search({ name })}
-              required
               wrapperClass="sm:col-span-2"
+              onSearch={(name) => search({ name })}
             >
-              {people &&
-                (people.length > 0 ? (
-                  <Form.Combobox.List>
-                    {people.map((name) => (
-                      <Form.Combobox.Item key={name} value={name}>
-                        {name}
-                      </Form.Combobox.Item>
-                    ))}
-                  </Form.Combobox.List>
-                ) : (
-                  <span className="block m-2">No results found</span>
-                ))}
+              {people.length > 0 ? (
+                <Form.Combobox.List>
+                  {people.map((name) => (
+                    <Form.Combobox.Item key={name} value={name}>
+                      {name}
+                    </Form.Combobox.Item>
+                  ))}
+                </Form.Combobox.List>
+              ) : (
+                <span className="block m-2">No results found</span>
+              )}
             </Form.Combobox>
             <Form.Combobox
+              required
               label="Team"
               name="team"
-              onSearch={(name) => teamSearch({ name })}
-              required
               wrapperClass="sm:col-span-2"
+              onSearch={(name) => teamSearch({ name })}
             >
-              {teams &&
-                (teams.length > 0 ? (
-                  <Form.Combobox.List>
-                    {teams.map(({ id, name }) => (
-                      <Form.Combobox.Item key={id} value={{ id, name }}>
-                        {name}
-                      </Form.Combobox.Item>
-                    ))}
-                  </Form.Combobox.List>
-                ) : (
-                  <span className="block m-2">No results found</span>
-                ))}
+              {teams.length > 0 ? (
+                <Form.Combobox.List>
+                  {teams.map(({ id, name }) => (
+                    <Form.Combobox.Item key={id} value={{ id, name }}>
+                      {name}
+                    </Form.Combobox.Item>
+                  ))}
+                </Form.Combobox.List>
+              ) : (
+                <span className="block m-2">No results found</span>
+              )}
             </Form.Combobox>
             <Form.Text
-              name="phone"
               label="Phone Number"
-              tag="optional"
+              name="phone"
               placeholder="+1 (555) 987-6543"
+              tag="optional"
               wrapperClass="sm:col-span-2"
             />
             <Form.TextArea
-              name="message"
               label="Message"
+              name="message"
               rows={4}
               tag="optional"
               wrapperClass="sm:col-span-2"
@@ -222,24 +223,24 @@ export const General = () => {
                 </p>
               </div>
               <Form.Checkbox
-                name="comments"
-                label="Comments"
-                help="Get notified when someones posts a comment on a posting."
                 required
+                help="Get notified when someones posts a comment on a posting."
+                label="Comments"
+                name="comments"
               />
               <Form.Checkbox
-                name="candidates"
-                label="Candidates"
                 help="Get notified when a candidate applies for a job."
+                label="Candidates"
+                name="candidates"
               />
               <Form.Checkbox
-                name="offers"
-                label="Offers"
                 help="Get notified when a candidate accepts or rejects an offer."
+                label="Offers"
+                name="offers"
               />
             </div>
             <Form.Switch.Group className="pt-4 border-t border-gray-200 sm:col-span-2">
-              <Form.Switch name="policy" className="focus:ring-green-500" />
+              <Form.Switch className="focus:ring-green-500" name="policy" />
               <Form.Switch.Label className="text-base leading-6 text-gray-500">
                 By selecting this, you agree to the Privacy Policy and Cookie Policy.
               </Form.Switch.Label>

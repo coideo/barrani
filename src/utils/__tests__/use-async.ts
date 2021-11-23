@@ -1,11 +1,12 @@
 /* eslint-disable no-console */
-import { act, renderHook } from '@testing-library/react-hooks';
-import { Status, useAsync } from '../use-async';
+import { act, renderHook } from "@testing-library/react-hooks";
+
+import { Status, useAsync } from "../use-async";
 
 const original = console.error;
 
 beforeEach(() => {
-  jest.spyOn(console, 'error');
+  jest.spyOn(console, "error");
 });
 
 afterEach(() => {
@@ -19,6 +20,7 @@ const deferred = <T>() => {
     res = resolve;
     rej = reject;
   });
+
   // @ts-expect-error Variable is used before being assigned.
   return { promise, resolve: res, reject: rej };
 };
@@ -60,18 +62,21 @@ const rejectedState = {
   isError: true,
 };
 
-test('calling run with a promise which resolves', async () => {
+test("calling run with a promise which resolves", async () => {
   const { promise, resolve } = deferred();
   const { result } = renderHook(() => useAsync());
+
   expect(result.current).toEqual(defaultState);
   let p: Promise<unknown>;
+
   act(() => {
     p = result.current.run(promise);
   });
   expect(result.current).toEqual(pendingState);
-  const resolvedValue = Symbol('resolved value');
+  const resolvedValue = Symbol("resolved value");
+
   await act(async () => {
-    resolve?.(resolvedValue);
+    resolve(resolvedValue);
     await p;
   });
   expect(result.current).toEqual({
@@ -85,18 +90,21 @@ test('calling run with a promise which resolves', async () => {
   expect(result.current).toEqual(defaultState);
 });
 
-test('calling run with a promise which rejects', async () => {
+test("calling run with a promise which rejects", async () => {
   const { promise, reject } = deferred();
   const { result } = renderHook(() => useAsync());
+
   expect(result.current).toEqual(defaultState);
   let p: Promise<unknown>;
+
   act(() => {
     p = result.current.run(promise);
   });
   expect(result.current).toEqual(pendingState);
-  const rejectedValue = Symbol('rejected value');
+  const rejectedValue = Symbol("rejected value");
+
   await act(async () => {
-    reject?.(rejectedValue);
+    reject(rejectedValue);
     await p.catch(() => {
       /* ignore erorr */
     });
@@ -104,22 +112,24 @@ test('calling run with a promise which rejects', async () => {
   expect(result.current).toEqual({ ...rejectedState, error: rejectedValue });
 });
 
-test('can specify an initial state', () => {
-  const mockData = Symbol('resolved value');
+test("can specify an initial state", () => {
+  const mockData = Symbol("resolved value");
   const customInitialState: { status: Status.RESOLVED; data: symbol } = {
     status: Status.RESOLVED,
     data: mockData,
   };
   const { result } = renderHook(() => useAsync(customInitialState));
+
   expect(result.current).toEqual({
     ...resolvedState,
     ...customInitialState,
   });
 });
 
-test('can set the data', () => {
-  const mockData = Symbol('resolved value');
+test("can set the data", () => {
+  const mockData = Symbol("resolved value");
   const { result } = renderHook(() => useAsync());
+
   act(() => {
     result.current.setData(mockData);
   });
@@ -129,9 +139,10 @@ test('can set the data', () => {
   });
 });
 
-test('can set the error', () => {
-  const mockError = Error('rejected value');
+test("can set the error", () => {
+  const mockError = Error("rejected value");
   const { result } = renderHook(() => useAsync());
+
   act(() => {
     result.current.setError(mockError);
   });
@@ -141,16 +152,17 @@ test('can set the error', () => {
   });
 });
 
-test('No state updates happen if the component is unmounted while pending', async () => {
+test("No state updates happen if the component is unmounted while pending", async () => {
   const { promise, resolve } = deferred();
   const { result, unmount } = renderHook(() => useAsync());
   let p: Promise<unknown>;
+
   act(() => {
     p = result.current.run(promise);
   });
   unmount();
   await act(async () => {
-    resolve?.(null);
+    resolve(null);
     await p;
   });
 
@@ -158,7 +170,7 @@ test('No state updates happen if the component is unmounted while pending', asyn
   expect(console.error).not.toHaveBeenCalled();
 });
 
-test('without data, can set the data with previous func', async () => {
+test("without data, can set the data with previous func", async () => {
   const { result } = renderHook(() => useAsync<number>());
 
   act(() => {
@@ -171,7 +183,7 @@ test('without data, can set the data with previous func', async () => {
   });
 });
 
-test('with data, can set the data with previous func', async () => {
+test("with data, can set the data with previous func", async () => {
   const { result } = renderHook(() => useAsync<number>());
 
   act(() => {
@@ -188,7 +200,7 @@ test('with data, can set the data with previous func', async () => {
   });
 });
 
-test('with data of previous func, can set the data', async () => {
+test("with data of previous func, can set the data", async () => {
   const { result } = renderHook(() => useAsync<number>());
 
   act(() => {

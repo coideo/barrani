@@ -1,8 +1,9 @@
-import React from 'react';
-import Skeleton from './Skeleton';
+import React from "react";
+
+import Skeleton from "./Skeleton";
 
 export default {
-  title: 'Skeleton',
+  title: "Skeleton",
   component: Skeleton,
 };
 

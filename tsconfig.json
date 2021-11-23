@@ -2,6 +2,7 @@
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
+    "alwaysStrict": true,
     "baseUrl": "./src",
     "declaration": true,
     "declarationDir": "build",
@@ -24,7 +25,8 @@
     "sourceMap": true,
     "strict": true,
     "strictNullChecks": true,
-    "target": "es6"
+    "target": "es6",
+    "incremental": true
   },
   "include": ["src", "types"],
   "exclude": ["node_modules", "build"]

@@ -6,10 +6,10 @@ import {
   ListboxList,
   ListboxOption,
   ListboxPopover,
-} from '@reach/listbox';
-import React, { FC, forwardRef, ReactNode } from 'react';
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
-import { cn } from 'utils/class-names';
+} from "@reach/listbox";
+import React, { FC, forwardRef, ReactNode } from "react";
+import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
+import { cn } from "utils/class-names";
 
 const Item: FC<{ icon?: ReactNode; value: string }> = ({ children, icon, value }) => (
   <ListboxOption className="relative py-2 pl-3 cursor-pointer select-none pr-9" value={value}>
@@ -18,12 +18,12 @@ const Item: FC<{ icon?: ReactNode; value: string }> = ({ children, icon, value }
       <span className="block font-normal truncate item-text">{children}</span>
     </div>
     <span className="absolute inset-y-0 right-0 flex items-center pr-4 check-icon">
-      <CheckIcon className="w-5 h-5" aria-hidden="true" />
+      <CheckIcon aria-hidden="true" className="w-5 h-5" />
     </span>
   </ListboxOption>
 );
 
-export type SelectProps = Omit<ListboxInputProps, 'ref' | 'children'> & {
+export type SelectProps = Omit<ListboxInputProps, "ref" | "children"> & {
   children?: ReactNode;
   className?: string;
   id?: string;
@@ -39,53 +39,53 @@ const Select = forwardRef<HTMLSpanElement, SelectProps>(function Select(
     defaultValue,
     disabled,
     id,
-    isDirty,
+    isDirty: _isDirty,
     onChange,
     options,
     value,
     withError,
     ...props
   },
-  ref
+  ref,
 ) {
   const items =
     children ??
     options?.map((o) =>
-      typeof o === 'string' ? (
+      typeof o === "string" ? (
         <Item key={o} value={o}>
           {o}
         </Item>
       ) : (
-        <Item key={o.id} value={o.id} icon={o.icon}>
+        <Item key={o.id} icon={o.icon} value={o.id}>
           {o.name}
         </Item>
-      )
+      ),
     );
 
   return (
     <ListboxInput
       aria-labelledby={id}
-      className={cn(className, 'relative')}
+      className={cn(className, "relative")}
       defaultValue={defaultValue}
       disabled={disabled}
-      onChange={onChange}
       value={value}
+      onChange={onChange}
       {...props}
     >
       <ListboxButton
-        className={cn(
-          'relative w-full flex py-2 pl-3 pr-10 text-left h-10 bg-white border border-gray-300 rounded-md shadow-sm cursor-default focus:outline-none focus:ring-1 sm:text-sm',
-          withError
-            ? 'focus:ring-red-500 border-red-500'
-            : 'focus:ring-primary-500 focus:border-primary-500'
-        )}
         ref={ref}
+        className={cn(
+          "relative w-full flex py-2 pl-3 pr-10 text-left h-10 bg-white border border-gray-300 rounded-md shadow-sm cursor-default focus:outline-none focus:ring-1 sm:text-sm",
+          withError
+            ? "focus:ring-red-500 border-red-500"
+            : "focus:ring-primary-500 focus:border-primary-500",
+        )}
       >
         {({ label }) => (
           <>
             <span className="block truncate">{label}</span>
             <ListboxArrow className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-              <SelectorIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
+              <SelectorIcon aria-hidden="true" className="w-5 h-5 text-gray-400" />
             </ListboxArrow>
           </>
         )}

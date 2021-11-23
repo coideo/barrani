@@ -4,11 +4,12 @@ import {
   ComboboxList,
   ComboboxOption,
   ComboboxPopover,
-} from '@reach/combobox';
-import React, { ChangeEvent, FC, forwardRef, ReactNode, useState } from 'react';
-import { cn } from 'utils/class-names';
-import { SelectorIcon } from '@heroicons/react/solid';
-import Input, { InputProps } from './Input';
+} from "@reach/combobox";
+import React, { ChangeEvent, FC, forwardRef, ReactNode, useState } from "react";
+import { cn } from "utils/class-names";
+import { SelectorIcon } from "@heroicons/react/solid";
+
+import Input, { InputProps } from "./Input";
 
 type Value = string | { id: string | number; name: string };
 
@@ -19,7 +20,7 @@ const Item: FC<{ className?: string; icon?: ReactNode; value: Value }> = ({
   value,
 }) => (
   <ComboboxOption
-    className={cn('relative px-3 py-2 cursor-pointer select-none', className)}
+    className={cn("relative px-3 py-2 cursor-pointer select-none", className)}
     value={JSON.stringify(value)}
   >
     <div className="flex items-center space-x-3">
@@ -31,8 +32,8 @@ const Item: FC<{ className?: string; icon?: ReactNode; value: Value }> = ({
 
 const List: FC = ({ children }) => (
   <ComboboxList
-    className="py-1 overflow-auto text-base rounded-md ring-1 ring-black ring-opacity-5 max-h-60 focus:outline-none sm:text-sm"
     persistSelection
+    className="py-1 overflow-auto text-base rounded-md ring-1 ring-black ring-opacity-5 max-h-60 focus:outline-none sm:text-sm"
   >
     {children}
   </ComboboxList>
@@ -52,7 +53,7 @@ type ComboInputProps = InputProps & { term: string; selected: string };
 
 const ComboInput = forwardRef<HTMLInputElement, ComboInputProps>(function ComboInput(
   { term, selected, onBlur, onFocus, ...props },
-  ref
+  ref,
 ) {
   const [focused, setFocused] = useState(false);
 
@@ -60,6 +61,7 @@ const ComboInput = forwardRef<HTMLInputElement, ComboInputProps>(function ComboI
     <Input
       {...props}
       ref={ref}
+      value={focused ? term : selected}
       onBlur={(e) => {
         setFocused(false);
         onBlur?.(e);
@@ -68,53 +70,54 @@ const ComboInput = forwardRef<HTMLInputElement, ComboInputProps>(function ComboI
         setFocused(true);
         onFocus?.(e);
       }}
-      value={focused ? term : selected}
     />
   );
 });
 
-const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
-  ({ children, disabled, id, onChange, onSearch, placeholder, withError }, ref) => {
-    const [term, setTerm] = useState('');
-    const [selected, setSelected] = useState('');
+const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Combobox(
+  { children, disabled, id, onChange, onSearch, placeholder, withError },
+  ref,
+) {
+  const [term, setTerm] = useState("");
+  const [selected, setSelected] = useState("");
 
-    const handleSelect = (v: string) => {
-      const value = JSON.parse(v) as Value;
-      const { id, name } = typeof value === 'string' ? { id: value, name: value } : value;
-      onChange?.(id);
-      onSearch?.(name);
-      setTerm(name);
-      setSelected(name);
-    };
+  const handleSelect = (v: string) => {
+    const value = JSON.parse(v) as Value;
+    const { id, name } = typeof value === "string" ? { id: value, name: value } : value;
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-      onSearch?.(e.target.value);
-      setTerm(e.target.value);
-    };
+    onChange?.(id);
+    onSearch?.(name);
+    setTerm(name);
+    setSelected(name);
+  };
 
-    return (
-      <ReachCombobox openOnFocus onSelect={handleSelect}>
-        <ComboboxInput
-          as={ComboInput}
-          autocomplete={false}
-          disabled={disabled}
-          id={id}
-          onChange={handleChange}
-          placeholder={placeholder}
-          ref={ref}
-          rightIcon={<SelectorIcon className="w-5 h-5 text-gray-400" />}
-          selected={selected}
-          term={term}
-          withError={withError}
-        />
-        {children ? (
-          <ComboboxPopover className="w-full mt-1 bg-white rounded-md shadow-lg">
-            {children}
-          </ComboboxPopover>
-        ) : null}
-      </ReachCombobox>
-    );
-  }
-);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onSearch?.(e.target.value);
+    setTerm(e.target.value);
+  };
+
+  return (
+    <ReachCombobox openOnFocus onSelect={handleSelect}>
+      <ComboboxInput
+        ref={ref}
+        as={ComboInput}
+        autocomplete={false}
+        disabled={disabled}
+        id={id}
+        placeholder={placeholder}
+        rightIcon={<SelectorIcon className="w-5 h-5 text-gray-400" />}
+        selected={selected}
+        term={term}
+        withError={withError}
+        onChange={handleChange}
+      />
+      {children ? (
+        <ComboboxPopover className="w-full mt-1 bg-white rounded-md shadow-lg">
+          {children}
+        </ComboboxPopover>
+      ) : null}
+    </ReachCombobox>
+  );
+});
 
 export default Object.assign(Combobox, { List, Item });

@@ -1,8 +1,10 @@
-import React, { FC, ReactNode } from 'react';
-import { RegisterOptions, useFormContext, ValidationRule } from 'react-hook-form';
-import { cn } from 'utils/class-names';
-import Label from '../Label';
-import ErrorMsg from './ErrorMsg';
+import React, { FC, ReactNode } from "react";
+import { RegisterOptions, useFormContext, ValidationRule } from "react-hook-form";
+import { cn } from "utils/class-names";
+
+import Label from "../Label";
+
+import ErrorMsg from "./ErrorMsg";
 
 const registerValidation = {
   min: (value: number) => `min ${value}`,
@@ -12,9 +14,9 @@ const registerValidation = {
 };
 
 const tv = (
-  key: keyof Omit<typeof registerValidation, 'required'>,
-  value?: ValidationRule<number | string>
-) => (typeof value === 'number' ? { value, message: registerValidation[key](value) } : value);
+  key: keyof Omit<typeof registerValidation, "required">,
+  value?: ValidationRule<number | string>,
+) => (typeof value === "number" ? { value, message: registerValidation[key](value) } : value);
 
 const HelpInfo: FC = ({ children }) =>
   children ? <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">{children}</p> : null;
@@ -72,26 +74,26 @@ const Field = ({
     ) : null;
 
   return (
-    <div className={cn('space-y-1', withError && 'motion-safe:animate-shake', wrapperClass)}>
+    <div className={cn("space-y-1", withError && "motion-safe:animate-shake", wrapperClass)}>
       {label}
       <Component
         disabled={formState.isSubmitting || disabled}
         isDirty={isDirty}
-        withError={withError}
         name={name}
         rules={{
-          max: tv('max', max),
-          maxLength: tv('maxLength', maxLength),
-          min: tv('min', min),
-          minLength: tv('minLength', minLength),
+          max: tv("max", max),
+          maxLength: tv("maxLength", maxLength),
+          min: tv("min", min),
+          minLength: tv("minLength", minLength),
           pattern,
-          required: required === true ? 'Required' : required,
+          required: required === true ? "Required" : required,
           setValueAs,
           shouldUnregister,
           validate,
           valueAsDate,
           valueAsNumber,
         }}
+        withError={withError}
         {...props}
       />
       <HelpInfo>{help}</HelpInfo>

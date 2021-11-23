@@ -1,11 +1,13 @@
-import React, { FC } from 'react';
-import { Controller } from 'react-hook-form';
-import Select, { SelectProps } from '../Select';
-import Field, { FieldComponentProps, FieldProps } from './Field';
+import React, { FC } from "react";
+import { Controller } from "react-hook-form";
+
+import Select, { SelectProps } from "../Select";
+
+import Field, { FieldComponentProps, FieldProps } from "./Field";
 
 type Props = Omit<
   SelectProps,
-  'pattern' | 'required' | 'name' | 'min' | 'max' | 'maxLength' | 'minLength' | 'as' | 'onFocus'
+  "pattern" | "required" | "name" | "min" | "max" | "maxLength" | "minLength" | "as" | "onFocus"
 >;
 
 const ControllerSelect: FC<FieldComponentProps & Props> = ({ name, ...props }) => (

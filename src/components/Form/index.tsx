@@ -1,5 +1,5 @@
-import { ButtonProps } from 'components/Button';
-import React, { BaseSyntheticEvent, FC, ReactNode } from 'react';
+import { ButtonProps } from "components/Button";
+import React, { BaseSyntheticEvent, FC, ReactNode } from "react";
 import {
   DeepMap,
   DeepPartial,
@@ -9,27 +9,28 @@ import {
   UnpackNestedValue,
   useFormContext,
   UseFormReturn,
-} from 'react-hook-form';
-import { PartialBy } from 'types';
-import Field, { FieldProps, FieldComponentProps } from './Field';
-import FieldCheckbox from './FieldCheckbox';
-import FieldCombobox from './FieldCombobox';
-import FieldEmail from './FieldEmail';
-import FieldInput, { FieldInputProps } from './FieldInput';
-import FieldSelect from './FieldSelect';
-import FieldSwitch from './FieldSwitch';
-import FieldTextArea from './FieldTextArea';
+} from "react-hook-form";
+import { PartialBy } from "types";
+
+import Field, { FieldProps, FieldComponentProps } from "./Field";
+import FieldCheckbox from "./FieldCheckbox";
+import FieldCombobox from "./FieldCombobox";
+import FieldEmail from "./FieldEmail";
+import FieldInput, { FieldInputProps } from "./FieldInput";
+import FieldSelect from "./FieldSelect";
+import FieldSwitch from "./FieldSwitch";
+import FieldTextArea from "./FieldTextArea";
 
 const FieldDate: FC<FieldProps & FieldInputProps> = (props) => (
-  <FieldInput type="date" valueAsDate {...props} />
+  <FieldInput valueAsDate type="date" {...props} />
 );
 
 const FieldNumber: FC<FieldProps & FieldInputProps> = (props) => (
-  <FieldInput type="number" valueAsNumber {...props} />
+  <FieldInput valueAsNumber type="number" {...props} />
 );
 
-const FieldPassword: FC<PartialBy<FieldProps, 'name'> & FieldInputProps> = (props) => (
-  <FieldInput type="password" name="password" label="Contraseña" {...props} />
+const FieldPassword: FC<PartialBy<FieldProps, "name"> & FieldInputProps> = (props) => (
+  <FieldInput label="Contraseña" name="password" type="password" {...props} />
 );
 
 const FieldText: FC<FieldProps & FieldInputProps> = (props) => (
@@ -47,7 +48,7 @@ const SubmitButton: FormButton = ({ children, disabled, loading, ...props }) => 
   return children({
     disabled: isSubmitting || (disabled !== undefined ? disabled : !isDirty),
     loading: isSubmitting || loading,
-    type: 'submit',
+    type: "submit",
     ...props,
   });
 };
@@ -68,12 +69,14 @@ const CancelButton: FormButton = ({ children, disabled, onClick, ...props }) => 
 
 function filterDirty<T extends FieldValues>(
   dirtyFields: DeepMap<DeepPartial<UnionLike<T>>, true>,
-  value: UnpackNestedValue<T>
+  value: UnpackNestedValue<T>,
 ): UnpackNestedValue<T> {
   const result: FieldValues = {};
+
   Object.keys(dirtyFields).forEach((key) => {
     result[key] = value[key];
   });
+
   return result as UnpackNestedValue<T>;
 }
 
@@ -84,7 +87,7 @@ export type FormProps<T> = {
   onSubmit: (
     dirtys: UnpackNestedValue<T>,
     data: UnpackNestedValue<T>,
-    event?: BaseSyntheticEvent
+    event?: BaseSyntheticEvent,
   ) => void | Promise<void>;
 };
 
