@@ -11,8 +11,19 @@ import React, { FC, forwardRef, ReactNode } from "react";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 import { cn } from "utils/class-names";
 
-const Item: FC<{ icon?: ReactNode; value: string }> = ({ children, icon, value }) => (
-  <ListboxOption className="relative py-2 pl-3 cursor-pointer select-none pr-9" value={value}>
+const Item: FC<{ icon?: ReactNode; value: string; disabled?: boolean; label?: string }> = ({
+  children,
+  icon,
+  value,
+  disabled,
+  label,
+}) => (
+  <ListboxOption
+    className="relative py-2 pl-3 cursor-pointer select-none pr-9"
+    disabled={disabled}
+    label={label}
+    value={value}
+  >
     <div className="flex items-center space-x-3">
       {icon}
       <span className="block font-normal truncate item-text">{children}</span>
