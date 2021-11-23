@@ -39,6 +39,7 @@ const Select = forwardRef<HTMLSpanElement, SelectProps>(function Select(
     defaultValue,
     disabled,
     id,
+    isDirty,
     onChange,
     options,
     value,
