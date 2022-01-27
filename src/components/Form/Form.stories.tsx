@@ -39,16 +39,16 @@ export const Basic = () => {
 
   return (
     <Theming>
-      <div className="py-10 bg-gray-300 dark:bg-gray-900">
+      <div className="bg-gray-300 py-10 dark:bg-gray-900">
         <Form
-          className="container max-w-md bg-white rounded-lg shadow-lg dark:bg-gray-700"
+          className="container max-w-md rounded-lg bg-white shadow-lg dark:bg-gray-700"
           methods={methods}
           onSubmit={action("onSubmit")}
         >
           <div className="px-8 pt-8 pb-6">
             <Form.Text required label="Nombre" name="name" />
           </div>
-          <div className="flex justify-end px-8 py-4 space-x-3 bg-gray-100 rounded-b-lg dark:bg-gray-800">
+          <div className="flex justify-end space-x-3 rounded-b-lg bg-gray-100 px-8 py-4 dark:bg-gray-800">
             <CancelButton />
             <SubmitButton />
           </div>
@@ -62,9 +62,9 @@ export const Login = () => {
   const methods = useForm();
 
   return (
-    <div className="py-20 bg-gray-300">
+    <div className="bg-gray-300 py-20">
       <Form
-        className="container max-w-md p-8 space-y-4 bg-white rounded-lg shadow-lg"
+        className="container max-w-md space-y-4 rounded-lg bg-white p-8 shadow-lg"
         methods={methods}
         onSubmit={action("onSubmit")}
       >
@@ -135,8 +135,8 @@ export const General = () => {
   const { teams, search: teamSearch } = useTeamMatch();
 
   return (
-    <div className="px-4 py-16 overflow-hidden sm:px-6 lg:px-8 lg:py-24">
-      <div className="max-w-xl mx-auto">
+    <div className="overflow-hidden px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+      <div className="mx-auto max-w-xl">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
             Contact sales
@@ -178,7 +178,7 @@ export const General = () => {
                   ))}
                 </Form.Combobox.List>
               ) : (
-                <span className="block m-2">No results found</span>
+                <span className="m-2 block">No results found</span>
               )}
             </Form.Combobox>
             <Form.Combobox
@@ -197,7 +197,7 @@ export const General = () => {
                   ))}
                 </Form.Combobox.List>
               ) : (
-                <span className="block m-2">No results found</span>
+                <span className="m-2 block">No results found</span>
               )}
             </Form.Combobox>
             <Form.Text
@@ -214,7 +214,7 @@ export const General = () => {
               tag="optional"
               wrapperClass="sm:col-span-2"
             />
-            <div className="pt-4 space-y-3 border-t border-gray-200 sm:col-span-2">
+            <div className="space-y-3 border-t border-gray-200 pt-4 sm:col-span-2">
               <div>
                 <h3 className="text-lg font-medium leading-6 text-gray-900">Notifications</h3>
                 <p className="mt-1 text-sm leading-5 text-gray-500">
@@ -239,7 +239,7 @@ export const General = () => {
                 name="offers"
               />
             </div>
-            <Form.Switch.Group className="pt-4 border-t border-gray-200 sm:col-span-2">
+            <Form.Switch.Group className="border-t border-gray-200 pt-4 sm:col-span-2">
               <Form.Switch className="focus:ring-green-500" name="policy" />
               <Form.Switch.Label className="text-base leading-6 text-gray-500">
                 By selecting this, you agree to the Privacy Policy and Cookie Policy.

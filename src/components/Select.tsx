@@ -19,17 +19,17 @@ const Item: FC<{ icon?: ReactNode; value: string; disabled?: boolean; label?: st
   label,
 }) => (
   <ListboxOption
-    className="relative py-2 pl-3 cursor-pointer select-none pr-9"
+    className="relative cursor-pointer select-none py-2 pl-3 pr-9"
     disabled={disabled}
     label={label}
     value={value}
   >
     <div className="flex items-center space-x-3">
       {icon}
-      <span className="block font-normal truncate item-text">{children}</span>
+      <span className="item-text block truncate font-normal">{children}</span>
     </div>
-    <span className="absolute inset-y-0 right-0 flex items-center pr-4 check-icon">
-      <CheckIcon aria-hidden="true" className="w-5 h-5" />
+    <span className="check-icon absolute inset-y-0 right-0 flex items-center pr-4">
+      <CheckIcon aria-hidden="true" className="h-5 w-5" />
     </span>
   </ListboxOption>
 );
@@ -86,23 +86,23 @@ const Select = forwardRef<HTMLSpanElement, SelectProps>(function Select(
       <ListboxButton
         ref={ref}
         className={cn(
-          "relative w-full flex py-2 pl-3 pr-10 text-left h-10 bg-white border border-gray-300 rounded-md shadow-sm cursor-default focus:outline-none focus:ring-1 sm:text-sm",
+          "relative flex h-10 w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-1 sm:text-sm",
           withError
-            ? "focus:ring-red-500 border-red-500"
+            ? "border-red-500 focus:ring-red-500"
             : "focus:ring-primary-500 focus:border-primary-500",
         )}
       >
         {({ label }) => (
           <>
             <span className="block truncate">{label}</span>
-            <ListboxArrow className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-              <SelectorIcon aria-hidden="true" className="w-5 h-5 text-gray-400" />
+            <ListboxArrow className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+              <SelectorIcon aria-hidden="true" className="h-5 w-5 text-gray-400" />
             </ListboxArrow>
           </>
         )}
       </ListboxButton>
-      <ListboxPopover className="absolute w-full mt-1 bg-white rounded-md shadow-lg">
-        <ListboxList className="py-1 overflow-auto text-base rounded-md ring-1 ring-black ring-opacity-5 max-h-60 focus:outline-none sm:text-sm">
+      <ListboxPopover className="absolute mt-1 w-full rounded-md bg-white shadow-lg">
+        <ListboxList className="max-h-60 overflow-auto rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
           {items}
         </ListboxList>
       </ListboxPopover>

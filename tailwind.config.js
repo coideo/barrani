@@ -2,12 +2,13 @@ const { fontFamily, colors } = require('tailwindcss/defaultTheme');
 
 module.exports = {
   presets: [require('tailwindcss/defaultConfig')],
-  purge: ['./src/components/**/*.{js,ts,jsx,tsx}', './src/utils/**/*.{js,ts,jsx,tsx}'],
-  darkMode: 'class', // false | 'media' | 'class'
+  content: ['./src/components/**/*.{js,ts,jsx,tsx}', './src/utils/**/*.{js,ts,jsx,tsx}'],
+  darkMode: 'class',
   theme: {
     container: { center: true },
     extend: {
       colors: {
+        current: 'currentColor',
         primary: colors.indigo,
       },
       fontFamily: {
@@ -36,15 +37,6 @@ module.exports = {
         },
       },
     },
-  },
-  variants: {
-    extend: {
-      backgroundColor: ['active', 'disabled'],
-      cursor: ['disabled'],
-      opacity: ['disabled'],
-      textColor: ['active', 'disabled'],
-    },
-    animation: ({ after }) => after(['motion-safe', 'motion-reduce']),
   },
   plugins: [],
 };

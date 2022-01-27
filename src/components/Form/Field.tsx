@@ -1,22 +1,10 @@
 import React, { FC, ReactNode } from "react";
-import { RegisterOptions, useFormContext, ValidationRule } from "react-hook-form";
+import { RegisterOptions, useFormContext } from "react-hook-form";
 import { cn } from "utils/class-names";
 
 import Label from "../Label";
 
 import ErrorMsg from "./ErrorMsg";
-
-const registerValidation = {
-  min: (value: number) => `min ${value}`,
-  max: (value: number) => `max ${value}`,
-  minLength: (value: number) => `min length ${value}`,
-  maxLength: (value: number) => `max length ${value}`,
-};
-
-const tv = (
-  key: keyof Omit<typeof registerValidation, "required">,
-  value?: ValidationRule<number | string>,
-) => (typeof value === "number" ? { value, message: registerValidation[key](value) } : value);
 
 const HelpInfo: FC = ({ children }) =>
   children ? <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">{children}</p> : null;
@@ -81,10 +69,16 @@ const Field = ({
         isDirty={isDirty}
         name={name}
         rules={{
-          max: tv("max", max),
-          maxLength: tv("maxLength", maxLength),
-          min: tv("min", min),
-          minLength: tv("minLength", minLength),
+          max: typeof max === "number" ? { value: max, message: `max ${max}` } : max,
+          maxLength:
+            typeof maxLength === "number"
+              ? { value: maxLength, message: `max length ${maxLength}` }
+              : maxLength,
+          min: typeof min === "number" ? { value: min, message: `min ${min}` } : min,
+          minLength:
+            typeof minLength === "number"
+              ? { value: minLength, message: `min length ${minLength}` }
+              : minLength,
           pattern,
           required: required === true ? "Required" : required,
           setValueAs,

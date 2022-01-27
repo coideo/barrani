@@ -41,7 +41,7 @@ export const WithIcon = () => {
     <div className="container max-w-sm space-y-1">
       <Select onChange={action("onChange")}>
         {people.map((name) => (
-          <Select.Item key={name} icon={<ChartBarIcon className="w-6 h-6" />} value={name}>
+          <Select.Item key={name} icon={<ChartBarIcon className="h-6 w-6" />} value={name}>
             {name}
           </Select.Item>
         ))}
@@ -57,7 +57,7 @@ export const WithOptions = () => {
         options={people.map((p) => ({
           id: p,
           name: p,
-          icon: <ChartBarIcon className="w-6 h-6" />,
+          icon: <ChartBarIcon className="h-6 w-6" />,
         }))}
         onChange={action("onChange")}
       />

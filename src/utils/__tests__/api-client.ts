@@ -1,4 +1,4 @@
-import { MockedRequest, rest } from "msw";
+import { rest, RestRequest } from "msw";
 import { setupServer } from "msw/node";
 
 import { doFetch } from "../api-client";
@@ -28,7 +28,7 @@ describe.skip("api-client", () => {
   });
 
   test("allows for config overrides", async () => {
-    let request: MockedRequest | undefined;
+    let request: RestRequest | undefined;
     const endpoint = "http://test-endpoint";
     const mockResult = { mockValue: "VALUE" };
 

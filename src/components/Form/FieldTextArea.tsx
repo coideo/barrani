@@ -26,10 +26,10 @@ const TextArea: FC<TextAreaProps & FieldComponentProps> = ({
       autoComplete="off"
       className={cn(
         className,
-        "block w-full sm:text-sm rounded-md shadow-sm",
+        "block w-full rounded-md shadow-sm sm:text-sm",
         withError
-          ? "border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500"
-          : "border-gray-300 focus:ring-primary-500 focus:border-primary-500",
+          ? "border-red-300 text-red-900 placeholder-red-300 focus:border-red-500 focus:outline-none focus:ring-red-500"
+          : "focus:ring-primary-500 focus:border-primary-500 border-gray-300",
       )}
       id={name}
       {...register(name, rules)}

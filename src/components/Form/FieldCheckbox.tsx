@@ -26,14 +26,14 @@ const FieldCheckbox = ({ help, label, name, required, wrapperClass, ...props }: 
         isError && "motion-safe:animate-shake",
       )}
     >
-      <div className="flex items-center h-5">
+      <div className="flex h-5 items-center">
         <input
           aria-label={label}
           className={cn(
-            "w-4 h-4 rounded text-primary-600",
+            "text-primary-600 h-4 w-4 rounded",
             isError
-              ? "border-red-600 focus:ring-red-500 focus:border-red-600"
-              : "border-gray-300 focus:ring-primary-500",
+              ? "border-red-600 focus:border-red-600 focus:ring-red-500"
+              : "focus:ring-primary-500 border-gray-300",
           )}
           id={name}
           type="checkbox"

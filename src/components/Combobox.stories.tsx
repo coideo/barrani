@@ -50,7 +50,7 @@ export const Default = () => {
             ))}
           </Combobox.List>
         ) : (
-          <span className="block m-2">No results found</span>
+          <span className="m-2 block">No results found</span>
         )}
       </Combobox>
     </div>

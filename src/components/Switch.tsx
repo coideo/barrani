@@ -14,7 +14,7 @@ const Switch = ({ className, ...props }: SwitchProps) => {
       className={({ checked }) =>
         cn(
           className ? (typeof className === "function" ? className({ checked }) : className) : "",
-          "relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500",
+          "focus:ring-primary-500 relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2",
           checked ? "bg-primary-600" : "bg-gray-200 dark:bg-gray-700",
         )
       }
@@ -23,25 +23,25 @@ const Switch = ({ className, ...props }: SwitchProps) => {
         <span
           aria-hidden="true"
           className={cn(
-            "relative inline-block h-5 w-5 rounded-full bg-white dark:bg-gray-300 shadow transform ring-0 transition duration-200",
+            "relative inline-block h-5 w-5 rounded-full bg-white shadow ring-0 transition duration-200 dark:bg-gray-300",
             checked ? "translate-x-5" : "translate-x-0",
           )}
         >
           <span
             className={cn(
-              "absolute inset-0 h-full w-full flex items-center justify-center transition-opacity",
-              checked ? "opacity-0 ease-out duration-100" : "opacity-100 ease-in duration-200",
+              "absolute inset-0 flex h-full w-full items-center justify-center transition-opacity",
+              checked ? "opacity-0 duration-100 ease-out" : "opacity-100 duration-200 ease-in",
             )}
           >
-            <XIcon className="w-3 h-3 text-gray-400 dark:text-gray-700" />
+            <XIcon className="h-3 w-3 text-gray-400 dark:text-gray-700" />
           </span>
           <span
             className={cn(
-              "absolute inset-0 h-full w-full flex items-center justify-center transition-opacity",
-              checked ? "opacity-100 ease-in duration-200" : "opacity-0 ease-out duration-100",
+              "absolute inset-0 flex h-full w-full items-center justify-center transition-opacity",
+              checked ? "opacity-100 duration-200 ease-in" : "opacity-0 duration-100 ease-out",
             )}
           >
-            <CheckIcon className="w-3 h-3 text-primary-600" />
+            <CheckIcon className="text-primary-600 h-3 w-3" />
           </span>
         </span>
       )}

@@ -69,7 +69,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
     <button
       ref={ref}
       className={cn(
-        "relative overflow-hidden inline-flex items-center justify-center shadow-sm border border-transparent font-medium focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:opacity-75 disabled:cursor-not-allowed",
+        "relative inline-flex items-center justify-center overflow-hidden border border-transparent font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-75",
         block && "w-full",
         !flat && "rounded-md",
         SIZES[size],

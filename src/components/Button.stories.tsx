@@ -64,7 +64,7 @@ export const Loading = () => (
 );
 
 export const Block = () => (
-  <div className="container max-w-sm p-10 space-y-4 bg-gray-50">
+  <div className="container max-w-sm space-y-4 bg-gray-50 p-10">
     {kinds.map((kind) => (
       <MyButton key={kind} block kind={kind}>
         Block

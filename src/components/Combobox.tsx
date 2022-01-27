@@ -20,12 +20,12 @@ const Item: FC<{ className?: string; icon?: ReactNode; value: Value }> = ({
   value,
 }) => (
   <ComboboxOption
-    className={cn("relative px-3 py-2 cursor-pointer select-none", className)}
+    className={cn("relative cursor-pointer select-none px-3 py-2", className)}
     value={JSON.stringify(value)}
   >
     <div className="flex items-center space-x-3">
       {icon}
-      <span className="block font-normal truncate item-text">{children}</span>
+      <span className="item-text block truncate font-normal">{children}</span>
     </div>
   </ComboboxOption>
 );
@@ -33,7 +33,7 @@ const Item: FC<{ className?: string; icon?: ReactNode; value: Value }> = ({
 const List: FC = ({ children }) => (
   <ComboboxList
     persistSelection
-    className="py-1 overflow-auto text-base rounded-md ring-1 ring-black ring-opacity-5 max-h-60 focus:outline-none sm:text-sm"
+    className="max-h-60 overflow-auto rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
   >
     {children}
   </ComboboxList>
@@ -105,14 +105,14 @@ const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Combobox(
         disabled={disabled}
         id={id}
         placeholder={placeholder}
-        rightIcon={<SelectorIcon className="w-5 h-5 text-gray-400" />}
+        rightIcon={<SelectorIcon className="h-5 w-5 text-gray-400" />}
         selected={selected}
         term={term}
         withError={withError}
         onChange={handleChange}
       />
       {children ? (
-        <ComboboxPopover className="w-full mt-1 bg-white rounded-md shadow-lg">
+        <ComboboxPopover className="mt-1 w-full rounded-md bg-white shadow-lg">
           {children}
         </ComboboxPopover>
       ) : null}

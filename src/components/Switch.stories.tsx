@@ -13,13 +13,13 @@ export const Default = () => {
 
   return (
     <div>
-      <div className="max-w-xl p-10 mx-auto space-y-8 bg-gray-900 dark">
+      <div className="dark mx-auto max-w-xl space-y-8 bg-gray-900 p-10">
         <Switch.Group>
           <Switch checked={state} className="dark:focus:ring-offset-gray-900" onChange={setState} />
           <Switch.Label className="dark:text-gray-100">Enable notifications</Switch.Label>
         </Switch.Group>
         <Switch.Group>
-          <Switch.Label passive as="span" className="flex flex-col flex-grow">
+          <Switch.Label passive as="span" className="flex flex-grow flex-col">
             <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
               Available to hire
             </span>
@@ -35,13 +35,13 @@ export const Default = () => {
         </Switch.Group>
       </div>
 
-      <div className="max-w-xl p-10 mx-auto space-y-8">
+      <div className="mx-auto max-w-xl space-y-8 p-10">
         <Switch.Group>
           <Switch checked={state} className="dark:focus:ring-offset-gray-900" onChange={setState} />
           <Switch.Label className="dark:text-gray-100">Enable notifications</Switch.Label>
         </Switch.Group>
         <Switch.Group>
-          <Switch.Label passive as="span" className="flex flex-col flex-grow">
+          <Switch.Label passive as="span" className="flex flex-grow flex-col">
             <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
               Available to hire
             </span>

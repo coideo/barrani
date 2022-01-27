@@ -14,12 +14,12 @@ export const Default = () => (
     <Input disabled placeholder="you@example.com" />
     <Input withError defaultValue="with error" placeholder="you@example.com" />
     <Input
-      icon={<MailIcon aria-hidden="true" className="w-5 h-5 text-gray-400" />}
+      icon={<MailIcon aria-hidden="true" className="h-5 w-5 text-gray-400" />}
       placeholder="you@example.com"
     />
     <Input
       placeholder="000-00-0000"
-      rightIcon={<QuestionMarkCircleIcon aria-hidden="true" className="w-5 h-5 text-gray-400" />}
+      rightIcon={<QuestionMarkCircleIcon aria-hidden="true" className="h-5 w-5 text-gray-400" />}
     />
     <Input placeholder="www.example.com" prepend="http://" />
     <Input append=".com" placeholder="example" />
