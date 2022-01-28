@@ -24,7 +24,7 @@ const peopleList = [
 
 function usePeopleMatch() {
   const [queryString, search] = useQueryString({ name: "" });
-  const name = queryString.name as string;
+  const name = queryString.name;
 
   return {
     people: useMemo(
@@ -40,7 +40,7 @@ export const Default = () => {
 
   return (
     <div className="container max-w-sm space-y-1">
-      <Combobox onChange={action("onChange")} onSearch={(name) => search({ name })}>
+      <Combobox onChange={action("onChange")} onSearch={(name) => search({ name: `${name}` })}>
         {people.length > 0 ? (
           <Combobox.List>
             {people.map((name) => (

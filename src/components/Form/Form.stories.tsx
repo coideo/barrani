@@ -94,7 +94,7 @@ const peopleList = [
 
 function usePeopleMatch() {
   const [queryString, search] = useQueryString({ name: "" });
-  const name = queryString.name as string;
+  const name = queryString.name;
 
   return {
     people: useMemo(
@@ -116,7 +116,7 @@ const teamList = [
 
 function useTeamMatch() {
   const [queryString, search] = useQueryString({ name: "" });
-  const name = queryString.name as string;
+  const name = queryString.name;
 
   return {
     teams: useMemo(
@@ -167,7 +167,7 @@ export const General = () => {
               label="Person"
               name="person"
               wrapperClass="sm:col-span-2"
-              onSearch={(name) => search({ name })}
+              onSearch={(name) => search({ name: `${name}` })}
             >
               {people.length > 0 ? (
                 <Form.Combobox.List>
@@ -186,7 +186,7 @@ export const General = () => {
               label="Team"
               name="team"
               wrapperClass="sm:col-span-2"
-              onSearch={(name) => teamSearch({ name })}
+              onSearch={(name) => teamSearch({ name: `${name}` })}
             >
               {teams.length > 0 ? (
                 <Form.Combobox.List>
