@@ -5,7 +5,7 @@ import { doFetch } from "../api-client";
 
 const server = setupServer();
 
-describe.skip("api-client", () => {
+describe("api-client", () => {
   // enable API mocking in test runs using the same request handlers
   // as for the client-side mocking.
   beforeAll(() => server.listen());
