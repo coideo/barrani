@@ -1,6 +1,6 @@
+import { ChartBarIcon } from "@heroicons/react/solid";
 import { action } from "@storybook/addon-actions";
 import React from "react";
-import { ChartBarIcon } from "@heroicons/react/solid";
 
 import Select from "./Select";
 

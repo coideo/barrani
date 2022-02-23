@@ -1,3 +1,4 @@
+import { ExclamationCircleIcon } from "@heroicons/react/solid";
 import React, {
   FC,
   forwardRef,
@@ -6,7 +7,6 @@ import React, {
   ReactNode,
 } from "react";
 import { cn } from "utils/class-names";
-import { ExclamationCircleIcon } from "@heroicons/react/solid";
 
 const ErrorIcon = () => (
   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">

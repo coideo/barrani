@@ -1,3 +1,4 @@
+import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 import {
   ListboxArrow,
   ListboxButton,
@@ -8,7 +9,6 @@ import {
   ListboxPopover,
 } from "@reach/listbox";
 import React, { FC, forwardRef, ReactNode } from "react";
-import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 import { cn } from "utils/class-names";
 
 const Item: FC<{ icon?: ReactNode; value: string; disabled?: boolean; label?: string }> = ({

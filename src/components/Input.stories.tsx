@@ -1,5 +1,5 @@
-import React from "react";
 import { MailIcon, QuestionMarkCircleIcon } from "@heroicons/react/solid";
+import React from "react";
 
 import Input from "./Input";
 

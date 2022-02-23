@@ -1,3 +1,4 @@
+import { SelectorIcon } from "@heroicons/react/solid";
 import {
   Combobox as ReachCombobox,
   ComboboxInput,
@@ -7,7 +8,6 @@ import {
 } from "@reach/combobox";
 import React, { ChangeEvent, FC, forwardRef, ReactNode, useState } from "react";
 import { cn } from "utils/class-names";
-import { SelectorIcon } from "@heroicons/react/solid";
 
 import Input, { InputProps } from "./Input";
 
