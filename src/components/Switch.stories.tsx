@@ -19,7 +19,7 @@ export const Default = () => {
           <Switch.Label className="dark:text-gray-100">Enable notifications</Switch.Label>
         </Switch.Group>
         <Switch.Group>
-          <Switch.Label passive as="span" className="flex flex-grow flex-col">
+          <Switch.Label passive as="span" className="flex grow flex-col">
             <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
               Available to hire
             </span>
@@ -41,7 +41,7 @@ export const Default = () => {
           <Switch.Label className="dark:text-gray-100">Enable notifications</Switch.Label>
         </Switch.Group>
         <Switch.Group>
-          <Switch.Label passive as="span" className="flex flex-grow flex-col">
+          <Switch.Label passive as="span" className="flex grow flex-col">
             <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
               Available to hire
             </span>
