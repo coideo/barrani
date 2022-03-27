@@ -14,7 +14,7 @@ const Switch = ({ className, ...props }: SwitchProps) => {
       className={({ checked }) =>
         cn(
           className ? (typeof className === "function" ? className({ checked }) : className) : "",
-          "focus:ring-primary-500 relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2",
+          "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2",
           checked ? "bg-primary-600" : "bg-gray-200 dark:bg-gray-700",
         )
       }
@@ -41,7 +41,7 @@ const Switch = ({ className, ...props }: SwitchProps) => {
               checked ? "opacity-100 duration-200 ease-in" : "opacity-0 duration-100 ease-out",
             )}
           >
-            <CheckIcon className="text-primary-600 h-3 w-3" />
+            <CheckIcon className="h-3 w-3 text-primary-600" />
           </span>
         </span>
       )}

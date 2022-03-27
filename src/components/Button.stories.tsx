@@ -12,12 +12,13 @@ const sizes = Object.keys(Button.Sizes) as Array<keyof typeof Button.Sizes>;
 const KINDS = {
   danger: {
     bg: "bg-red-600",
-    button: "text-white hover:bg-red-700 focus:ring-red-500 disabled:bg-red-600",
+    button: "border-transparent text-white hover:bg-red-700 focus:ring-red-500 disabled:bg-red-600",
     loading: "bg-white",
   },
   warning: {
     bg: "bg-yellow-100",
-    button: "text-yellow-700 hover:bg-yellow-200 focus:ring-yellow-500 disabled:bg-yellow-100",
+    button:
+      "border-transparent text-yellow-700 hover:bg-yellow-200 focus:ring-yellow-500 disabled:bg-yellow-100",
     loading: "bg-yellow-700",
   },
 };

@@ -29,7 +29,7 @@ const TextArea: FC<TextAreaProps & FieldComponentProps> = ({
         "block w-full rounded-md shadow-sm sm:text-sm",
         withError
           ? "border-red-300 text-red-900 placeholder-red-300 focus:border-red-500 focus:outline-none focus:ring-red-500"
-          : "focus:ring-primary-500 focus:border-primary-500 border-gray-300",
+          : "border-gray-300 focus:border-primary-500 focus:ring-primary-500",
       )}
       id={name}
       {...register(name, rules)}

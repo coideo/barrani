@@ -44,7 +44,7 @@ const SubmitButton: FormButton = ({ children, disabled, loading, ...props }) => 
 
   return children({
     disabled: isSubmitting || (disabled !== undefined ? disabled : !isDirty),
-    loading: isSubmitting || loading,
+    loading: loading ? isSubmitting || loading : isSubmitting,
     type: "submit",
     ...props,
   });
@@ -83,6 +83,7 @@ const Form = <T extends FieldValues>({ className, children, methods, onSubmit }:
     <FormProvider {...methods}>
       <form
         className={className}
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onSubmit={handleSubmit((v, e) => {
           const result = Object.fromEntries(
             Object.keys(dirtyFields).map((key) => [key, v[key]]),

@@ -19,17 +19,17 @@
   [data-reach-listbox-option][data-current-selected] .item-text {
     @apply font-semibold;
   }
-  [data-reach-listbox-option][aria-selected='true'] {
-    @apply text-white bg-primary-600;
+  [data-reach-listbox-option][aria-selected="true"] {
+    @apply bg-primary-600 text-white;
   }
-  [data-reach-listbox-option][aria-selected='true'] .check-icon {
+  [data-reach-listbox-option][aria-selected="true"] .check-icon {
     @apply text-white;
   }
-  [data-reach-listbox-button][aria-disabled='true'] {
+  [data-reach-listbox-button][aria-disabled="true"] {
     @apply bg-gray-100 text-gray-500;
   }
   [data-reach-combobox-option][data-highlighted] {
-    @apply text-white bg-primary-600;
+    @apply bg-primary-600 text-white;
   }
 }
 

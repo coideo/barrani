@@ -25,36 +25,25 @@ const CancelButton = (props: ButtonProps) => (
   </Form.CancelButton>
 );
 
-const Theming: FC = ({ children }) => {
-  return (
-    <div>
-      <div>{children}</div>
-      <div className="dark">{children}</div>
-    </div>
-  );
-};
-
 export const Basic = () => {
   const methods = useForm({ defaultValues: { name: "" } });
 
   return (
-    <Theming>
-      <div className="bg-gray-300 py-10 dark:bg-gray-900">
-        <Form
-          className="container max-w-md rounded-lg bg-white shadow-lg dark:bg-gray-700"
-          methods={methods}
-          onSubmit={action("onSubmit")}
-        >
-          <div className="px-8 pt-8 pb-6">
-            <Form.Text required label="Nombre" name="name" />
-          </div>
-          <div className="flex justify-end space-x-3 rounded-b-lg bg-gray-100 px-8 py-4 dark:bg-gray-800">
-            <CancelButton />
-            <SubmitButton />
-          </div>
-        </Form>
-      </div>
-    </Theming>
+    <div className="bg-gray-200 py-20 dark:bg-gray-900">
+      <Form
+        className="container max-w-md rounded-lg bg-white shadow-lg dark:bg-gray-700"
+        methods={methods}
+        onSubmit={action("onSubmit")}
+      >
+        <div className="px-8 pt-8 pb-6">
+          <Form.Text required label="Nombre" name="name" />
+        </div>
+        <div className="flex justify-end space-x-3 rounded-b-lg bg-gray-100 px-8 py-4 dark:bg-gray-800">
+          <CancelButton />
+          <SubmitButton />
+        </div>
+      </Form>
+    </div>
   );
 };
 

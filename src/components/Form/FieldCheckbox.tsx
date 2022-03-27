@@ -30,10 +30,10 @@ const FieldCheckbox = ({ help, label, name, required, wrapperClass, ...props }: 
         <input
           aria-label={label}
           className={cn(
-            "text-primary-600 h-4 w-4 rounded",
+            "h-4 w-4 rounded text-primary-600",
             isError
               ? "border-red-600 focus:border-red-600 focus:ring-red-500"
-              : "focus:ring-primary-500 border-gray-300",
+              : "border-gray-300 focus:ring-primary-500",
           )}
           id={name}
           type="checkbox"

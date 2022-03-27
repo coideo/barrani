@@ -1,4 +1,5 @@
-const { fontFamily, colors } = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors");
+const { fontFamily } = require("tailwindcss/defaultTheme");
 
 module.exports = {
   presets: [require("tailwindcss/defaultConfig")],
@@ -38,5 +39,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 };

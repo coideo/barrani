@@ -3,7 +3,7 @@ import { cn } from "utils/class-names";
 
 import Loading from "./Loading";
 
-const ButtonLoading: FC<{ bg: string; className: string; size?: Size }> = ({
+const ButtonLoading: FC<{ bg: string; className: string; size: Size }> = ({
   bg,
   className,
   size,
@@ -27,12 +27,14 @@ const Sizes = Object.fromEntries(Object.keys(SIZES).map((s) => [s, s])) as { [ke
 const KINDS = {
   primary: {
     bg: "bg-primary-600",
-    button: "text-white hover:bg-primary-700 focus:ring-primary-500 disabled:bg-primary-600",
+    button:
+      "border-transparent text-white hover:bg-primary-700 focus:ring-primary-500 disabled:bg-primary-600",
     loading: "bg-white",
   },
   secondary: {
     bg: "bg-primary-100",
-    button: "text-primary-700 hover:bg-primary-200 focus:ring-primary-500 disabled:bg-primary-100",
+    button:
+      "border-transparent text-primary-700 hover:bg-primary-200 focus:ring-primary-500 disabled:bg-primary-100",
     loading: "bg-primary-700",
   },
   light: {
@@ -69,7 +71,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
     <button
       ref={ref}
       className={cn(
-        "relative inline-flex items-center justify-center overflow-hidden border border-transparent font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-75",
+        "relative inline-flex items-center justify-center overflow-hidden border font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-75",
         block && "w-full",
         !flat && "rounded-md",
         SIZES[size],
