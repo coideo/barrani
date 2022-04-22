@@ -21,7 +21,7 @@ const FieldInputComponent: FC<FieldInputProps & FieldComponentProps> = ({
 };
 
 const FieldInput = (props: FieldProps & FieldInputProps) => (
-  <Field component={FieldInputComponent} {...props} />
+  <Field render={(p) => <FieldInputComponent {...p} />} {...props} />
 );
 
 export default FieldInput;

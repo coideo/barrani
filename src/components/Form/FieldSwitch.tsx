@@ -1,16 +1,17 @@
 import React from "react";
-import { Controller } from "react-hook-form";
+import { useController } from "react-hook-form";
 
 import Switch, { SwitchProps } from "../Switch";
 
 import { FieldProps } from "./Field";
 
-const FieldSwitch = ({ name, ...props }: FieldProps & Omit<SwitchProps, "checked">) => (
-  <Controller
-    name={name}
-    render={({ field: { value, ...field } }) => <Switch checked={value} {...field} {...props} />}
-  />
-);
+const FieldSwitch = ({ name, rules, ...props }: FieldProps & Omit<SwitchProps, "checked">) => {
+  const {
+    field: { value, ...field },
+  } = useController({ name, rules });
+
+  return <Switch checked={value} {...field} {...props} />;
+};
 
 FieldSwitch.Group = Switch.Group;
 FieldSwitch.Label = Switch.Label;

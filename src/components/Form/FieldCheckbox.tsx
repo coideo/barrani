@@ -12,11 +12,8 @@ export type CheckboxProps = InputHTMLAttributes<HTMLInputElement> & {
 };
 
 const FieldCheckbox = ({ help, label, name, required, wrapperClass, ...props }: CheckboxProps) => {
-  const {
-    formState: { errors },
-    register,
-  } = useFormContext();
-  const isError = errors[name];
+  const { formState, register } = useFormContext();
+  const isError = formState.errors[name];
 
   return (
     <div

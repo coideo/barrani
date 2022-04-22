@@ -1,22 +1,25 @@
-import React, { FC } from "react";
+import React from "react";
 import { Controller } from "react-hook-form";
 
 import Select, { SelectProps } from "../Select";
 
-import Field, { FieldComponentProps, FieldProps } from "./Field";
+import Field, { FieldProps } from "./Field";
 
-type Props = Omit<
-  SelectProps,
-  "pattern" | "required" | "name" | "min" | "max" | "maxLength" | "minLength" | "as" | "onFocus"
->;
+type Props<TType> = Omit<SelectProps<TType>, "onChange" | "value">;
 
-const ControllerSelect: FC<FieldComponentProps & Props> = ({ name, ...props }) => (
-  <Controller name={name} render={({ field }) => <Select id={name} {...field} {...props} />} />
-);
-
-const FieldSelect = (props: FieldProps & Props) => (
-  <Field component={ControllerSelect} {...props} />
-);
+function FieldSelect<TType>({ displayValue, ...props }: FieldProps & Props<TType>) {
+  return (
+    <Field
+      render={({ name, rules, ...p }) => (
+        <Controller
+          {...{ name, rules }}
+          render={({ field }) => <Select displayValue={displayValue} {...field} {...p} />}
+        />
+      )}
+      {...props}
+    />
+  );
+}
 
 FieldSelect.Item = Select.Item;
 

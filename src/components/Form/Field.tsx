@@ -26,8 +26,7 @@ export type FieldProps = {
   wrapperClass?: string;
 } & RegisterOptions;
 
-const Field = ({
-  component: Component,
+function Field({
   disabled = false,
   help,
   label: labelText,
@@ -37,6 +36,7 @@ const Field = ({
   minLength,
   name,
   pattern,
+  render,
   required,
   setValueAs,
   shouldUnregister,
@@ -46,7 +46,7 @@ const Field = ({
   valueAsNumber,
   wrapperClass,
   ...props
-}: FieldProps & { component: FC<FieldComponentProps> }) => {
+}: FieldProps & { render: (props: FieldComponentProps) => ReactNode }) {
   const { formState } = useFormContext();
   const isDirty = Object.keys(formState.dirtyFields).includes(name);
   const withError = formState.errors[name];
@@ -64,11 +64,11 @@ const Field = ({
   return (
     <div className={cn("space-y-1", withError && "motion-safe:animate-shake", wrapperClass)}>
       {label}
-      <Component
-        disabled={formState.isSubmitting || disabled}
-        isDirty={isDirty}
-        name={name}
-        rules={{
+      {render({
+        disabled: formState.isSubmitting || disabled,
+        isDirty,
+        name,
+        rules: {
           max: typeof max === "number" ? { value: max, message: `max ${max}` } : max,
           maxLength:
             typeof maxLength === "number"
@@ -86,14 +86,14 @@ const Field = ({
           validate,
           valueAsDate,
           valueAsNumber,
-        }}
-        withError={withError}
-        {...props}
-      />
+        },
+        withError,
+        ...props,
+      })}
       <HelpInfo>{help}</HelpInfo>
       <ErrorMsg className="mt-2" name={name} />
     </div>
   );
-};
+}
 
 export default Field;

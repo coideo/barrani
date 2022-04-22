@@ -40,7 +40,7 @@ const TextArea: FC<TextAreaProps & FieldComponentProps> = ({
 };
 
 const FieldTextArea = (props: FieldProps & TextAreaProps) => (
-  <Field component={TextArea} {...props} />
+  <Field render={(p) => <TextArea {...p} />} {...props} />
 );
 
 export default FieldTextArea;

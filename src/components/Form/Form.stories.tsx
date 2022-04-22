@@ -1,6 +1,6 @@
 import { action } from "@storybook/addon-actions";
 import Button, { ButtonProps } from "components/Button";
-import React, { FC, useMemo } from "react";
+import React, { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useQueryString } from "utils/use-query-string";
 
@@ -87,7 +87,8 @@ function usePeopleMatch() {
 
   return {
     people: useMemo(
-      () => peopleList.filter((p) => p.toLowerCase().includes(name.toLowerCase())),
+      () =>
+        !name ? peopleList : peopleList.filter((p) => p.toLowerCase().includes(name.toLowerCase())),
       [name],
     ),
     search,
@@ -109,7 +110,10 @@ function useTeamMatch() {
 
   return {
     teams: useMemo(
-      () => teamList.filter((t) => t.name.toLowerCase().includes(name.toLowerCase())),
+      () =>
+        !name
+          ? teamList
+          : teamList.filter((t) => t.name.toLowerCase().includes(name.toLowerCase())),
       [name],
     ),
     search,
@@ -146,6 +150,7 @@ export const General = () => {
             <Form.Email required wrapperClass="sm:col-span-2" />
             <Form.Select
               required
+              displayValue={(value) => value}
               label="Country / Region"
               name="country"
               options={["Argentina", "United States", "Australia"]}

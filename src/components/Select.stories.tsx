@@ -1,6 +1,5 @@
 import { ChartBarIcon } from "@heroicons/react/solid";
-import { action } from "@storybook/addon-actions";
-import React from "react";
+import React, { useState } from "react";
 
 import Select from "./Select";
 
@@ -22,10 +21,18 @@ const people = [
   "Emil Schaefer",
 ];
 
+const options = people.map((p) => ({
+  id: p,
+  name: p,
+  icon: ChartBarIcon,
+}));
+
 export const Default = () => {
+  const [selected, setSelected] = useState(people[3]);
+
   return (
     <div className="container max-w-sm space-y-1">
-      <Select onChange={action("onChange")}>
+      <Select displayValue={selected} value={selected} onChange={setSelected}>
         {people.map((name) => (
           <Select.Item key={name} value={name}>
             {name}
@@ -37,11 +44,13 @@ export const Default = () => {
 };
 
 export const WithIcon = () => {
+  const [selected, setSelected] = useState(people[3]);
+
   return (
     <div className="container max-w-sm space-y-1">
-      <Select onChange={action("onChange")}>
+      <Select displayValue={selected} value={selected} onChange={setSelected}>
         {people.map((name) => (
-          <Select.Item key={name} icon={<ChartBarIcon className="h-6 w-6" />} value={name}>
+          <Select.Item key={name} icon={ChartBarIcon} value={name}>
             {name}
           </Select.Item>
         ))}
@@ -51,32 +60,48 @@ export const WithIcon = () => {
 };
 
 export const WithOptions = () => {
+  const [selected, setSelected] = useState(options[3]);
+
   return (
     <div className="container max-w-sm space-y-1">
       <Select
-        options={people.map((p) => ({
-          id: p,
-          name: p,
-          icon: <ChartBarIcon className="h-6 w-6" />,
-        }))}
-        onChange={action("onChange")}
+        displayValue={selected?.name}
+        options={options}
+        value={selected}
+        onChange={setSelected}
       />
     </div>
   );
 };
 
 export const WithError = () => {
+  const [selected, setSelected] = useState(options[3]);
+
   return (
     <div className="container max-w-sm space-y-1">
-      <Select withError options={people} onChange={action("onChange")} />
+      <Select
+        withError
+        displayValue={selected?.name}
+        options={options}
+        value={selected}
+        onChange={setSelected}
+      />
     </div>
   );
 };
 
 export const Disabled = () => {
+  const [selected, setSelected] = useState(options[3]);
+
   return (
     <div className="container max-w-sm space-y-1">
-      <Select disabled options={people} onChange={action("onChange")} />
+      <Select
+        disabled
+        displayValue={selected?.name}
+        options={options}
+        value={selected}
+        onChange={setSelected}
+      />
     </div>
   );
 };

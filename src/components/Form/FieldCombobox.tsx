@@ -14,7 +14,7 @@ const ControllerCombobox: FC<FieldComponentProps & Props> = ({ name, ...props })
 );
 
 const FieldCombobox = (props: FieldProps & Props) => (
-  <Field component={ControllerCombobox} {...props} />
+  <Field render={(p) => <ControllerCombobox {...p} />} {...props} />
 );
 
 FieldCombobox.Item = Combobox.Item;

@@ -1,64 +1,80 @@
+import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
-import {
-  ListboxArrow,
-  ListboxButton,
-  ListboxInput,
-  ListboxInputProps,
-  ListboxList,
-  ListboxOption,
-  ListboxPopover,
-} from "@reach/listbox";
-import React, { FC, forwardRef, ReactNode } from "react";
+import React, { ComponentType, Fragment, Key, ReactNode } from "react";
 import { cn } from "utils/class-names";
 
-const Item: FC<{ icon?: ReactNode; value: string; disabled?: boolean; label?: string }> = ({
+type Icon = ComponentType<{ className: string }>;
+
+function Item<TType = string>({
   children,
-  icon,
   value,
   disabled,
-  label,
-}) => (
-  <ListboxOption
-    className="relative cursor-pointer select-none py-2 pl-3 pr-9"
-    disabled={disabled}
-    label={label}
-    value={value}
-  >
-    <div className="flex items-center space-x-3">
-      {icon}
-      <span className="item-text block truncate font-normal">{children}</span>
-    </div>
-    <span className="check-icon absolute inset-y-0 right-0 flex items-center pr-4">
-      <CheckIcon aria-hidden="true" className="h-5 w-5" />
-    </span>
-  </ListboxOption>
-);
-
-export type SelectProps = Omit<ListboxInputProps, "ref" | "children"> & {
+  icon: Icon,
+}: {
   children?: ReactNode;
-  className?: string;
-  id?: string;
+  disabled?: boolean | undefined;
+  value: TType;
+  icon?: Icon;
+}) {
+  return (
+    <Listbox.Option
+      className={({ active }) =>
+        cn(
+          "relative cursor-default select-none py-2 pl-3 pr-9",
+          active ? "bg-primary-600 text-white" : "text-gray-900",
+        )
+      }
+      disabled={disabled}
+      value={value}
+    >
+      {({ selected, active }) => (
+        <>
+          <div className="flex items-center space-x-3">
+            {Icon ? <Icon className="h-6 w-6" /> : null}
+            <span className={cn(selected ? "font-semibold" : "font-normal", "block truncate")}>
+              {children}
+            </span>
+          </div>
+          {selected ? (
+            <span
+              className={cn(
+                "absolute inset-y-0 right-0 flex items-center pr-4",
+                active ? "text-white" : "text-primary-600",
+              )}
+            >
+              <CheckIcon aria-hidden="true" className="h-5 w-5" />
+            </span>
+          ) : null}
+        </>
+      )}
+    </Listbox.Option>
+  );
+}
+
+export type SelectProps<TType = string> = {
+  children?: ReactNode | undefined;
+  disabled?: boolean;
   isDirty?: boolean;
-  options?: Array<{ id: string; name: ReactNode; icon?: ReactNode } | string>;
+  label?: string;
+  onChange: (value: TType) => void;
+  options?: string[] | Array<{ id: Key; name: ReactNode; icon?: Icon }>;
+  displayValue: ReactNode | ((value: TType) => ReactNode);
+  value: TType;
   withError?: boolean;
 };
 
-const Select = forwardRef<HTMLSpanElement, SelectProps>(function Select(
-  {
-    children,
-    className,
-    defaultValue,
-    disabled,
-    id,
-    isDirty: _isDirty,
-    onChange,
-    options,
-    value,
-    withError,
-    ...props
-  },
-  ref,
-) {
+function Select<TType = string>({
+  children,
+  disabled,
+  isDirty: _isDirty,
+  label,
+  onChange,
+  options,
+  displayValue,
+  value,
+  withError,
+  ...props
+}: SelectProps<TType>) {
   const items =
     children ??
     options?.map((o) =>
@@ -67,47 +83,47 @@ const Select = forwardRef<HTMLSpanElement, SelectProps>(function Select(
           {o}
         </Item>
       ) : (
-        <Item key={o.id} icon={o.icon} value={o.id}>
+        <Item key={o.id} icon={o.icon} value={o}>
           {o.name}
         </Item>
       ),
     );
 
+  const selectedNode = typeof displayValue === "function" ? displayValue(value) : displayValue;
+
   return (
-    <ListboxInput
-      aria-labelledby={id}
-      className={cn(className, "relative")}
-      defaultValue={defaultValue}
-      disabled={disabled}
-      value={value}
-      onChange={onChange}
-      {...props}
-    >
-      <ListboxButton
-        ref={ref}
-        className={cn(
-          "relative flex h-10 w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-1 sm:text-sm",
-          withError
-            ? "border-red-500 focus:ring-red-500"
-            : "focus:border-primary-500 focus:ring-primary-500",
-        )}
-      >
-        {({ label }) => (
-          <>
-            <span className="block truncate">{label}</span>
-            <ListboxArrow className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-              <SelectorIcon aria-hidden="true" className="h-5 w-5 text-gray-400" />
-            </ListboxArrow>
-          </>
-        )}
-      </ListboxButton>
-      <ListboxPopover className="absolute mt-1 w-full rounded-md bg-white shadow-lg">
-        <ListboxList className="max-h-60 overflow-auto rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-          {items}
-        </ListboxList>
-      </ListboxPopover>
-    </ListboxInput>
+    <Listbox disabled={disabled} value={value} onChange={onChange} {...props}>
+      {label ? (
+        <Listbox.Label className="block text-sm font-medium text-gray-700">{label}</Listbox.Label>
+      ) : null}
+      <div className="relative mt-1">
+        <Listbox.Button
+          className={cn(
+            "relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:bg-gray-100 sm:text-sm",
+            withError
+              ? "border-red-500 focus:ring-red-500"
+              : "focus:border-primary-500 focus:ring-primary-500",
+          )}
+        >
+          <span className="block truncate">{selectedNode}</span>
+          <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+            <SelectorIcon aria-hidden="true" className="h-5 w-5 text-gray-400" />
+          </span>
+        </Listbox.Button>
+
+        <Transition
+          as={Fragment}
+          leave="transition ease-in duration-100"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <Listbox.Options className="absolute z-10 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            {items}
+          </Listbox.Options>
+        </Transition>
+      </div>
+    </Listbox>
   );
-});
+}
 
 export default Object.assign(Select, { Item });

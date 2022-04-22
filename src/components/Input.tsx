@@ -47,7 +47,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
     className,
     containerClass,
     icon,
-    isDirty,
+    isDirty: _isDirty,
     name,
     prepend,
     rightIcon,
@@ -72,7 +72,6 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
             "block w-full flex-1 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-100 sm:text-sm",
             !!icon && "pl-10",
             (withError || !!rightIcon) && (withError && !!rightIcon ? "pr-14" : "pr-10"),
-            isDirty && "",
             append && prepend
               ? "rounded-none"
               : append

@@ -1,5 +1,4 @@
-import { action } from "@storybook/addon-actions";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useQueryString } from "utils/use-query-string";
 
 import Combobox from "./Combobox";
@@ -10,25 +9,28 @@ export default {
 };
 
 const peopleList = [
-  "Wade Cooper",
-  "Arlene Mccoy",
-  "Devon Webb",
-  "Tom Cook",
-  "Tanya Fox",
-  "Hellen Schmidt",
-  "Caroline Schultz",
-  "Mason Heaney",
-  "Claudie Smitham",
-  "Emil Schaefer",
+  { id: 1, name: "Leslie Alexander" },
+  { id: 2, name: "Wade Cooper" },
+  { id: 3, name: "Arlene Mccoy" },
+  { id: 4, name: "Devon Webb" },
+  { id: 5, name: "Tom Cook" },
+  { id: 6, name: "Tanya Fox" },
+  { id: 7, name: "Hellen Schmidt" },
+  { id: 8, name: "Caroline Schultz" },
+  { id: 9, name: "Mason Heaney" },
+  { id: 10, name: "Claudie Smitham" },
+  { id: 11, name: "Emil Schaefer" },
 ];
 
 function usePeopleMatch() {
-  const [queryString, search] = useQueryString({ name: "" });
-  const name = queryString.name;
+  const [{ name }, search] = useQueryString({ name: "" });
 
   return {
     people: useMemo(
-      () => peopleList.filter((p) => p.toLowerCase().includes(name.toLowerCase())),
+      () =>
+        name === ""
+          ? peopleList
+          : peopleList.filter((p) => p.name.toLowerCase().includes(name.toLowerCase())),
       [name],
     ),
     search,
@@ -37,15 +39,21 @@ function usePeopleMatch() {
 
 export const Default = () => {
   const { people, search } = usePeopleMatch();
+  const [selectedPerson, setSelectedPerson] = useState<typeof peopleList[number]>();
 
   return (
     <div className="container max-w-sm space-y-1">
-      <Combobox onChange={action("onChange")} onSearch={(name) => search({ name: `${name}` })}>
+      <Combobox
+        displayValue={(person) => person?.name ?? ""}
+        value={selectedPerson}
+        onChange={setSelectedPerson}
+        onSearch={(name) => search({ name: `${name}` })}
+      >
         {people.length > 0 ? (
           <Combobox.List>
-            {people.map((name) => (
-              <Combobox.Item key={name} value={name}>
-                {name}
+            {people.map((person) => (
+              <Combobox.Item key={person.id} value={person}>
+                {person.name}
               </Combobox.Item>
             ))}
           </Combobox.List>
@@ -60,7 +68,13 @@ export const Default = () => {
 export const Disabled = () => {
   return (
     <div className="container max-w-sm space-y-1">
-      <Combobox disabled />
+      <Combobox
+        disabled
+        displayValue={() => ""}
+        value={undefined}
+        onChange={() => undefined}
+        onSearch={() => undefined}
+      />
     </div>
   );
 };
@@ -68,7 +82,13 @@ export const Disabled = () => {
 export const WithError = () => {
   return (
     <div className="container max-w-sm space-y-1">
-      <Combobox withError />
+      <Combobox
+        withError
+        displayValue={() => ""}
+        value={undefined}
+        onChange={() => undefined}
+        onSearch={() => undefined}
+      />
     </div>
   );
 };
