@@ -57,24 +57,26 @@ function List({ children }: { children: ReactNode }) {
 
 export type ComboboxProps<TType = string> = {
   children?: ReactNode;
-  withError?: boolean;
-  onSearch: (value: string) => void;
-  displayValue: (item: TType) => string;
   disabled?: boolean;
+  displayValue: (item: TType) => string;
   label?: string;
   onChange: (value: TType) => void;
+  onSearch: (value: string) => void;
+  placeholder?: string;
   value: TType;
+  withError?: boolean;
 };
 
 function Combobox<TType = string>({
   children,
-  withError,
-  onSearch,
-  displayValue,
   disabled,
+  displayValue,
   label,
   onChange,
+  onSearch,
+  placeholder,
   value,
+  withError,
 }: ComboboxProps<TType>) {
   return (
     <HUCombobox as="div" disabled={disabled} value={value} onChange={onChange}>
@@ -92,6 +94,7 @@ function Combobox<TType = string>({
               : "border-gray-300 focus:border-primary-500 focus:ring-primary-500",
           )}
           displayValue={displayValue}
+          placeholder={placeholder}
           onChange={(event) => onSearch(event.target.value)}
         />
         <HUCombobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
