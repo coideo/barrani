@@ -150,6 +150,7 @@ export const General = () => {
             <Form.Email required wrapperClass="sm:col-span-2" />
             <Form.Select
               required
+              defaultValue="Argentina"
               displayValue={(value: string) => value}
               label="Country / Region"
               name="country"
