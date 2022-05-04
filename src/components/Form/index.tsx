@@ -36,7 +36,7 @@ const FieldText: FC<FieldProps & FieldInputProps> = (props) => (
 
 const FieldURL: FC<FieldProps & FieldInputProps> = (props) => <FieldInput type="url" {...props} />;
 
-type FormButton = FC<ButtonProps & { children: FC<ButtonProps> }>;
+type FormButton = FC<Omit<ButtonProps, "children"> & { children: FC<ButtonProps> }>;
 
 const SubmitButton: FormButton = ({ children, disabled, loading, ...props }) => {
   const { formState } = useFormContext();

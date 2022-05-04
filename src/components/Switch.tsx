@@ -1,10 +1,12 @@
 import { Switch as HSwitch } from "@headlessui/react";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
-import React, { ComponentProps, FC } from "react";
+import React, { ReactNode } from "react";
 import { cn } from "utils/class-names";
 
-export type SwitchProps = ComponentProps<typeof HSwitch> & {
+export type SwitchProps = {
   className?: string | ((bag: { checked: boolean }) => string);
+  checked: boolean;
+  onChange: (checked: boolean) => void;
 };
 
 const Switch = ({ className, ...props }: SwitchProps) => {
@@ -49,8 +51,10 @@ const Switch = ({ className, ...props }: SwitchProps) => {
   );
 };
 
-const SwitchGroup: FC<{ className?: string }> = ({ className, ...props }) => (
-  <HSwitch.Group as="div" className={cn(className, "flex items-center space-x-4")} {...props} />
+const SwitchGroup = ({ className, children }: { className?: string; children: ReactNode }) => (
+  <HSwitch.Group as="div" className={cn(className, "flex items-center space-x-4")}>
+    {children}
+  </HSwitch.Group>
 );
 
 Switch.Group = SwitchGroup;

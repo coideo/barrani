@@ -1,11 +1,5 @@
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
-import React, {
-  FC,
-  forwardRef,
-  ForwardRefRenderFunction,
-  InputHTMLAttributes,
-  ReactNode,
-} from "react";
+import React, { forwardRef, ForwardRefRenderFunction, InputHTMLAttributes, ReactNode } from "react";
 import { cn } from "utils/class-names";
 
 const ErrorIcon = () => (
@@ -14,7 +8,7 @@ const ErrorIcon = () => (
   </div>
 );
 
-const Pend: FC<{ className: string }> = ({ className, children }) => (
+const Pend = ({ className, children }: { className: string; children?: React.ReactNode }) => (
   <span
     className={cn(
       className,
@@ -25,7 +19,7 @@ const Pend: FC<{ className: string }> = ({ className, children }) => (
   </span>
 );
 
-const Icon: FC<{ className: string }> = ({ className, children }) => (
+const Icon = ({ className, children }: { className: string; children?: React.ReactNode }) => (
   <div className={cn(className, "pointer-events-none absolute inset-y-0 flex items-center")}>
     {children}
   </div>

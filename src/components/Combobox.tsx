@@ -68,7 +68,7 @@ export type ComboboxProps<TType = string> = {
 
 function Combobox<TType = string>({
   children,
-  withError: _withError,
+  withError,
   onSearch,
   displayValue,
   disabled,
@@ -85,7 +85,12 @@ function Combobox<TType = string>({
       ) : null}
       <div className="relative mt-1">
         <HUCombobox.Input
-          className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 sm:text-sm"
+          className={cn(
+            "w-full rounded-md border bg-white py-2 pl-3 pr-10 shadow-sm focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:bg-gray-100 sm:text-sm",
+            withError
+              ? "border-red-300 text-red-900 placeholder-red-300 focus:border-red-500 focus:ring-red-500"
+              : "border-gray-300 focus:border-primary-500 focus:ring-primary-500",
+          )}
           displayValue={displayValue}
           onChange={(event) => onSearch(event.target.value)}
         />

@@ -2,18 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --reach-combobox: 1;
-  }
-}
-
-@layer components {
-  [data-reach-combobox-option][data-highlighted] {
-    @apply bg-primary-600 text-white;
-  }
-}
-
 @layer utilities {
   .animation-delay-0 {
     animation-delay: 0s;

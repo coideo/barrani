@@ -1,21 +1,26 @@
 import Combobox, { ComboboxProps } from "components/Combobox";
-import React, { FC } from "react";
+import React from "react";
 import { Controller } from "react-hook-form";
 
-import Field, { FieldComponentProps, FieldProps } from "./Field";
+import Field, { FieldProps } from "./Field";
 
-type Props = Omit<
-  ComboboxProps,
-  "pattern" | "required" | "name" | "min" | "max" | "maxLength" | "minLength" | "as" | "onFocus"
->;
+type Props<TType> = Omit<ComboboxProps<TType>, "onChange" | "value">;
 
-const ControllerCombobox: FC<FieldComponentProps & Props> = ({ name, ...props }) => (
-  <Controller name={name} render={({ field }) => <Combobox id={name} {...field} {...props} />} />
-);
-
-const FieldCombobox = (props: FieldProps & Props) => (
-  <Field render={(p) => <ControllerCombobox {...p} />} {...props} />
-);
+function FieldCombobox<TType>({ displayValue, onSearch, ...props }: FieldProps & Props<TType>) {
+  return (
+    <Field
+      render={({ name, rules, ...p }) => (
+        <Controller
+          {...{ name, rules }}
+          render={({ field }) => (
+            <Combobox<TType> displayValue={displayValue} onSearch={onSearch} {...field} {...p} />
+          )}
+        />
+      )}
+      {...props}
+    />
+  );
+}
 
 FieldCombobox.Item = Combobox.Item;
 FieldCombobox.List = Combobox.List;

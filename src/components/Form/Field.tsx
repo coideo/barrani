@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from "react";
+import React, { ReactNode } from "react";
 import { RegisterOptions, useFormContext } from "react-hook-form";
 import { cn } from "utils/class-names";
 
@@ -6,7 +6,7 @@ import Label from "../Label";
 
 import ErrorMsg from "./ErrorMsg";
 
-const HelpInfo: FC = ({ children }) =>
+const HelpInfo = ({ children }: { children: React.ReactNode }) =>
   children ? <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">{children}</p> : null;
 
 export type FieldComponentProps = {
@@ -37,7 +37,7 @@ function Field({
   name,
   pattern,
   render,
-  required,
+  required = false,
   setValueAs,
   shouldUnregister,
   tag,

@@ -47,7 +47,7 @@ export const Default = () => {
         displayValue={(person) => person?.name ?? ""}
         value={selectedPerson}
         onChange={setSelectedPerson}
-        onSearch={(name) => search({ name: `${name}` })}
+        onSearch={(name) => search({ name })}
       >
         {people.length > 0 ? (
           <Combobox.List>

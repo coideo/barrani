@@ -150,7 +150,7 @@ export const General = () => {
             <Form.Email required wrapperClass="sm:col-span-2" />
             <Form.Select
               required
-              displayValue={(value) => value}
+              displayValue={(value: string) => value}
               label="Country / Region"
               name="country"
               options={["Argentina", "United States", "Australia"]}
@@ -158,10 +158,11 @@ export const General = () => {
             />
             <Form.Combobox
               required
+              displayValue={(name: string) => name}
               label="Person"
               name="person"
               wrapperClass="sm:col-span-2"
-              onSearch={(name) => search({ name: `${name}` })}
+              onSearch={(name) => search({ name })}
             >
               {people.length > 0 ? (
                 <Form.Combobox.List>
@@ -177,10 +178,11 @@ export const General = () => {
             </Form.Combobox>
             <Form.Combobox
               required
+              displayValue={(team: typeof teams[number]) => team.name}
               label="Team"
               name="team"
               wrapperClass="sm:col-span-2"
-              onSearch={(name) => teamSearch({ name: `${name}` })}
+              onSearch={(name) => teamSearch({ name })}
             >
               {teams.length > 0 ? (
                 <Form.Combobox.List>

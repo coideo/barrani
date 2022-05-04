@@ -1,6 +1,6 @@
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
-import React, { ComponentType, Fragment, Key, ReactNode } from "react";
+import React, { ComponentType, Key, ReactNode } from "react";
 import { cn } from "utils/class-names";
 
 type Icon = ComponentType<{ className: string }>;
@@ -92,7 +92,7 @@ function Select<TType = string>({
   const selectedNode = typeof displayValue === "function" ? displayValue(value) : displayValue;
 
   return (
-    <Listbox disabled={disabled} value={value} onChange={onChange} {...props}>
+    <Listbox as="div" disabled={disabled} value={value} onChange={onChange} {...props}>
       {label ? (
         <Listbox.Label className="block text-sm font-medium text-gray-700">{label}</Listbox.Label>
       ) : null}
@@ -112,10 +112,12 @@ function Select<TType = string>({
         </Listbox.Button>
 
         <Transition
-          as={Fragment}
-          leave="transition ease-in duration-100"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
+          enter="transition duration-100 ease-out"
+          enterFrom="transform scale-95 opacity-0"
+          enterTo="transform scale-100 opacity-100"
+          leave="transition duration-75 ease-out"
+          leaveFrom="transform scale-100 opacity-100"
+          leaveTo="transform scale-95 opacity-0"
         >
           <Listbox.Options className="absolute z-10 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
             {items}
