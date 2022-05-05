@@ -52,14 +52,15 @@ function Item<TType = string>({
 }
 
 export type SelectProps<TType = string> = {
-  children?: ReactNode | undefined;
+  children?: ReactNode;
+  className?: string;
   disabled?: boolean;
   isDirty?: boolean;
   label?: string;
   onChange: (value: TType) => void;
   options?: string[] | Array<{ id: Key; name: ReactNode; icon?: Icon }>;
-  displayValue: ReactNode | ((value: TType) => ReactNode);
-  value: TType;
+  displayValue: ReactNode | ((value?: TType) => ReactNode);
+  value: TType | undefined;
   withError?: boolean;
 };
 

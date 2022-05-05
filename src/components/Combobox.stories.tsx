@@ -45,21 +45,22 @@ export const Default = () => {
     <div className="container max-w-sm space-y-1">
       <Combobox
         displayValue={(person) => person?.name ?? ""}
+        label="Person"
         value={selectedPerson}
         onChange={setSelectedPerson}
         onSearch={(name) => search({ name })}
       >
-        {people.length > 0 ? (
-          <Combobox.List>
-            {people.map((person) => (
+        <Combobox.List>
+          {people.length > 0 ? (
+            people.map((person) => (
               <Combobox.Item key={person.id} value={person}>
                 {person.name}
               </Combobox.Item>
-            ))}
-          </Combobox.List>
-        ) : (
-          <span className="m-2 block">No results found</span>
-        )}
+            ))
+          ) : (
+            <span className="m-2 block">No results found</span>
+          )}
+        </Combobox.List>
       </Combobox>
     </div>
   );

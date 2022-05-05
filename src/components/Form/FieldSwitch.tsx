@@ -14,8 +14,9 @@ const FieldSwitch = ({
   className?: SwitchProps["className"];
 }) => (
   <Controller
-    {...{ name, rules: { required: required === true ? "Required" : required } }}
+    name={name}
     render={({ field: { value, ...field } }) => <Switch checked={value} {...field} {...props} />}
+    rules={{ required: required === true ? "Required" : required }}
   />
 );
 

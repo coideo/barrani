@@ -58,12 +58,12 @@ function List({ children }: { children: ReactNode }) {
 export type ComboboxProps<TType = string> = {
   children?: ReactNode;
   disabled?: boolean;
-  displayValue: (item: TType) => string;
+  displayValue: (item?: TType) => string;
   label?: string;
   onChange: (value: TType) => void;
   onSearch: (value: string) => void;
   placeholder?: string;
-  value: TType;
+  value: TType | undefined;
   withError?: boolean;
 };
 

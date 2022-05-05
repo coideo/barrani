@@ -11,10 +11,11 @@ function FieldCombobox<TType>({ displayValue, onSearch, ...props }: FieldProps &
     <Field
       render={({ name, rules, ...p }) => (
         <Controller
-          {...{ name, rules }}
+          name={name}
           render={({ field }) => (
             <Combobox<TType> displayValue={displayValue} onSearch={onSearch} {...field} {...p} />
           )}
+          rules={rules}
         />
       )}
       {...props}

@@ -151,7 +151,7 @@ export const General = () => {
             <Form.Select
               required
               defaultValue="Argentina"
-              displayValue={(value: string) => value}
+              displayValue={(value?: string) => value}
               label="Country / Region"
               name="country"
               options={["Argentina", "United States", "Australia"]}
@@ -159,7 +159,7 @@ export const General = () => {
             />
             <Form.Combobox
               required
-              displayValue={(name: string) => name}
+              displayValue={(name?: string) => name ?? ""}
               label="Person"
               name="person"
               wrapperClass="sm:col-span-2"
@@ -179,7 +179,7 @@ export const General = () => {
             </Form.Combobox>
             <Form.Combobox
               required
-              displayValue={(team: typeof teams[number]) => team.name}
+              displayValue={(team?: typeof teams[number]) => team?.name ?? ""}
               label="Team"
               name="team"
               wrapperClass="sm:col-span-2"

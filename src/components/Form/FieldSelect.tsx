@@ -14,8 +14,11 @@ function FieldSelect<TType>({ displayValue, ...props }: FieldProps & Props<TType
     <Field
       render={({ name, rules, ...p }) => (
         <Controller
-          {...{ name, rules }}
-          render={({ field }) => <Select displayValue={displayValue} {...field} {...p} />}
+          name={name}
+          render={({ field: { ...field } }) => (
+            <Select<TType> displayValue={displayValue} {...field} {...p} />
+          )}
+          rules={rules}
         />
       )}
       {...props}

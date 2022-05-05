@@ -11,6 +11,7 @@ export type TextAreaProps = Omit<
 
 const TextArea: FC<TextAreaProps & FieldComponentProps> = ({
   className,
+  isDirty: _isDirty,
   name,
   rules,
   withError,
