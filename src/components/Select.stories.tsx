@@ -28,79 +28,50 @@ const options = people.map((p) => ({
 }));
 
 export const Default = () => {
-  const [selected, setSelected] = useState(people[3]);
+  const [selected1, setSelected1] = useState(people[3]);
+  const [selected2, setSelected2] = useState(people[3]);
+  const [selected3, setSelected3] = useState<typeof options[number]>();
+  const [selected4, setSelected4] = useState(options[3]);
+  const [selected5, setSelected5] = useState(options[3]);
 
   return (
-    <div className="container max-w-sm space-y-1">
-      <Select displayValue={selected} value={selected} onChange={setSelected}>
+    <div className="container max-w-sm space-y-3">
+      <Select displayValue={selected1} label="Default" value={selected1} onChange={setSelected1}>
         {people.map((name) => (
           <Select.Item key={name} value={name}>
             {name}
           </Select.Item>
         ))}
       </Select>
-    </div>
-  );
-};
-
-export const WithIcon = () => {
-  const [selected, setSelected] = useState(people[3]);
-
-  return (
-    <div className="container max-w-sm space-y-1">
-      <Select displayValue={selected} value={selected} onChange={setSelected}>
+      <Select displayValue={selected2} label="With Icon" value={selected2} onChange={setSelected2}>
         {people.map((name) => (
           <Select.Item key={name} icon={ChartBarIcon} value={name}>
             {name}
           </Select.Item>
         ))}
       </Select>
-    </div>
-  );
-};
-
-export const WithOptions = () => {
-  const [selected, setSelected] = useState(options[3]);
-
-  return (
-    <div className="container max-w-sm space-y-1">
       <Select
-        displayValue={selected?.name}
+        displayValue={selected3?.name}
+        label="With Options"
         options={options}
-        value={selected}
-        onChange={setSelected}
+        value={selected3}
+        onChange={setSelected3}
       />
-    </div>
-  );
-};
-
-export const WithError = () => {
-  const [selected, setSelected] = useState(options[3]);
-
-  return (
-    <div className="container max-w-sm space-y-1">
       <Select
         withError
-        displayValue={selected?.name}
+        displayValue={selected4?.name}
+        label="With Error"
         options={options}
-        value={selected}
-        onChange={setSelected}
+        value={selected4}
+        onChange={setSelected4}
       />
-    </div>
-  );
-};
-
-export const Disabled = () => {
-  const [selected, setSelected] = useState(options[3]);
-
-  return (
-    <div className="container max-w-sm space-y-1">
       <Select
         disabled
-        displayValue={selected?.name}
+        displayValue={selected5?.name}
+        label="Disabled"
         options={options}
-        value={selected}
-        onChange={setSelected}
+        value={selected5}
+        onChange={setSelected5}
       />
     </div>
   );

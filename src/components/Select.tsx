@@ -106,13 +106,14 @@ function Select<TType = string>({
               : "focus:border-primary-500 focus:ring-primary-500",
           )}
         >
-          <span className="block truncate">{selectedNode}</span>
+          <span className="block truncate">{selectedNode ?? <>&zwnj;</>}</span>
           <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
             <SelectorIcon aria-hidden="true" className="h-5 w-5 text-gray-400" />
           </span>
         </Listbox.Button>
 
         <Transition
+          className="relative z-10"
           enter="transition duration-100 ease-out"
           enterFrom="transform scale-95 opacity-0"
           enterTo="transform scale-100 opacity-100"
