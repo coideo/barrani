@@ -65,6 +65,8 @@ export type ComboboxProps<TType = string> = {
   placeholder?: string;
   value: TType | undefined;
   withError?: boolean;
+  nullable?: boolean;
+  multiple?: boolean;
 };
 
 function Combobox<TType = string>({
@@ -72,14 +74,13 @@ function Combobox<TType = string>({
   disabled,
   displayValue,
   label,
-  onChange,
   onSearch,
   placeholder,
-  value,
   withError,
+  ...props
 }: ComboboxProps<TType>) {
   return (
-    <HUCombobox as="div" disabled={disabled} value={value} onChange={onChange}>
+    <HUCombobox as="div" disabled={disabled} {...props}>
       {label ? (
         <HUCombobox.Label className="block text-sm font-medium text-gray-700">
           {label}

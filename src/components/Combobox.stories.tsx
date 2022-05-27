@@ -39,11 +39,12 @@ function usePeopleMatch() {
 
 export const Default = () => {
   const { people, search } = usePeopleMatch();
-  const [selectedPerson, setSelectedPerson] = useState<typeof peopleList[number]>();
+  const [selectedPerson, setSelectedPerson] = useState<typeof peopleList[number] | null>(null);
 
   return (
     <div className="container max-w-sm space-y-1">
       <Combobox
+        nullable
         displayValue={(person) => person?.name ?? ""}
         label="Person"
         value={selectedPerson}
