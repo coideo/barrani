@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useCallback, useLayoutEffect, useReducer, useRef } from "react";
 
-export enum Status {
+export enum AsyncStatus {
   IDLE = "idle",
   RESOLVED = "resolved",
   REJECTED = "rejected",
@@ -8,7 +8,7 @@ export enum Status {
 }
 
 type AsyncState<T> = {
-  status: Status;
+  status: AsyncStatus;
   data: T | null;
   error: Error | null;
 };
@@ -40,7 +40,7 @@ function useSafeDispatch<T>(dispatch: Dispatch<SetState<T>>) {
 // useEffect(() => {
 //   run(fetchPokemon(pokemonName))
 // }, [pokemonName, run])
-const defaultInitialState = { status: Status.IDLE, data: null, error: null };
+const defaultInitialState = { status: AsyncStatus.IDLE, data: null, error: null };
 
 function useAsync<T>(initialState?: PartialState<T>) {
   const initialStateRef = useRef<AsyncState<T>>({
@@ -58,19 +58,19 @@ function useAsync<T>(initialState?: PartialState<T>) {
     (data: NotFunction<T, SetStateAction<T | null>>) =>
       safeSetState((prev) => ({
         data: typeof data === "function" ? data(prev.data) : data,
-        status: Status.RESOLVED,
+        status: AsyncStatus.RESOLVED,
       })),
     [safeSetState],
   );
   const setError = useCallback(
-    (error: Error) => safeSetState({ error, status: Status.REJECTED }),
+    (error: Error) => safeSetState({ error, status: AsyncStatus.REJECTED }),
     [safeSetState],
   );
   const reset = useCallback(() => safeSetState(initialStateRef.current), [safeSetState]);
 
   const run = useCallback(
     async (promise: Promise<NotFunction<T, T | null>>): Promise<T | null> => {
-      safeSetState({ status: Status.PENDING });
+      safeSetState({ status: AsyncStatus.PENDING });
 
       return await promise.then(
         (data) => {
@@ -89,10 +89,10 @@ function useAsync<T>(initialState?: PartialState<T>) {
   );
 
   return {
-    isIdle: status === Status.IDLE,
-    isLoading: status === Status.PENDING,
-    isError: status === Status.REJECTED,
-    isSuccess: status === Status.RESOLVED,
+    isIdle: status === AsyncStatus.IDLE,
+    isLoading: status === AsyncStatus.PENDING,
+    isError: status === AsyncStatus.REJECTED,
+    isSuccess: status === AsyncStatus.RESOLVED,
 
     setData,
     setError,

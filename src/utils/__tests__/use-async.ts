@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { act, renderHook } from "@testing-library/react-hooks";
 
-import { Status, useAsync } from "../use-async";
+import { AsyncStatus, useAsync } from "../use-async";
 
 const original = console.error;
 
@@ -26,7 +26,7 @@ const deferred = <T>() => {
 };
 
 const defaultState = {
-  status: Status.IDLE,
+  status: AsyncStatus.IDLE,
   data: null,
   error: null,
 
@@ -43,21 +43,21 @@ const defaultState = {
 
 const pendingState = {
   ...defaultState,
-  status: Status.PENDING,
+  status: AsyncStatus.PENDING,
   isIdle: false,
   isLoading: true,
 };
 
 const resolvedState = {
   ...defaultState,
-  status: Status.RESOLVED,
+  status: AsyncStatus.RESOLVED,
   isIdle: false,
   isSuccess: true,
 };
 
 const rejectedState = {
   ...defaultState,
-  status: Status.REJECTED,
+  status: AsyncStatus.REJECTED,
   isIdle: false,
   isError: true,
 };
@@ -114,8 +114,8 @@ test("calling run with a promise which rejects", async () => {
 
 test("can specify an initial state", () => {
   const mockData = Symbol("resolved value");
-  const customInitialState: { status: Status.RESOLVED; data: symbol } = {
-    status: Status.RESOLVED,
+  const customInitialState: { status: AsyncStatus.RESOLVED; data: symbol } = {
+    status: AsyncStatus.RESOLVED,
     data: mockData,
   };
   const { result } = renderHook(() => useAsync(customInitialState));
