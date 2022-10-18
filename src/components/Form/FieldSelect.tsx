@@ -9,14 +9,22 @@ type Props<TType> = Omit<SelectProps<TType>, "onChange" | "value"> & {
   defaultValue?: ControllerProps["defaultValue"];
 };
 
-function FieldSelect<TType>({ displayValue, ...props }: FieldProps & Props<TType>) {
+function FieldSelect<TType>({ displayValue, onChange, ...props }: FieldProps & Props<TType>) {
   return (
     <Field
       render={({ name, rules, ...p }) => (
         <Controller
           name={name}
-          render={({ field: { ref: _ref, ...field } }) => (
-            <Select<TType> displayValue={displayValue} {...field} {...p} />
+          render={({ field: { ref: _ref, onChange: controllerOnChange, ...field } }) => (
+            <Select<TType>
+              displayValue={displayValue}
+              onChange={(value) => {
+                onChange?.(value);
+                controllerOnChange(value);
+              }}
+              {...field}
+              {...p}
+            />
           )}
           rules={rules}
         />

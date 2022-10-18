@@ -156,6 +156,10 @@ export const General = () => {
               name="country"
               options={["Argentina", "United States", "Australia"]}
               wrapperClass="sm:col-span-2"
+              onChange={(value) => {
+                // eslint-disable-next-line no-console
+                console.log("country: ", value);
+              }}
             />
             <Form.Combobox
               required

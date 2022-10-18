@@ -32,6 +32,7 @@ storybook-static
 .eslintcache
 yarn.lock
 tsconfig.tsbuildinfo
+.idea
 
 #tailwind
 src/styles/tailwind.css
