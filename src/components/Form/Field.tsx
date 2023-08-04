@@ -9,13 +9,21 @@ import ErrorMsg from "./ErrorMsg";
 const HelpInfo = ({ children }: { children: React.ReactNode }) =>
   children ? <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">{children}</p> : null;
 
+type Rules = {
+  required?: boolean;
+  max?: number | string;
+  maxLength?: number;
+  min?: number | string;
+  minLength?: number;
+};
+
 export type FieldComponentProps = {
   disabled?: boolean;
   isDirty: boolean;
   name: string;
   rules: RegisterOptions;
   withError: boolean;
-};
+} & Rules;
 
 export type FieldProps = {
   disabled?: boolean;
@@ -24,7 +32,8 @@ export type FieldProps = {
   name: string;
   tag?: ReactNode;
   wrapperClass?: string;
-} & RegisterOptions;
+} & Omit<RegisterOptions, keyof Rules> &
+  Rules;
 
 function Field({
   disabled = false,
@@ -37,7 +46,7 @@ function Field({
   name,
   pattern,
   render,
-  required = false,
+  required,
   setValueAs,
   shouldUnregister,
   tag,
@@ -87,6 +96,11 @@ function Field({
           valueAsDate,
           valueAsNumber,
         },
+        max,
+        maxLength,
+        min,
+        minLength,
+        required,
         withError,
         ...props,
       })}
