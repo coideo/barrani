@@ -147,6 +147,7 @@ export const General = () => {
           >
             <Form.Text required label="First name" name="firstName" />
             <Form.Text required label="Last name" name="lastName" />
+            <Form.Number required label="Edad" max={10} min={0} name="age" />
             <Form.Email required wrapperClass="sm:col-span-2" />
             <Form.Select
               required

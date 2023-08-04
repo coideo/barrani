@@ -10,7 +10,7 @@ const HelpInfo = ({ children }: { children: React.ReactNode }) =>
   children ? <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">{children}</p> : null;
 
 type Rules = {
-  required?: boolean;
+  // required?: boolean;
   max?: number | string;
   maxLength?: number;
   min?: number | string;
@@ -100,7 +100,7 @@ function Field({
         maxLength,
         min,
         minLength,
-        required,
+        // required,
         withError,
         ...props,
       })}
